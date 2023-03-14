@@ -1,3 +1,3 @@
 # FlightDataProject-Group17
-visualizing flight data  
+Visualizing Flight Data  
 Radoslaw Dulny
