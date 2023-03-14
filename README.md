@@ -1,4 +1,4 @@
 # FlightDataProject-Group17
 Visualizing Flight Data  
-Radoslaw Dulny\n
+Radoslaw Dulny
 Reece Webb
