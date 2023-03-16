@@ -99,24 +99,26 @@ class Flight //<>// //<>//
       break;
       
       case CANCELLED_NO:
-      if(data == "0")
+      int cancelledAsInt = Integer.parseInt(data);
+      if(cancelledAsInt == 0)
       {
-        this.cancelled = false;
+        cancelled = false;
       }
       else
       {
-        this.cancelled = true;
+        cancelled = true;
       }
       break;
       
       case DIVERTED_NO:
-      if(data == "0")
+      int divertedAsInt = Integer.parseInt(data);
+      if(divertedAsInt == 0)
       {
-        this.diverted = false;
+        diverted = false;
       }
       else
       {
-        this.diverted = true;
+        diverted = true;
       }
       break;
       

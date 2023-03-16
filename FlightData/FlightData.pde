@@ -43,7 +43,7 @@ int j = 20;
 void draw()
 {
     float delay = 0;
-    if (l < myFlights.size())
+    if (l < 30)
     {
       myFont=loadFont("Arial-Black-48.vlw");
       textFont(myFont);
