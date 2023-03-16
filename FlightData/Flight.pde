@@ -1,4 +1,4 @@
-class Flight
+class Flight //<>// //<>//
 {
   int dataIdentifier;
   String flightDate;
@@ -20,79 +20,85 @@ class Flight
   boolean diverted;
   int distance;
   
-  
   Flight(int dataIdentifier)
   {
     this.dataIdentifier = dataIdentifier;
   }
   
+  public String joinData()
+  {
+    String allJoinedData = this.flightDate + ", " + this.mktCarrier + ", " + this.mktCarrierFlNum + ", " + this.origin + ", " + this.originCityName + ", " + this.originStateAbr + ", " + this.originWAC +
+                           ", " + this.dest + ", " + this.destCityName + ", " + this.destStateAbr + ", " + this.destWAC + ", " + this.crsDepTime + ", " + this.depTime + ", " + this.crsArrTime + ", " + 
+                           this.arrTime + ", " + ((cancelled) ? 1 : 0) + ", " + ((diverted) ? 1 : 0) + ", " + this.distance;
+    return allJoinedData;
+  }
   
   
   public void setData(String data, int dataType)
   {
-    switch(dataType) //<>//
+    switch(dataType)
     {
-      case 0:
+      case FLIGHT_DATE_NO:
       this.flightDate = data;
       break;
       
-      case 1:
+      case MKT_CARRIER_NO:
       this.mktCarrier = data;
       break;
       
-      case 2:
+      case MKT_CARRIER_FL_NUM_NO:
       this.mktCarrierFlNum = Integer.parseInt(data);
       break;
       
-      case 3:
+      case ORIGIN_NO:
       this.origin = data;
       break;
       
-      case 4:
+      case ORIGIN_CITY_NAME_NO:
       this.originCityName = data;
       break;
       
-      case 5: //<>//
+      case ORIGIN_STATE_ABR_NO:
       this.originStateAbr = data;
       break;
       
-      case 7:
+      case ORIGIN_WAC_NO:
       this.originWAC = Integer.parseInt(data);
       break;
       
-      case 8:
+      case DEST_NO:
       this.dest = data;
       break;
       
-      case 9:
+      case DEST_CITY_NAME_NO:
       this.destCityName = data;
       break;
       
-      case 11:
+      case DEST_STATE_ABR_NO:
       this.destStateAbr = data;
       break;
       
-      case 12:
+      case DEST_WAC_NO:
       this.destWAC = Integer.parseInt(data);
       break;
       
-      case 13:
+      case CRS_DEP_TIME_NO:
       this.crsDepTime = data;
       break;
       
-      case 14:
+      case DEP_TIME_NO:
       this.depTime = data;
       break;
       
-      case 15:
+      case CRS_ARR_TIME_NO:
       this.crsArrTime = data;
       break;
       
-      case 16:
+      case ARR_TIME_NO:
       this.arrTime = data;
       break;
       
-      case 17:
+      case CANCELLED_NO:
       if(data == "0")
       {
         this.cancelled = false;
@@ -103,7 +109,7 @@ class Flight
       }
       break;
       
-      case 18:
+      case DIVERTED_NO:
       if(data == "0")
       {
         this.diverted = false;
@@ -114,7 +120,7 @@ class Flight
       }
       break;
       
-      case 19:
+      case DISTANCE_NO:
       this.distance = Integer.parseInt(data);
       break;
       

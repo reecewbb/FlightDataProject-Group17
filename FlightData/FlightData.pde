@@ -2,9 +2,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 
-final int NUMBER_OF_DATAPOINTS = 18;
-final int LENGTH_OF_DATA = 16;
-
 void setup()  {
   try  {
     File myFile = new File("flights2k.csv");
