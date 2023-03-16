@@ -50,6 +50,8 @@ void draw()
     String lineOfData = myFlights.get(l).joinData();
     text(lineOfData, 50, j);
     j = j + 20;
-    while(delay<10000)  {delay= delay + 0.1;}
+    while(delay<1000000)  {delay= delay + 0.04;}
     l++;
+    if(j==500)
+    {
   }
