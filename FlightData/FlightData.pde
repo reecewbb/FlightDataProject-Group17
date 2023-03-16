@@ -23,10 +23,9 @@ void setup()  {
       for (int i = 0; i < NUMBER_OF_DATAPOINTS + 1; i++)
       {
         String data = allDataArray[i];
-        if (i == 4 || i == 9) 
+        if (i == 4 || i == 9)  //<>//
         {
           data += ", " + allDataArray[i+1]; 
-          i++;
         }
         myFlight.setData(data, i);
       }

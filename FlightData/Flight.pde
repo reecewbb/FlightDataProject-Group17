@@ -27,7 +27,7 @@ class Flight //<>// //<>//
   
   public String joinData()
   {
-    String allJoinedData = this.flightDate + ", " + this.mktCarrier + ", " + this.mktCarrierFlNum + ", " + this.origin + ", " + this.originCityName + ", " + this.originStateAbr + ", " + this.originWAC +
+    String allJoinedData = this.flightDate + ", " + this.mktCarrier + ", " + this.mktCarrierFlNum + ", " + this.origin + ", " + this.originCityName + ", " + this.originStateAbr + ", " + this.originWAC + //<>//
                            ", " + this.dest + ", " + this.destCityName + ", " + this.destStateAbr + ", " + this.destWAC + ", " + this.crsDepTime + ", " + this.depTime + ", " + this.crsArrTime + ", " + 
                            this.arrTime + ", " + ((cancelled) ? 1 : 0) + ", " + ((diverted) ? 1 : 0) + ", " + this.distance;
     return allJoinedData;
@@ -124,6 +124,7 @@ class Flight //<>// //<>//
       this.distance = Integer.parseInt(data);
       break;
       
+      default:
     }
     
   }
