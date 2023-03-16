@@ -5,8 +5,11 @@ import java.util.ArrayList;
 PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
 
+void settings()  {
+  size(SCREENX, SCREENY);
+}
+
 void setup()  {
-  size(700, 700);
   background(0);
   
   try  {
@@ -23,7 +26,7 @@ void setup()  {
       for (int i = 0; i < NUMBER_OF_DATAPOINTS + 1; i++)
       {
         String data = allDataArray[i];
-        if (i == 4 || i == 9)  //<>//
+        if (i == 4 || i == 9) 
         {
           data += ", " + allDataArray[i+1]; 
         }
@@ -42,7 +45,6 @@ int j = 20;
 
 void draw()
 {
-    float delay = 0;
     if (l < 30)
     {
       myFont=loadFont("Arial-Black-48.vlw");
@@ -52,10 +54,11 @@ void draw()
       text(lineOfData, 50, j);
       j = j + 20;
       l++;
-      while(delay<1000000)  {delay= delay + 0.04;}
-      if(j==720)
-      {j=20;
-      background(0);}
+      if(j>=SCREENY)
+      {
+         j=20;
+         background(0);
+      }
     }
 
   }

@@ -18,3 +18,5 @@ final int ARR_TIME_NO = 16;
 final int CANCELLED_NO = 17;
 final int DIVERTED_NO = 18;
 final int DISTANCE_NO = 19;
+final int SCREENX = 800;
+final int SCREENY = 700;
