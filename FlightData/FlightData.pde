@@ -43,13 +43,14 @@ int j = 20;
 
 void draw()
 {
-    float delay = 0;
-    myFont=loadFont("Arial-Black-48.vlw");
-    textFont(myFont);
-    textSize(10);
-    String lineOfData = myFlights.get(l).joinData();
-    text(lineOfData, 50, j);
-    j = j + 20;
-    while(delay<10000)  {delay= delay + 0.1;}
-    l++;
+    if (l < myFlights.size())
+    {
+      myFont=loadFont("Arial-Black-48.vlw");
+      textFont(myFont);
+      textSize(10);
+      String lineOfData = myFlights.get(l).joinData();
+      text(lineOfData, 50, j);
+      j = j + 20;
+      l++;
+    }
   }
