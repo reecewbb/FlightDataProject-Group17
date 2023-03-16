@@ -3,24 +3,33 @@ import java.io.File;
 import java.util.ArrayList;
 
 final int NUMBER_OF_DATAPOINTS = 18;
+final int LENGTH_OF_DATA = 16;
 
 void setup()  {
   try  {
     File myFile = new File("flights2k.csv");
     Scanner input = new Scanner(myFile);
-    input.useDelimiter(",");
-    int dataID = 0;
+    input.useDelimiter("\n");
+    int dataIdentifier = 0;
     ArrayList<Flight> myFlights = new ArrayList<Flight>();
+    input.next();
     while (input.hasNext())
     {
-      Flight myFlight = new Flight(int dataID);
-      for (int i = 0; i < NUMBER_OF_DATAPOINTS; i++)
+      Flight myFlight = new Flight(dataIdentifier);
+      String allData = input.next();
+      String[] allDataArray = allData.split("[,]", 0);
+      for (int i = 0; i < NUMBER_OF_DATAPOINTS + 1; i++)
       {
-        String data = input.next();
-        myFlight.setData(String data, int i);
+        String data = allDataArray[i];
+        if (i == 4 || i == 9) 
+        {
+          data += ", " + allDataArray[i+1]; 
+          i++;
+        }
+        myFlight.setData(data, i);
       }
       myFlights.add(myFlight);
-      dataID++;
+      dataIdentifier++;
     }
     input.close();
   } catch (Exception e) {System.err.println(e);}
