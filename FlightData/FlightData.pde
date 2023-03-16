@@ -2,13 +2,18 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 
+PFont myFont;
+ArrayList<Flight> myFlights = new ArrayList<Flight>();
+
 void setup()  {
+  size(700, 700);
+  background(0);
+  
   try  {
     File myFile = new File("flights2k.csv");
     Scanner input = new Scanner(myFile);
     input.useDelimiter("\n");
     int dataIdentifier = 0;
-    ArrayList<Flight> myFlights = new ArrayList<Flight>();
     input.next();
     while (input.hasNext())
     {
@@ -30,4 +35,23 @@ void setup()  {
     }
     input.close();
   } catch (Exception e) {System.err.println(e);}
+  
 }
+
+int l = -1;
+int j = 0;
+
+void draw()
+{
+    l = l +1;
+    float delay = 0;
+    myFont=loadFont("Arial-Black-48.vlw");
+    textFont(myFont);
+    textSize(10);
+    String lineOfData = myFlights.get(l).joinData();
+    text(lineOfData, 50, j);
+      j = j + 20;
+      while(delay<10000)
+      {delay= delay + 0.1;}
+
+  }
