@@ -38,20 +38,18 @@ void setup()  {
   
 }
 
-int l = -1;
-int j = 0;
+int l = 0;
+int j = 20;
 
 void draw()
 {
-    l = l +1;
     float delay = 0;
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
     textSize(10);
     String lineOfData = myFlights.get(l).joinData();
     text(lineOfData, 50, j);
-      j = j + 20;
-      while(delay<10000)
-      {delay= delay + 0.1;}
-
+    j = j + 20;
+    while(delay<10000)  {delay= delay + 0.1;}
+    l++;
   }
