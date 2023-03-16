@@ -36,7 +36,7 @@ class Flight //<>// //<>//
   
   public void setData(String data, int dataType)
   {
-    switch(dataType)
+    switch(dataType) //<>//
     {
       case FLIGHT_DATE_NO:
       this.flightDate = data;
@@ -98,7 +98,7 @@ class Flight //<>// //<>//
       this.arrTime = data;
       break;
       
-      case CANCELLED_NO: //<>//
+      case CANCELLED_NO:
       int cancelledAsInt = Integer.parseInt(data);
       if(cancelledAsInt == 0)
       {

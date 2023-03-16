@@ -23,13 +23,14 @@ void setup()  {
       Flight myFlight = new Flight(dataIdentifier);
       String allData = input.next();
       String[] allDataArray = allData.split("[,]", 0);
-      for (int i = 0; i < NUMBER_OF_DATAPOINTS + 1; i++)
+      for (int i = 0; i < NUMBER_OF_DATAPOINTS + 2; i++)
       {
         String data = allDataArray[i];
         if (i == 4 || i == 9) 
         {
           data += ", " + allDataArray[i+1]; 
         }
+        data = data.trim(); //<>//
         myFlight.setData(data, i);
       }
       myFlights.add(myFlight);
@@ -45,11 +46,11 @@ int j = 20;
 
 void draw()
 {
-    if (l < 30)
+    if (l < myFlights.size())
     {
       myFont=loadFont("Arial-Black-48.vlw");
       textFont(myFont);
-      textSize(10);
+      textSize(10); //<>//
       String lineOfData = myFlights.get(l).joinData();
       text(lineOfData, 50, j);
       j = j + 20;
