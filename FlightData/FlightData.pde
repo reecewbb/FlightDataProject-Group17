@@ -70,15 +70,20 @@ void setup() {
   myAirports.add(new Airport(240, 540, "LAS"));
   myAirports.add(new Airport(990, 260, "ATW"));
   myAirports.add(new Airport(780, 700, "DAL"));
+  myAirports.add(new Airport(830, 450, "MCI"));    
 }
 
 void draw()
 {
   image(mapImage, 0, 0);
+  myFont=loadFont("Arial-Black-48.vlw");
+  textFont(myFont);
+  textSize(10);
   for (int i = 0; i < myAirports.size(); i++)
   {
     fill(0);
     rect((myAirports.get(i)).getX(), (myAirports.get(i)).getY(), 10, 10, 10);
+    text((myAirports.get(i)).getAirportName(), (myAirports.get(i)).getX(), (myAirports.get(i)).getY());
   }
   System.out.println(airportNames);
   System.out.println(airportNames.size());
