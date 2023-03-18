@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
-ArrayList<String> myAirports = new ArrayList<String>();
+ArrayList<String> airportNames = new ArrayList<String>();
+ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
-
-Airport JFK;
-Airport LAX;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -41,13 +39,13 @@ void setup() {
         {
           boolean repeat = false;
           ;
-          for (int j = 0; j < myAirports.size() && !repeat; j++)
+          for (int j = 0; j < airportNames.size() && !repeat; j++)
           {
-            repeat = myAirports.contains(data);
+            repeat = airportNames.contains(data);
           }
           if (!repeat)
           {
-            myAirports.add(data);
+            airportNames.add(data);
           }
         }
         data = data.trim();
@@ -61,17 +59,27 @@ void setup() {
   catch (Exception e) {
     System.err.println(e);
   }
-  
-  JFK = new Airport(1400, 330);
-  LAX = new Airport(130, 580);
+
+  myAirports.add(new Airport(1400, 330, "JFK"));
+  myAirports.add(new Airport(130, 580, "LAX"));
+  myAirports.add(new Airport(1330, 420, "DCA"));
+  myAirports.add(new Airport(150, 50, "SEA"));
+  myAirports.add(new Airport(1320, 900, "FLL"));
+  myAirports.add(new Airport(450, 890, "HNL"));
+  myAirports.add(new Airport(1015, 340, "ORD"));
+  myAirports.add(new Airport(240, 540, "LAS"));
+  myAirports.add(new Airport(990, 260, "ATW"));
+  myAirports.add(new Airport(780, 700, "DAL"));
 }
 
 void draw()
 {
   image(mapImage, 0, 0);
-  fill(0);
-  rect(JFK.getX(), JFK.getY(), 10, 10, 10);
-  rect(LAX.getX(), LAX.getY(), 10, 10, 10);
-  System.out.println(myAirports);
-  System.out.println(myAirports.size());
+  for (int i = 0; i < myAirports.size(); i++)
+  {
+    fill(0);
+    rect((myAirports.get(i)).getX(), (myAirports.get(i)).getY(), 10, 10, 10);
+  }
+  System.out.println(airportNames);
+  System.out.println(airportNames.size());
 }
