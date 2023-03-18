@@ -7,14 +7,17 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> myAirports = new ArrayList<String>();
 PImage mapImage;
 
+Airport JFK;
+Airport LAX;
+
 void settings() {
   size(SCREENX, SCREENY);
-  mapImage = loadImage("US-Blank-map.jpg");
+  mapImage = loadImage("Blank_US_Map.png");
   mapImage.resize(SCREENX, SCREENY);
 }
 
 void setup() {
-  background(0);
+  background(255);
 
   try {
     File myFile = new File("flights2k.csv");
@@ -58,11 +61,17 @@ void setup() {
   catch (Exception e) {
     System.err.println(e);
   }
+  
+  JFK = new Airport(1400, 330);
+  LAX = new Airport(130, 580);
 }
 
 void draw()
 {
-  
+  image(mapImage, 0, 0);
+  fill(0);
+  rect(JFK.getX(), JFK.getY(), 10, 10, 10);
+  rect(LAX.getX(), LAX.getY(), 10, 10, 10);
   System.out.println(myAirports);
   System.out.println(myAirports.size());
 }
