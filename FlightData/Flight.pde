@@ -1,4 +1,4 @@
-class Flight //<>// //<>//
+class Flight  //<>//
 {
   int dataIdentifier;
   String flightDate;
@@ -36,7 +36,7 @@ class Flight //<>// //<>//
   
   public void setData(String data, int dataType)
   {
-    switch(dataType) //<>//
+    switch(dataType)
     {
       case FLIGHT_DATE_NO:
       this.flightDate = data;

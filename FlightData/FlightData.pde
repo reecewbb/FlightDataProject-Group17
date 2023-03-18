@@ -1,18 +1,22 @@
-import java.util.Scanner;
+import java.util.Scanner; //<>//
 import java.io.File;
 import java.util.ArrayList;
 
 PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
+ArrayList<String> myAirports = new ArrayList<String>();
+PImage mapImage;
 
-void settings()  {
+void settings() {
   size(SCREENX, SCREENY);
+  mapImage = loadImage("US-Blank-map.jpg");
+  mapImage.resize(SCREENX, SCREENY);
 }
 
-void setup()  {
+void setup() {
   background(0);
-  
-  try  {
+
+  try {
     File myFile = new File("flights2k.csv");
     Scanner input = new Scanner(myFile);
     input.useDelimiter("\n");
@@ -26,40 +30,39 @@ void setup()  {
       for (int i = 0; i < NUMBER_OF_DATAPOINTS + 2; i++)
       {
         String data = allDataArray[i];
-        if (i == 4 || i == 9) 
+        if (i == 5 || i == 10)
         {
-          data += ", " + allDataArray[i+1]; 
+          data += ", " + allDataArray[i+1];
         }
-        data = data.trim(); //<>//
+        if (i == 3 || i == 8)
+        {
+          boolean repeat = false;
+          ;
+          for (int j = 0; j < myAirports.size() && !repeat; j++)
+          {
+            repeat = myAirports.contains(data);
+          }
+          if (!repeat)
+          {
+            myAirports.add(data);
+          }
+        }
+        data = data.trim();
         myFlight.setData(data, i);
       }
       myFlights.add(myFlight);
       dataIdentifier++;
     }
     input.close();
-  } catch (Exception e) {System.err.println(e);}
-  
+  }
+  catch (Exception e) {
+    System.err.println(e);
+  }
 }
-
-int l = 0;
-int j = 20;
 
 void draw()
 {
-    if (l < myFlights.size())
-    {
-      myFont=loadFont("Arial-Black-48.vlw");
-      textFont(myFont);
-      textSize(10); //<>//
-      String lineOfData = myFlights.get(l).joinData();
-      text(lineOfData, 50, j);
-      j = j + 20;
-      l++;
-      if(j>=SCREENY)
-      {
-         j=20;
-         background(0);
-      }
-    }
-
-  }
+  
+  System.out.println(myAirports);
+  System.out.println(myAirports.size());
+}
