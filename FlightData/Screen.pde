@@ -1,14 +1,33 @@
 class Screen {
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
+  int screenType;
 
-  void addAirport(Airport airport) {
+  Screen (int screenType)  
+  {
+     this.screenType = screenType;
+  }
+  
+  void addAirport(Airport airport) 
+  {
     airportList.add(airport);
+  }
+  
+  int buttonClicked()
+  {
+    int event;
+    for (int i = 0; i < airportList.size(); i++)
+    {
+      Airport myAirport = (Airport) airportList.get(i);
+      event = myAirport.airportClicked(mouseX, mouseY);
+      if (event != -1) return event;
+    }
+    return NO_EVENT;
   }
 
   void draw()
   {
-    image(mapImage, 0, 0);
+    if(screenType == MAP_SCREEN) image(mapImage, 0, 0);
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
     textSize(10);

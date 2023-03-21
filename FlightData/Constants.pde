@@ -26,3 +26,4 @@ final int ON_BOTTOM = 3;
 final int AIRPORT_RADIUS = 5;
 final int MAP_SCREEN = 0;
 final int BAR_CHART_SCREEN = 1;
+final int NO_EVENT = -1;

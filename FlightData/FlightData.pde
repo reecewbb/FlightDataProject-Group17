@@ -7,9 +7,9 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
-Screen currentScreen = new Screen();
-Screen mapScreen = new Screen();
-Screen chartScreen = new Screen();
+Screen mapScreen; 
+Screen chartScreen; 
+Screen currentScreen;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -19,6 +19,9 @@ void settings() {
 
 void setup() {
   background(255);
+  
+  mapScreen = new Screen(MAP_SCREEN);
+  chartScreen = new Screen(BAR_CHART_SCREEN);
 
   try {
     File myFile = new File("flights2k.csv");
@@ -119,18 +122,22 @@ void setup() {
   for(int i = 0; i < myAirports.size(); i++)
   {
     mapScreen.addAirport(myAirports.get(i));
+    (myAirports.get(i)).setID(i);
   }
 }
 
 
 void draw()
 {
+  background(255);
   currentScreen.draw();
 } //<>//
 
 void mousePressed()  
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
+  int event = currentScreen.buttonClicked();
+  if (event >= 0 && event <= 130) currentScreen = chartScreen;
 }
 
 void mouseMoved()
