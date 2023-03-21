@@ -7,6 +7,9 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
+Screen currentScreen = new Screen();
+Screen mapScreen = new Screen();
+Screen chartScreen = new Screen();
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -59,11 +62,14 @@ void setup() {
   catch (Exception e) {
     System.err.println(e);
   }
-  
+
   System.out.println(airportNames);
   System.out.println(airportNames.size());
-  
+
   ellipseMode(RADIUS);
+
+  currentScreen = mapScreen;
+  
 
   myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
   myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
@@ -110,23 +116,20 @@ void setup() {
   myAirports.add(new Airport(1259, 694, "SAV", ON_TOP));
   myAirports.add(new Airport(1071, 571, "BNA", ON_TOP));
   myAirports.add(new Airport(100, 168, "EUG", ON_TOP));
-
+  
+  for(int i = 0; i < myAirports.size(); i++)
+  {
+    mapScreen.addAirport(myAirports.get(i));
+  }
 }
 
 
 void draw()
 {
-  image(mapImage, 0, 0);
-  myFont=loadFont("Arial-Black-48.vlw");
-  textFont(myFont);
-  textSize(10);
-  for(int z = 0; z < myAirports.size(); z++)
-  {
-    myAirports.get(z).draw();
-  }
+  currentScreen.draw(); //<>//
 }
 
-void mousePressed()  
+void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
 }
