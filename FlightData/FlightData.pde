@@ -62,52 +62,54 @@ void setup() {
   
   System.out.println(airportNames);
   System.out.println(airportNames.size());
+  
+  ellipseMode(RADIUS);
 
-  myAirports.add(new Airport(1410, 335, "JFK"));
-  myAirports.add(new Airport(130, 580, "LAX"));
-  myAirports.add(new Airport(1330, 420, "DCA"));
-  myAirports.add(new Airport(150, 50, "SEA"));
-  myAirports.add(new Airport(1320, 900, "FLL"));
-  myAirports.add(new Airport(450, 890, "HNL"));
-  myAirports.add(new Airport(1015, 340, "ORD"));
-  myAirports.add(new Airport(240, 540, "LAS"));
-  myAirports.add(new Airport(990, 260, "ATW"));
-  myAirports.add(new Airport(780, 700, "DAL"));
-  myAirports.add(new Airport(830, 450, "MCI"));
-  myAirports.add(new Airport(820, 810, "HOU"));
-  myAirports.add(new Airport(1260, 890, "RSW"));
-  myAirports.add(new Airport(145, 600, "LGB"));
-  myAirports.add(new Airport(60, 390, "SMF"));
-  myAirports.add(new Airport(600, 650, "LBB"));
-  myAirports.add(new Airport(760, 710, "DFW"));
-  myAirports.add(new Airport(500, 910, "OGG"));
-  myAirports.add(new Airport(1395, 340, "EWR"));
-  myAirports.add(new Airport(380, 260, "IDA"));
-  myAirports.add(new Airport(304, 631, "PHX"));
-  myAirports.add(new Airport(1276, 839, "MCO"));
-  myAirports.add(new Airport(125, 134, "PDX"));
-  myAirports.add(new Airport(503, 715, "ELP"));
-  myAirports.add(new Airport(56, 427, "SJC"));
-  myAirports.add(new Airport(1470, 253, "BOS"));
-  myAirports.add(new Airport(1251, 763, "JAX"));
-  myAirports.add(new Airport(754, 896, "CRP"));
-  myAirports.add(new Airport(983, 598, "MEM"));
-  myAirports.add(new Airport(173, 940, "ADQ"));
-  myAirports.add(new Airport(190, 886, "ANC"));
-  myAirports.add(new Airport(47, 422, "SFO"));
-  myAirports.add(new Airport(1428, 325, "LGA"));
-  myAirports.add(new Airport(156, 620, "SNA"));
-  myAirports.add(new Airport(159, 22, "BLI"));
-  myAirports.add(new Airport(1020, 355, "MDW"));
-  myAirports.add(new Airport(156, 635, "SAN"));
-  myAirports.add(new Airport(1185, 356, "CLE"));
-  myAirports.add(new Airport(956, 480, "STL"));
-  myAirports.add(new Airport(1260, 287, "BUF"));
-  myAirports.add(new Airport(1242, 854, "TPA"));
-  myAirports.add(new Airport(544, 438, "DEN"));
-  myAirports.add(new Airport(1259, 694, "SAV"));
-  myAirports.add(new Airport(1071, 571, "BNA"));
-  myAirports.add(new Airport(100, 168, "EUG"));
+  myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
+  myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
+  myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));
+  myAirports.add(new Airport(150, 50, "SEA", ON_BOTTOM));
+  myAirports.add(new Airport(1320, 900, "FLL", ON_BOTTOM));
+  myAirports.add(new Airport(450, 890, "HNL", ON_TOP));
+  myAirports.add(new Airport(1015, 340, "ORD", ON_TOP));
+  myAirports.add(new Airport(240, 540, "LAS", ON_TOP));
+  myAirports.add(new Airport(990, 260, "ATW", ON_TOP));
+  myAirports.add(new Airport(780, 700, "DAL", ON_SIDE));
+  myAirports.add(new Airport(830, 450, "MCI", ON_TOP));
+  myAirports.add(new Airport(820, 810, "HOU", ON_TOP));
+  myAirports.add(new Airport(1260, 890, "RSW", ON_TOP));
+  myAirports.add(new Airport(145, 600, "LGB", ON_SIDE));
+  myAirports.add(new Airport(60, 390, "SMF", ON_TOP));
+  myAirports.add(new Airport(600, 650, "LBB", ON_TOP));
+  myAirports.add(new Airport(760, 710, "DFW", ON_TOP));
+  myAirports.add(new Airport(500, 910, "OGG", ON_TOP));
+  myAirports.add(new Airport(1395, 340, "EWR", ON_TOP));
+  myAirports.add(new Airport(380, 260, "IDA", ON_TOP));
+  myAirports.add(new Airport(304, 631, "PHX", ON_TOP));
+  myAirports.add(new Airport(1276, 839, "MCO", ON_TOP));
+  myAirports.add(new Airport(125, 134, "PDX", ON_TOP));
+  myAirports.add(new Airport(503, 715, "ELP", ON_TOP));
+  myAirports.add(new Airport(56, 427, "SJC", ON_SIDE));
+  myAirports.add(new Airport(1470, 253, "BOS", ON_TOP));
+  myAirports.add(new Airport(1251, 763, "JAX", ON_TOP));
+  myAirports.add(new Airport(754, 896, "CRP", ON_TOP));
+  myAirports.add(new Airport(983, 598, "MEM", ON_TOP));
+  myAirports.add(new Airport(173, 940, "ADQ", ON_TOP));
+  myAirports.add(new Airport(190, 886, "ANC", ON_TOP));
+  myAirports.add(new Airport(47, 422, "SFO", ON_TOP));
+  myAirports.add(new Airport(1428, 325, "LGA", ON_TOP));
+  myAirports.add(new Airport(156, 620, "SNA", ON_SIDE));
+  myAirports.add(new Airport(159, 22, "BLI", ON_SIDE));
+  myAirports.add(new Airport(1020, 355, "MDW", ON_SIDE));
+  myAirports.add(new Airport(156, 635, "SAN", ON_BOTTOM));
+  myAirports.add(new Airport(1185, 356, "CLE", ON_TOP));
+  myAirports.add(new Airport(956, 480, "STL", ON_TOP));
+  myAirports.add(new Airport(1260, 287, "BUF", ON_TOP));
+  myAirports.add(new Airport(1242, 854, "TPA", ON_TOP));
+  myAirports.add(new Airport(544, 438, "DEN", ON_TOP));
+  myAirports.add(new Airport(1259, 694, "SAV", ON_TOP));
+  myAirports.add(new Airport(1071, 571, "BNA", ON_TOP));
+  myAirports.add(new Airport(100, 168, "EUG", ON_TOP));
 
 }
 
@@ -118,14 +120,13 @@ void draw()
   myFont=loadFont("Arial-Black-48.vlw");
   textFont(myFont);
   textSize(10);
-  for (int i = 0; i < myAirports.size(); i++)
+  for(int z = 0; z < myAirports.size(); z++)
   {
-    fill(0);
-    rect((myAirports.get(i)).getX(), (myAirports.get(i)).getY(), 10, 10, 10);
-    text((myAirports.get(i)).getAirportName(), (myAirports.get(i)).getX(), (myAirports.get(i)).getY());
+    myAirports.get(z).draw();
   }
 }
 
-void mousePressed()  {
-  System.out.println("x value: " + mouseX + "/n y value: " + mouseY);
+void mousePressed()  
+{
+  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
 }

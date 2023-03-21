@@ -1,4 +1,4 @@
-class Flight  //<>//
+class Flight 
 {
   int dataIdentifier;
   String flightDate;

@@ -20,3 +20,7 @@ final int DIVERTED_NO = 18;
 final int DISTANCE_NO = 19;
 final int SCREENX = 1600;
 final int SCREENY = 1000;
+final int ON_TOP = 1;
+final int ON_SIDE = 2;
+final int ON_BOTTOM = 3;
+final int AIRPORT_RADIUS = 5;
