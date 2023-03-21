@@ -222,7 +222,7 @@ void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
   int event = currentScreen.buttonClicked();
-  if (event >= 0 && event <= 130) currentScreen = chartScreen;
+  if (event >= 0 && event <= 129) currentScreen = chartScreen;
 }
 
 void mouseMoved()
