@@ -4,6 +4,10 @@ class Airport
   int y;
   String name;
   int topSideBottom;
+  int airportID;
+  color airportStrokeColor;
+  color airportColor; 
+  color airportTextColor;
   
   Airport(int x, int y, String name, int topSideBottom)
   {
@@ -11,6 +15,14 @@ class Airport
     this.y = y;
     this.name = name;
     this.topSideBottom = topSideBottom;
+    airportStrokeColor = color(0);
+    airportColor = color(#FC0808);
+    airportTextColor = color(0);
+  }
+  
+  public void setID(int x)
+  {
+    airportID = x;
   }
   
   public int getX()  
@@ -28,12 +40,30 @@ class Airport
      return name; 
   }
   
+  void strokeAirport(int mX, int mY)
+  {
+    if( mX < this.x + AIRPORT_RADIUS && mX > this.x - AIRPORT_RADIUS && mY < this.y + AIRPORT_RADIUS && mY > this.y - AIRPORT_RADIUS)
+    {
+      this.airportStrokeColor = (255);
+    }
+    else
+    {
+      this.airportStrokeColor = (0);
+    }
+  }
+  
+  int airportClicked(int mX, int mY)
+  {
+    if( mX < this.x + AIRPORT_RADIUS && mX > this.x - AIRPORT_RADIUS && mY < this.y + AIRPORT_RADIUS && mY > this.y - AIRPORT_RADIUS) return airportID;
+    else return -1;
+  }
+  
   void draw()
   {
-    fill(#FA0505);
-    stroke(0);
+    fill(airportColor);
+    stroke(airportStrokeColor);
     ellipse(this.x, this.y, AIRPORT_RADIUS, AIRPORT_RADIUS);
-    fill(0);
+    fill(airportTextColor);
     switch(topSideBottom)
     {
       case ON_TOP:

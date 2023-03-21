@@ -7,6 +7,9 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
+Screen mapScreen; 
+Screen chartScreen; 
+Screen currentScreen;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -16,6 +19,9 @@ void settings() {
 
 void setup() {
   background(255);
+  
+  mapScreen = new Screen(MAP_SCREEN);
+  chartScreen = new Screen(BAR_CHART_SCREEN);
 
   try {
     File myFile = new File("flights2k.csv");
@@ -59,11 +65,13 @@ void setup() {
   catch (Exception e) {
     System.err.println(e);
   }
-
+  
   System.out.println(airportNames);
   System.out.println(airportNames.size());
-
+  
   ellipseMode(RADIUS);
+  
+  currentScreen = mapScreen;
 
   myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
   myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
@@ -195,22 +203,32 @@ void setup() {
   myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
   myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
   myAirports.add(new Airport(919, 355, "CID", ON_TOP));
+
+  for(int i = 0; i < myAirports.size(); i++)
+  {
+    mapScreen.addAirport(myAirports.get(i));
+    (myAirports.get(i)).setID(i);
+  }
 }
 
 
 void draw()
 {
-  image(mapImage, 0, 0);
-  myFont=loadFont("Arial-Black-48.vlw");
-  textFont(myFont);
-  textSize(10);
-  for (int z = 0; z < myAirports.size(); z++)
-  {
-    myAirports.get(z).draw();
-  }
+  background(255);
+  currentScreen.draw();
 }
 
-void mousePressed()
+void mousePressed()  
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
+  int event = currentScreen.buttonClicked();
+  if (event >= 0 && event <= 130) currentScreen = chartScreen;
+}
+
+void mouseMoved()
+{
+  for(int z = 0; z < myAirports.size(); z++)
+  {
+    myAirports.get(z).strokeAirport(mouseX, mouseY);
+  }
 }
