@@ -130,3 +130,11 @@ void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
 }
+
+void mouseMoved()
+{
+  for(int z = 0; z < myAirports.size(); z++)
+  {
+    myAirports.get(z).strokeAirport(mouseX, mouseY);
+  }
+}
