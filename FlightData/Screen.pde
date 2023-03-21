@@ -1,4 +1,5 @@
-class Screen {
+class Screen 
+{
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
 
