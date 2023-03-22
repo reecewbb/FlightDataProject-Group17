@@ -6,12 +6,13 @@ class BarChart
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
   ArrayList<Flight> outgoingFlights = new ArrayList();
-  int[] outgoingCount;
 
-  BarChart(int airportID, String airportName, ArrayList airportList, ArrayList flightList)
+  BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
     this.airportID = airportID;
     this.airportList = airportList;
+    Airport currentAirport = airportList.get(airportID);
+    String airportName = currentAirport.getAirportName();
     for (int i = 0; i < flightList.size(); i++)
     {
       Flight currentFlight = (Flight) flightList.get(i);
@@ -20,18 +21,23 @@ class BarChart
         outgoingFlights.add(currentFlight);
       }
     }
-    outgoingCount = new int[outgoingFlights.size()];
   }
-
-  void addAirport(Airport airport)
-  {
-    airportList.add(airport);
-  }
-
 
   public int findMaxValue()
   {
     int maxValue = 0;
+    int[] desinationCount = createDestinationArray();
+    for (int i = 0; i < outgoingCount.length; i++)
+    {
+      int currentValue = destinationCount[i];
+      if (currentValue > maxValue) maxValue = currentValue;
+    }
+    return maxValue;
+  }
+
+  public int[] createDestinationArray
+  {
+    int[] outgoingCount = new int[outgoingFlights.size()];
     for (int i = 0; i < outgoingFlights.size(); i++)
     {
       Flight currentFlight = outgoingFlights.get(i);
@@ -45,15 +51,8 @@ class BarChart
         }
       }
     }
-    for (int i = 0; i < outgoingCount.length; i++)
-    {
-      int currentValue = outgoingCount[i];
-      if (currentValue > maxValue) maxValue = currentValue;
-    }
-    return maxValue;
+    return outgoingCount;
   }
-
-
 
   void draw()
   {

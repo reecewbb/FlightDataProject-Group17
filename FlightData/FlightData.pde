@@ -10,6 +10,7 @@ PImage mapImage;
 Screen mapScreen;
 Screen chartScreen;
 Screen currentScreen;
+BarChart chart;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -79,6 +80,9 @@ void setup() {
     mapScreen.addAirport(myAirports.get(i));
     (myAirports.get(i)).setID(i);
   }
+  
+  chart = new BarChart(0, myAirports, myFlights)
+  
 }
 
 
