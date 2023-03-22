@@ -30,4 +30,4 @@ final int NO_EVENT = -1;
 final int BAR_CHART_Y_AXIS_LENGTH = 800;
 final int BAR_CHART_X_AXIS_LENGTH = 1400;
 final int CHART_BUFFER = 100;
-final int AMOUNT_OF_Y_VALUES = 10;
+final int MAX_Y_VALUES = 10;

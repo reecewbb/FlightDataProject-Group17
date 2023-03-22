@@ -82,13 +82,16 @@ class BarChart //<>// //<>// //<>//
         text(currentAirportName, point, SCREENY - 70);
       }
     }
-    float maxValue = findMaxValue(); //<>//
-    float valueOnY = maxValue / AMOUNT_OF_Y_VALUES;
+    int maxValue = findMaxValue(); //<>//
+    int amountOfYValues;
+    if(maxValue > 10) amountOfYValues = MAX_Y_VALUES;
+    else amountOfYValues = maxValue;
+    float valueOnY = maxValue / amountOfYValues;
     float differenceInValue = valueOnY;
     int positionOnY = SCREENY - CHART_BUFFER;
-    int differenceInPosition = barChartYAxisLength / 10;
+    int differenceInPosition = barChartYAxisLength / amountOfYValues;
     int xPosition = 80;
-    for (int i = 0; i < AMOUNT_OF_Y_VALUES; i++)
+    for (int i = 0; i < amountOfYValues; i++)
     {
       positionOnY -= differenceInPosition;
       String valueOnYAxis = Integer.toString((int)valueOnY);
