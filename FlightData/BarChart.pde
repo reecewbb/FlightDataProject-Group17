@@ -33,7 +33,7 @@ class BarChart //<>// //<>// //<>//
   public int findMaxValue()
   {
     int maxValue = 0;
-    destinationCount = createDestinationArray(); //<>//
+    destinationCount = createDestinationArray();
     for (int i = 0; i < flightCount.length; i++)
     {
       int currentValue = destinationCount[i];
@@ -45,7 +45,7 @@ class BarChart //<>// //<>// //<>//
 
   public int[] createDestinationArray()
   {
-    flightCount = new int[airportList.size()]; //<>//
+    flightCount = new int[airportList.size()];
     for (int i = 0; i < flightList.size(); i++)
     {
       Flight currentFlight = flightList.get(i);
@@ -60,7 +60,7 @@ class BarChart //<>// //<>// //<>//
         }
       }
     }
-    return flightCount; //<>//
+    return flightCount;
   }
 
   void draw()
@@ -70,7 +70,7 @@ class BarChart //<>// //<>// //<>//
     rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
     int point = CHART_BUFFER;
     double difference = barChartXAxisLength / 50 - 1;                      //only for 50 airports
-    text("0", 90, SCREENY - CHART_BUFFER);
+    text("0", 80, SCREENY - CHART_BUFFER);
     for (int i = 0; i < 50; i++)
     {
       textSize(10);
@@ -82,18 +82,18 @@ class BarChart //<>// //<>// //<>//
         text(currentAirportName, point, SCREENY - 70);
       }
     }
-    int maxValue = findMaxValue(); //<>//
-    int valueOnY = maxValue / AMOUNT_OF_Y_VALUES;
-    int differenceInValue = valueOnY;
+    float maxValue = findMaxValue(); //<>//
+    float valueOnY = maxValue / AMOUNT_OF_Y_VALUES;
+    float differenceInValue = valueOnY;
     int positionOnY = SCREENY - CHART_BUFFER;
     int differenceInPosition = barChartYAxisLength / 10;
     int xPosition = 80;
     for (int i = 0; i < AMOUNT_OF_Y_VALUES; i++)
     {
       positionOnY -= differenceInPosition;
-      String valueOnYAxis = Integer.toString(valueOnY);
-      text(valueOnYAxis, xPosition, positionOnY);
+      String valueOnYAxis = Integer.toString((int)valueOnY);
       valueOnY += differenceInValue;
+      text(valueOnYAxis, xPosition, positionOnY);
     }
 
 
