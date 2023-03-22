@@ -7,6 +7,7 @@ class Airport
   color airportStrokeColor;
   color airportColor; 
   color airportTextColor;
+  boolean isClicked;
   
   Airport(int x, int y, String name, int topSideBottom)
   {
@@ -17,7 +18,9 @@ class Airport
     airportStrokeColor = color(0);
     airportColor = color(#FC0808);
     airportTextColor = color(0);
+    isClicked = false;
   }
+  
   
   public int getX()  
   {
@@ -43,6 +46,15 @@ class Airport
     else
     {
       this.airportStrokeColor = (0);
+    }
+  }
+  
+  void isClicked(int mX, int mY)
+  {
+    if( mX < this.x + AIRPORT_RADIUS && mX > this.x - AIRPORT_RADIUS && mY < this.y + AIRPORT_RADIUS && mY > this.y - AIRPORT_RADIUS)
+    {
+      this.isClicked = true;
+      System.out.print("Hello");
     }
   }
   

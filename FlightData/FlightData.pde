@@ -1,4 +1,4 @@
-import java.util.Scanner; //<>// //<>// //<>//
+import java.util.Scanner; //<>// //<>// //<>// //<>//
 import java.io.File;
 import java.util.ArrayList;
 
@@ -126,11 +126,15 @@ void setup() {
 void draw()
 {
   currentScreen.draw();
-} //<>// //<>//
+} //<>// //<>// //<>//
 
 void mousePressed()  
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
+  for(int i = 0; i < myAirports.size(); i++)
+  {
+    myAirports.get(i).isClicked(mouseX,mouseY);
+  }
 }
 
 void mouseMoved()
