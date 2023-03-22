@@ -1,4 +1,4 @@
-import java.util.Scanner; //<>//
+import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ Screen mapScreen;
 Screen chartScreen;
 Screen currentScreen;
 BarChart chart;
+int event;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -80,23 +81,20 @@ void setup() {
     mapScreen.addAirport(myAirports.get(i));
     (myAirports.get(i)).setID(i);
   }
-  
-  chart = new BarChart(0, myAirports, myFlights)
-  
 }
 
 
 void draw()
 {
   background(255);
-  currentScreen.draw();
+  currentScreen.draw(event, myAirports, myFlights);
 }
 
 void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
-  int event = currentScreen.buttonClicked();
-  if (event >= 0 && event <= 129) currentScreen = chartScreen;
+  event = currentScreen.buttonClicked(); //<>//
+  if (event >= 0 && event < myAirports.size()) currentScreen = chartScreen;
 }
 
 void mouseMoved()

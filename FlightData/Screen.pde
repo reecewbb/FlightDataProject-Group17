@@ -25,7 +25,7 @@ class Screen {
     return NO_EVENT;
   }
 
-  void draw()
+  void draw(int event, ArrayList<Airport> myAirports, ArrayList<Flight> myFlights)
   {
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
@@ -33,7 +33,8 @@ class Screen {
     if (screenType == MAP_SCREEN) image(mapImage, 0, 0);
     if (screenType == BAR_CHART_SCREEN)
     {
-      text("CHAR BART", SCREENX/2, SCREENY/2);
+      BarChart bc = new BarChart(event, myAirports, myFlights);
+      bc.draw();
     }
     for (int z = 0; z < airportList.size(); z++)
     {
