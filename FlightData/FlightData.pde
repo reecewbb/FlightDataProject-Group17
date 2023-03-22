@@ -21,10 +21,44 @@ void settings() {
 
 void setup() {
   background(255);
-
   mapScreen = new Screen(MAP_SCREEN);
   chartScreen = new Screen(BAR_CHART_SCREEN);
+  currentScreen = mapScreen;
+  importDataFromFile();
+  System.out.println(airportNames);
+  System.out.println(airportNames.size());
+  ellipseMode(RADIUS);
+  addAirports();
+  for (int i = 0; i < myAirports.size(); i++)
+  {
+    mapScreen.addAirport(myAirports.get(i));
+    (myAirports.get(i)).setID(i);
+  }
+}
 
+
+void draw()
+{
+  background(255);
+  currentScreen.draw(event, myAirports, myFlights);
+}
+
+void mousePressed()
+{
+  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
+  event = currentScreen.buttonClicked(); //<>//
+  if (event >= 0 && event < myAirports.size()) currentScreen = chartScreen;
+}
+
+void mouseMoved()
+{
+  for (int z = 0; z < myAirports.size(); z++)
+  {
+    myAirports.get(z).strokeAirport(mouseX, mouseY);
+  }
+}
+
+void importDataFromFile()  {
   try {
     File myFile = new File("flights2k.csv");
     Scanner input = new Scanner(myFile);
@@ -65,43 +99,6 @@ void setup() {
   }
   catch (Exception e) {
     System.err.println(e);
-  }
-
-  System.out.println(airportNames);
-  System.out.println(airportNames.size());
-
-  ellipseMode(RADIUS);
-
-  currentScreen = mapScreen;
-
-  addAirports();
-
-  for (int i = 0; i < myAirports.size(); i++)
-  {
-    mapScreen.addAirport(myAirports.get(i));
-    (myAirports.get(i)).setID(i);
-  }
-}
-
-
-void draw()
-{
-  background(255);
-  currentScreen.draw(event, myAirports, myFlights);
-}
-
-void mousePressed()
-{
-  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
-  event = currentScreen.buttonClicked(); //<>//
-  if (event >= 0 && event < myAirports.size()) currentScreen = chartScreen;
-}
-
-void mouseMoved()
-{
-  for (int z = 0; z < myAirports.size(); z++)
-  {
-    myAirports.get(z).strokeAirport(mouseX, mouseY);
   }
 }
 

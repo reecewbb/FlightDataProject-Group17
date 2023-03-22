@@ -1,4 +1,4 @@
-class BarChart //<>// //<>// //<>//
+class BarChart //<>// //<>// //<>// //<>// //<>//
 {
   int barChartYAxisLength;
   int barChartXAxisLength;
@@ -12,7 +12,7 @@ class BarChart //<>// //<>// //<>//
 
   BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
-    this.barChartYAxisLength = BAR_CHART_Y_AXIS_LENGTH; //<>//
+    this.barChartYAxisLength = BAR_CHART_Y_AXIS_LENGTH;
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
     this.airportID = airportID;
     this.airportList = airportList;
@@ -21,12 +21,12 @@ class BarChart //<>// //<>// //<>//
     airportName = currentAirport.getAirportName();
     //for (int i = 0; i < flightList.size(); i++)
     //{
-      //Flight currentFlight = (Flight) flightList.get(i);
-      //String origin = currentFlight.getOrigin();
-      //if (origin.equals(airportName))
-      //{
-        //outgoingFlights.add(currentFlight);
-      //}
+    //Flight currentFlight = (Flight) flightList.get(i);
+    //String origin = currentFlight.getOrigin();
+    //if (origin.equals(airportName))
+    //{
+    //outgoingFlights.add(currentFlight);
+    //}
     //}
   }
 
@@ -82,39 +82,43 @@ class BarChart //<>// //<>// //<>//
         text(currentAirportName, point, SCREENY - 70);
       }
     }
-    int maxValue = findMaxValue(); //<>//
-    int amountOfYValues;
-    if(maxValue > 10) amountOfYValues = MAX_Y_VALUES;
-    else amountOfYValues = maxValue;
-    float valueOnY = maxValue / amountOfYValues;
-    float differenceInValue = valueOnY;
-    int positionOnY = SCREENY - CHART_BUFFER;
-    int differenceInPosition = barChartYAxisLength / amountOfYValues;
-    int xPosition = 80;
-    for (int i = 0; i < amountOfYValues; i++)
+    int maxValue = findMaxValue();
+    if (maxValue != 0)
     {
-      positionOnY -= differenceInPosition;
-      String valueOnYAxis = Integer.toString((int)valueOnY);
-      valueOnY += differenceInValue;
-      text(valueOnYAxis, xPosition, positionOnY);
-    }
-
-
-    point = CHART_BUFFER;
-    point += difference;
-    int widthOfBar = 20;
-    int[] flightCount = createDestinationArray();
-    float yIncrement = barChartYAxisLength/maxValue;
-    for (int i = 0; i < 50; i++)
-    {
-      Airport currentAirport = airportList.get(i);
-      String currentAirportName = currentAirport.getAirportName();
-      if (!currentAirportName.equals(airportName))
+      int amountOfYValues;
+      if (maxValue > 10) amountOfYValues = MAX_Y_VALUES;
+      else amountOfYValues = maxValue;
+      float valueOnY = maxValue / amountOfYValues;
+      float differenceInValue = valueOnY;
+      int positionOnY = SCREENY - CHART_BUFFER;
+      int differenceInPosition = barChartYAxisLength / amountOfYValues;
+      int xPosition = 80;
+      for (int i = 0; i < amountOfYValues; i++)
       {
-        float barHeight = flightCount[i] * yIncrement;
-        rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
-        point += difference;
+        positionOnY -= differenceInPosition;
+        String valueOnYAxis = Integer.toString((int)valueOnY);
+        valueOnY += differenceInValue;
+        text(valueOnYAxis, xPosition, positionOnY);
+      }
+
+
+      point = CHART_BUFFER;
+      point += difference;
+      int widthOfBar = 20;
+      int[] flightCount = createDestinationArray();
+      float yIncrement = barChartYAxisLength/maxValue;
+      for (int i = 0; i < 50; i++)
+      {
+        Airport currentAirport = airportList.get(i);
+        String currentAirportName = currentAirport.getAirportName();
+        if (!currentAirportName.equals(airportName))
+        {
+          float barHeight = flightCount[i] * yIncrement;
+          rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
+          point += difference;
+        }
       }
     }
+    else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
   }
 }
