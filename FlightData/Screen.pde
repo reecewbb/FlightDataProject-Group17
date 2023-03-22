@@ -33,7 +33,7 @@ class Screen {
     if(screenType == MAP_SCREEN) image(mapImage, 0, 0);
     else if (screenType == BAR_CHART_SCREEN)
     {
-        text("BAR CHART", SCREENX/2, SCREENY/2);                        @PUT BAR CHART CALL HERE
+        text("CHAR BART", SCREENX/2, SCREENY/2);                        //PUT BAR CHART CALL HERE
     }
     for (int z = 0; z < airportList.size(); z++)
     {
