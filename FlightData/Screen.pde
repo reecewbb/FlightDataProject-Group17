@@ -3,16 +3,16 @@ class Screen {
   ArrayList airportList = new ArrayList();
   int screenType;
 
-  Screen (int screenType)  
+  Screen (int screenType)
   {
-     this.screenType = screenType;
+    this.screenType = screenType;
   }
-  
-  void addAirport(Airport airport) 
+
+  void addAirport(Airport airport)
   {
     airportList.add(airport);
   }
-  
+
   int buttonClicked()
   {
     int event;
@@ -30,10 +30,10 @@ class Screen {
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
     textSize(10);
-    if(screenType == MAP_SCREEN) image(mapImage, 0, 0);
-    else if (screenType == BAR_CHART_SCREEN)
+    if (screenType == MAP_SCREEN) image(mapImage, 0, 0);
+    if (screenType == BAR_CHART_SCREEN)
     {
-        text("CHAR BART", SCREENX/2, SCREENY/2);                        //PUT BAR CHART CALL HERE
+      text("CHAR BART", SCREENX/2, SCREENY/2);
     }
     for (int z = 0; z < airportList.size(); z++)
     {

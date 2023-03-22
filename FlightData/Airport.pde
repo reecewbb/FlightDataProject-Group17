@@ -20,9 +20,14 @@ class Airport
     airportTextColor = color(0);
   }
   
-  public void setID(int x)
+  public void setID(int airportID)
   {
-    airportID = x;
+    this.airportID = airportID;
+  }
+  
+  public int getID()
+  {
+    return airportID;
   }
   
   public int getX()  

@@ -7,8 +7,8 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
-Screen mapScreen; 
-Screen chartScreen; 
+Screen mapScreen;
+Screen chartScreen;
 Screen currentScreen;
 
 void settings() {
@@ -19,7 +19,7 @@ void settings() {
 
 void setup() {
   background(255);
-  
+
   mapScreen = new Screen(MAP_SCREEN);
   chartScreen = new Screen(BAR_CHART_SCREEN);
 
@@ -44,7 +44,6 @@ void setup() {
         if (i == 3 || i == 8)
         {
           boolean repeat = false;
-          ;
           for (int j = 0; j < airportNames.size() && !repeat; j++)
           {
             repeat = airportNames.contains(data);
@@ -65,14 +64,46 @@ void setup() {
   catch (Exception e) {
     System.err.println(e);
   }
-  
+
   System.out.println(airportNames);
   System.out.println(airportNames.size());
-  
+
   ellipseMode(RADIUS);
-  
+
   currentScreen = mapScreen;
 
+  addAirports();
+
+  for (int i = 0; i < myAirports.size(); i++)
+  {
+    mapScreen.addAirport(myAirports.get(i));
+    (myAirports.get(i)).setID(i);
+  }
+}
+
+
+void draw()
+{
+  background(255);
+  currentScreen.draw();
+}
+
+void mousePressed()
+{
+  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
+  int event = currentScreen.buttonClicked();
+  if (event >= 0 && event <= 129) currentScreen = chartScreen;
+}
+
+void mouseMoved()
+{
+  for (int z = 0; z < myAirports.size(); z++)
+  {
+    myAirports.get(z).strokeAirport(mouseX, mouseY);
+  }
+}
+
+void addAirports() {
   myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
   myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
   myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));
@@ -203,32 +234,4 @@ void setup() {
   myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
   myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
   myAirports.add(new Airport(919, 355, "CID", ON_TOP));
-
-  for(int i = 0; i < myAirports.size(); i++)
-  {
-    mapScreen.addAirport(myAirports.get(i));
-    (myAirports.get(i)).setID(i);
-  }
-}
-
-
-void draw()
-{
-  background(255);
-  currentScreen.draw();
-}
-
-void mousePressed()  
-{
-  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
-  int event = currentScreen.buttonClicked();
-  if (event >= 0 && event <= 129) currentScreen = chartScreen;
-}
-
-void mouseMoved()
-{
-  for(int z = 0; z < myAirports.size(); z++)
-  {
-    myAirports.get(z).strokeAirport(mouseX, mouseY);
-  }
 }
