@@ -1,14 +1,11 @@
-class BarChart //<>// //<>// //<>// //<>// //<>//
+class BarChart  //<>//
 {
-  int barChartYAxisLength;
-  int barChartXAxisLength;
-  int airportID;
+  int barChartYAxisLength, barChartXAxisLength, airportID;
   String airportName;
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
   ArrayList<Flight> outgoingFlights = new ArrayList();
-  int[] flightCount;
-  int[] destinationCount;
+  int[] flightCount, destinationCount;
 
   BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
@@ -16,7 +13,7 @@ class BarChart //<>// //<>// //<>// //<>// //<>//
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
     this.airportID = airportID;
     this.airportList = airportList;
-    this.flightList = flightList;
+    this.flightList = flightList; //<>//
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
     //for (int i = 0; i < flightList.size(); i++)
@@ -64,6 +61,11 @@ class BarChart //<>// //<>// //<>// //<>// //<>//
   }
 
   void draw()
+  {
+    drawBarChartForOutgoingFlights();
+  }
+  
+  void drawBarChartForOutgoingFlights()
   {
     fill(0);
     rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);

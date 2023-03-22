@@ -1,24 +1,8 @@
 class Flight
 {
-  int dataIdentifier;
-  String flightDate;
-  String mktCarrier;
-  int mktCarrierFlNum;
-  String origin;
-  String originCityName;
-  String originStateAbr;
-  int originWAC;
-  String dest;
-  String destCityName;
-  String destStateAbr;
-  int destWAC;
-  String crsDepTime;
-  String depTime;
-  String crsArrTime;
-  String arrTime;
-  boolean cancelled;
-  boolean diverted;
-  int distance;
+  int dataIdentifier, mktCarrierFlNum, originWAC, destWAC, distance;
+  String flightDate, mktCarrier, origin, originCityName, originStateAbr, dest, destCityName, destStateAbr, crsDepTime, depTime, crsArrTime, arrTime;
+  boolean cancelled, diverted;
 
   Flight(int dataIdentifier)
   {

@@ -7,9 +7,7 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
-Screen mapScreen;
-Screen chartScreen;
-Screen currentScreen;
+Screen mapScreen, chartScreen, currentScreen;
 BarChart chart;
 int event;
 
@@ -34,6 +32,8 @@ void setup() {
     mapScreen.addAirport(myAirports.get(i));
     (myAirports.get(i)).setID(i);
   }
+  Widget backToMapButton = new Widget(20, 20, 80, 30, "Back to Map", color(180), myFont, myAirports.size() + 1);
+  chartScreen.addWidget(backToMapButton);
 }
 
 
@@ -48,6 +48,7 @@ void mousePressed()
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
   event = currentScreen.buttonClicked(); //<>//
   if (event >= 0 && event < myAirports.size()) currentScreen = chartScreen;
+  if (event == myAirports.size() + 1) currentScreen = mapScreen;
 }
 
 void mouseMoved()

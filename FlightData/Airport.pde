@@ -1,14 +1,9 @@
 class Airport
 {
-  int x;
-  int y;
+  int x, y, topSideBottom, airportID;
   String name;
-  int topSideBottom;
-  int airportID;
-  color airportStrokeColor;
-  color airportColor; 
-  color airportTextColor;
-  
+  color airportStrokeColor, airportColor, airportTextColor;
+
   Airport(int x, int y, String name, int topSideBottom)
   {
     this.x = x;
