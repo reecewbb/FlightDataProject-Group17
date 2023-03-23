@@ -11,7 +11,7 @@ Screen mapScreen, chartScreen, currentScreen;
 BarChart chart;
 int event;
 Filter mapFilter;
-Widget backToMapButton;
+Widget backToMapButton, currF1, currF2, currF3;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -36,7 +36,13 @@ void setup() {
     (myAirports.get(i)).setID(i);
   }
   backToMapButton = new Widget(20, 20, 80, 30, "Back to Map", color(180), myFont, myAirports.size() + 1);
+  currF1= new Widget(1500,700, 50, 20, "A-K", color(180), myFont, myAirports.size()+2);
+  currF2= new Widget(1500,775, 50, 20, "L-V", color(180), myFont, myAirports.size()+3);
+  currF3= new Widget(1500,850, 50, 20, "W-Z", color(180), myFont, myAirports.size()+4);
   chartScreen.addWidget(backToMapButton);
+  mapScreen.addWidget(currF1);
+  mapScreen.addWidget(currF2);
+  mapScreen.addWidget(currF3);
 }
 
 
@@ -50,8 +56,26 @@ void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
   event = currentScreen.buttonClicked();
-  if (event >= 0 && event < myAirports.size()) currentScreen = chartScreen;
-  if (event == myAirports.size() + 1) currentScreen = mapScreen;
+  if(event >= 0 && event < myAirports.size()) 
+  {
+    currentScreen = chartScreen;
+  }
+  if(event == myAirports.size() + 1)          // if back to map button is clicked
+  {
+    currentScreen = mapScreen;
+  }
+  if(event == myAirports.size() + 2)          // if A-K button is clicked 
+  {
+    
+  }
+  if(event == myAirports.size() + 3)          // if L-V button is pressed 
+  {
+    
+  }
+  if(event == myAirports.size() + 4)          // if W-Z button is pressed 
+  {
+    
+  }
 }
 
 void mouseMoved()
@@ -61,6 +85,9 @@ void mouseMoved()
     myAirports.get(z).strokeAirport(mouseX, mouseY);
   }
    backToMapButton.hover(mouseX, mouseY);
+   currF1.hover(mouseX, mouseY);
+   currF2.hover(mouseX, mouseY);
+   currF3.hover(mouseX, mouseY);
 }
 
 void importDataFromFile()  {

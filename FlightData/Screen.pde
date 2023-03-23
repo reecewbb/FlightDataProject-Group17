@@ -29,6 +29,12 @@ class Screen {
         event = myAirport.airportClicked(mouseX, mouseY);
         if (event != -1) return event;
       }
+      for(int i = 0; i < widgetList.size(); i++)
+      {
+        Widget myWidget = (Widget) widgetList.get(i);
+        event = myWidget.getEvent(mouseX, mouseY);
+        if(event != -1) return event;
+      }
     }
     else 
     {
@@ -56,6 +62,11 @@ class Screen {
       {
         Airport myAirport = (Airport) airportList.get(z);
         myAirport.draw();
+      }
+      for(int i = 0; i < widgetList.size(); i++)
+      {
+        Widget myWidget = (Widget) widgetList.get(i);
+        myWidget.draw();
       }
     }
     if (screenType == BAR_CHART_SCREEN)

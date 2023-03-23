@@ -10,7 +10,7 @@ class Airport
     this.y = y;
     this.name = name;
     this.topSideBottom = topSideBottom;
-    airportStrokeColor = color(0);
+    airportStrokeColor = color(255);
     airportColor = color(#FC0808);
     airportTextColor = color(0);
   }
