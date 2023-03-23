@@ -110,16 +110,20 @@ class BarChart  //<>//
       int widthOfBar = 20;
       int[] flightCount = createDestinationArray();
       float yIncrement = barChartYAxisLength/maxValue;
-      for (int i = 0; i < 50; i++)
+      int airportCounter = 0;
+      int i = 0;
+      while (airportCounter < 50 && i < 131)
       {
         Airport currentAirport = airportList.get(i);
         String currentAirportName = currentAirport.getAirportName();
-        if (!currentAirportName.equals(airportName))
+        if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
           float barHeight = flightCount[i] * yIncrement;
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
           point += difference;
+          airportCounter++;
         }
+        i++;
       }
     }
     else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
