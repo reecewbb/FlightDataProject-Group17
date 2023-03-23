@@ -174,7 +174,8 @@ void showAirports(ArrayList<Airport> myAirports){
     splitCurrentName[0].equals("D")||splitCurrentName[0].equals("E")||splitCurrentName[0].equals("F")||splitCurrentName[0].equals("G")||
     splitCurrentName[0].equals("H")||splitCurrentName[0].equals("I")||splitCurrentName[0].equals("J")||splitCurrentName[0].equals("K")){
       if(myAirports.get(i).x>2000){
-        myAirports.get(i).x = myAirports.get(i).x-2000;
+        while(myAirports.get(i).x>2000){
+        myAirports.get(i).x = myAirports.get(i).x-2000;}
       }
       myAirports.get(i).x = myAirports.get(i).x;
     }
@@ -186,7 +187,8 @@ void showAirports(ArrayList<Airport> myAirports){
     splitCurrentName[0].equals("O")||splitCurrentName[0].equals("P")||splitCurrentName[0].equals("Q")||splitCurrentName[0].equals("R")||
     splitCurrentName[0].equals("S")){
     if(myAirports.get(i).x>2000){
-        myAirports.get(i).x = myAirports.get(i).x-2000;
+      while(myAirports.get(i).x>2000){
+        myAirports.get(i).x = myAirports.get(i).x-2000;}
       }
       myAirports.get(i).x = myAirports.get(i).x;
     }
@@ -197,7 +199,8 @@ void showAirports(ArrayList<Airport> myAirports){
     if(splitCurrentName[0].equals("T")||splitCurrentName[0].equals("U")||splitCurrentName[0].equals("V")
     ||splitCurrentName[0].equals("W")||splitCurrentName[0].equals("X")||splitCurrentName[0].equals("Y")||splitCurrentName[0].equals("Z")){
      if(myAirports.get(i).x>2000){
-        myAirports.get(i).x = myAirports.get(i).x-2000;
+       while(myAirports.get(i).x>2000){
+        myAirports.get(i).x = myAirports.get(i).x-2000;}
       }
       myAirports.get(i).x = myAirports.get(i).x;
     }
@@ -207,12 +210,13 @@ void showAirports(ArrayList<Airport> myAirports){
     if(currentFilter==4){
     
      if(myAirports.get(i).x>2000){
-        myAirports.get(i).x = myAirports.get(i).x-2000;
+       while(myAirports.get(i).x>2000){
+        myAirports.get(i).x = myAirports.get(i).x-2000;}
       }
     }
   }
   previousFilter = currentFilter;  
   
   
-} //<>//
+}
 }

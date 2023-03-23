@@ -54,8 +54,8 @@ void draw()
   background(255);
   currentScreen.draw(event, myAirports, myFlights);
   
-  if(mapFilter.currentFilter !=0){
-  mapFilter.showAirports(myAirports);}
+  if(mapFilter.currentFilter !=0 && mapFilter.currentFilter!=mapFilter.previousFilter){
+  mapFilter.showAirports(myAirports);} //<>//
   
 }
 
