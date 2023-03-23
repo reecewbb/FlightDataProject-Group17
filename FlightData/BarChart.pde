@@ -6,6 +6,7 @@ class BarChart  //<>//
   ArrayList<Flight> flightList = new ArrayList();
   ArrayList<Flight> outgoingFlights = new ArrayList();
   int[] flightCount, destinationCount;
+  int number;
 
   BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
