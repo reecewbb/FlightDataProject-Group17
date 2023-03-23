@@ -248,4 +248,11 @@ void addAirports() {
   myAirports.add(new Airport(697, 270, "PIR", ON_TOP));
   myAirports.add(new Airport(406, 458, "CNY", ON_TOP));
   myAirports.add(new Airport(1333, 213, "OGS", ON_TOP));
+  myAirports.add(new Airport(1008, 749, "PIB", ON_TOP));
+  myAirports.add(new Airport(522, 240, "SHR", ON_TOP));
+  myAirports.add(new Airport(768, 849, "VCT", ON_TOP));
+  myAirports.add(new Airport(552, 375, "LAR", ON_TOP));
+  myAirports.add(new Airport(652, 543, "LBL", ON_TOP));
+  myAirports.add(new Airport(1266, 388, "JST", ON_TOP));
+  myAirports.add(new Airport(868, 317, "MCW", ON_TOP));
 }
