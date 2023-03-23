@@ -104,7 +104,7 @@ class BarChart  //<>//
         text(valueOnYAxis, xPosition, positionOnY);
       }
 
-
+      fill(#08F4FA);
       point = CHART_BUFFER;
       point += difference;
       int widthOfBar = 20;
