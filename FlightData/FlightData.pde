@@ -235,4 +235,8 @@ void addAirports() {
   myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
   myAirports.add(new Airport(919, 355, "CID", ON_TOP));
   myAirports.add(new Airport(370, 348, "OGD", ON_TOP));
+  myAirports.add(new Airport(1369, 390, "ILG", ON_TOP));
+  myAirports.add(new Airport(65, 195, "OTH", ON_TOP));
+  myAirports.add(new Airport(65, 195, "OTH", ON_TOP));
+  myAirports.add(new Airport(810, 474, "ATY", ON_TOP));
 }
