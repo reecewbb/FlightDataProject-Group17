@@ -239,4 +239,13 @@ void addAirports() {
   myAirports.add(new Airport(65, 195, "OTH", ON_TOP));
   myAirports.add(new Airport(65, 195, "OTH", ON_TOP));
   myAirports.add(new Airport(810, 474, "ATY", ON_TOP));
+  myAirports.add(new Airport(1314, 402, "HGR", ON_TOP));
+  myAirports.add(new Airport(1255, 277, "IAG", ON_TOP));
+  myAirports.add(new Airport(142, 920, "AKN", ON_TOP));
+  myAirports.add(new Airport(128, 911, "DLG", ON_TOP));
+  myAirports.add(new Airport(114, 811, "OME", ON_TOP));
+  myAirports.add(new Airport(1026, 712, "MEI", ON_TOP));
+  myAirports.add(new Airport(697, 270, "PIR", ON_TOP));
+  myAirports.add(new Airport(406, 458, "CNY", ON_TOP));
+  myAirports.add(new Airport(1333, 213, "OGS", ON_TOP));
 }
