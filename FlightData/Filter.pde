@@ -1,6 +1,6 @@
 class Filter {
 
-  void addAirports(ArrayList<Airport> myAirports) {
+void addAirports(ArrayList<Airport> myAirports) {
     myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
     myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
     myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));

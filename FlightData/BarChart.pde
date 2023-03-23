@@ -96,7 +96,7 @@ class BarChart
       float yIncrement = barChartYAxisLength/maxValue;
       int airportCounter = 0;
       int i = 0;
-      while (airportCounter < 50 && i < 131)
+      while (airportCounter < 50 && i < airportList.size())
       {
         Airport currentAirport = airportList.get(i);
         String currentAirportName = currentAirport.getAirportName();
