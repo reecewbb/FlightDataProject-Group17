@@ -1,6 +1,6 @@
 class Filter {
 
-void addAirports(ArrayList<Airport> myAirports) {
+  void addAirports(ArrayList<Airport> myAirports) {
     myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
     myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
     myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));
@@ -132,7 +132,67 @@ void addAirports(ArrayList<Airport> myAirports) {
     myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
     myAirports.add(new Airport(919, 355, "CID", ON_TOP));
   }
-  
-  
-  
+
+  /*
+  void whichWidget(int event) {
+    if (currF1.event) {
+      currentFilter = 1;
+    }
+
+    if (currF2.event) {
+      currentFilter = 2;
+    }
+
+    if (currF3.event) {
+      currentFilter= 3;
+    }
+  }
+
+  void showAirports(ArrayList<Airport> myAirports)
+  {
+    currentFilter = widgetFilterPressed;
+
+    if (currentFilter!=previousFilter) 
+    {
+      for (int i=0; i<myAirports.size(); i++) 
+      {
+        if (myAirports.get(i).x>2000) 
+        {
+          myAirports.get(i).x = myAirports.get(i).x - 2000;
+        }
+      }
+    }
+
+    for (int i=0; i<myAirports.size(); i++) 
+    {
+      String currentName = myAirports.get(i).name;
+      String splitCurrentName = currentName.split("");
+
+      if (currentFilter==1) 
+      {
+        if (!splitCurrentName[0].equals("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K")) 
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+
+      if (currentFilter==2) 
+      {
+        if (!splitCurrentName[0].equals("L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V")) 
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+
+      if (currentFilter==3) 
+      {
+        if (!splitCurrentName[0].equals("W"||"X"||"Y"||"Z")) 
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+    }
+    previousFilter = currentFilter;
+  }
+  */
 }
