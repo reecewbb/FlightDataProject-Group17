@@ -27,7 +27,19 @@ class Screen {
       {
         Airport myAirport = (Airport) airportList.get(i);
         event = myAirport.airportClicked(mouseX, mouseY);
-        if (event != -1) return event;
+        if (event != -1)
+        {
+           return event;
+        }
+      }
+      for(int i = 0; i < widgetList.size(); i++)
+      {
+        Widget myWidget = (Widget) widgetList.get(i);
+        event = myWidget.getEvent(mouseX, mouseY);
+        if(event != -1)
+        {
+           return event;
+        }
       }
     } else
     {
@@ -59,6 +71,11 @@ class Screen {
       {
         Airport myAirport = (Airport) airportList.get(i);
         myAirport.draw(MAP_SCREEN);
+      }
+      for(int i = 0; i < widgetList.size(); i++)
+      {
+        Widget myWidget = (Widget) widgetList.get(i);
+        myWidget.draw();
       }
       break;
 
