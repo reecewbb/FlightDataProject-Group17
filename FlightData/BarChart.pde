@@ -1,4 +1,4 @@
-class BarChart  //<>//
+class BarChart //<>// //<>//
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
   String airportName;
@@ -14,7 +14,7 @@ class BarChart  //<>//
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
     this.airportID = airportID;
     this.airportList = airportList;
-    this.flightList = flightList; //<>//
+    this.flightList = flightList;
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
     //for (int i = 0; i < flightList.size(); i++)
@@ -65,26 +65,11 @@ class BarChart  //<>//
   {
     drawBarChartForOutgoingFlights();
   }
-  
+
   void drawBarChartForOutgoingFlights()
   {
-    fill(0);
-    rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);
-    rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
-    int point = CHART_BUFFER;
+    setBarChart();
     double difference = barChartXAxisLength / 50 - 1;                      //only for 50 airports
-    text("0", 80, SCREENY - CHART_BUFFER);
-    for (int i = 0; i < 50; i++)
-    {
-      textSize(10);
-      Airport currentAirport = airportList.get(i);
-      String currentAirportName = currentAirport.getAirportName();
-      if (!currentAirportName.equals(airportName))
-      {
-        point += difference;
-        text(currentAirportName, point, SCREENY - 70);
-      }
-    }
     int maxValue = findMaxValue();
     if (maxValue != 0)
     {
@@ -105,8 +90,7 @@ class BarChart  //<>//
       }
 
       fill(#08F4FA);
-      point = CHART_BUFFER;
-      point += difference;
+      int point = CHART_BUFFER;
       int widthOfBar = 20;
       int[] flightCount = createDestinationArray();
       float yIncrement = barChartYAxisLength/maxValue;
@@ -118,14 +102,25 @@ class BarChart  //<>//
         String currentAirportName = currentAirport.getAirportName();
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
+          textSize(10);
+          point += difference;
+          fill(0);
+          text(currentAirportName, point, SCREENY - 70);
+          fill(#08F4FA);
           float barHeight = flightCount[i] * yIncrement;
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
-          point += difference;
           airportCounter++;
         }
         i++;
       }
-    }
-    else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
+    } else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
+  }
+
+  void setBarChart()
+  {
+    fill(0);
+    rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);
+    rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
+    text("0", 80, SCREENY - CHART_BUFFER);
   }
 }
