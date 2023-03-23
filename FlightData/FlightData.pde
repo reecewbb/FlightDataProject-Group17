@@ -7,7 +7,7 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 PImage mapImage;
-Screen mapScreen, chartScreen, currentScreen;
+Screen mapScreen, chartScreen, currentScreen, topLeft;
 BarChart chart;
 int event;
 Filter mapFilter;
@@ -15,8 +15,6 @@ Widget backToMapButton;
 
 void settings() {
   size(SCREENX, SCREENY);
-  mapImage = loadImage("Blank_US_Map.png");
-  mapImage.resize(SCREENX, SCREENY);
 }
 
 void setup() {

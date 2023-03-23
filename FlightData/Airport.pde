@@ -54,14 +54,20 @@ class Airport
   
   int airportClicked(int mX, int mY)
   {
-    if( mX < this.x + AIRPORT_RADIUS && mX > this.x - AIRPORT_RADIUS && mY < this.y + AIRPORT_RADIUS && mY > this.y - AIRPORT_RADIUS) return airportID;
+    if( mX < x + AIRPORT_RADIUS && mX > x - AIRPORT_RADIUS && mY < y + AIRPORT_RADIUS && mY > y - AIRPORT_RADIUS) return airportID;
     else return -1;
   }
   
-  void draw()
+  void draw(int screen)
   {
     fill(airportColor);
     stroke(airportStrokeColor);
+    int screenPart = screen;
+    switch(screenPart)
+    {
+      case MAP_SCREEN:
+      int xpos = x;
+    }
     ellipse(this.x, this.y, AIRPORT_RADIUS, AIRPORT_RADIUS);
     fill(airportTextColor);
     switch(topSideBottom)

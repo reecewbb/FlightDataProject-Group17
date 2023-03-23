@@ -50,15 +50,27 @@ class Screen {
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
     textSize(10);
+    mapImage = loadImage("Blank_US_Map.png");
     if (screenType == MAP_SCREEN) {
+      mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
-      for (int z = 0; z < airportList.size(); z++)
+      for (int i = 0; i < airportList.size(); i++)
       {
-        Airport myAirport = (Airport) airportList.get(z);
-        myAirport.draw();
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(MAP_SCREEN);
       }
     }
-    if (screenType == BAR_CHART_SCREEN)
+    else if (screenType == TOP_LEFT_SCREEN)
+    {
+      mapImage.resize(SCREENX * 9, SCREENY * 9);
+      image(mapImage, 0, 0);
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(TOP_LEFT_SCREEN);
+      }
+    }
+    else if (screenType == BAR_CHART_SCREEN)
     {
       for (int i = 0; i < widgetList.size(); i++) 
       {
