@@ -93,7 +93,7 @@ class Flight
 
     case CANCELLED_NO:
       double cancelledAsDouble = Double.parseDouble(data);
-      int cancelledAsInt = (int) cancelledAsDouble;
+      int cancelledAsInt = (int)cancelledAsDouble;
       if (cancelledAsInt == 0)
       {
         cancelled = false;
@@ -106,7 +106,7 @@ class Flight
 
     case DIVERTED_NO:
       double divertedAsDouble = Double.parseDouble(data);
-      int divertedAsInt = (int) divertedAsDouble;
+      int divertedAsInt = (int)divertedAsDouble;
       if (divertedAsInt == 0)
       {
         diverted = false;
@@ -118,7 +118,7 @@ class Flight
       break;
 
     case DISTANCE_NO:
-      double distanceAsDouble =Double.parseDouble(data);
+      double distanceAsDouble = Double.parseDouble(data);
       this.distance = (int) distanceAsDouble;
       break;
 

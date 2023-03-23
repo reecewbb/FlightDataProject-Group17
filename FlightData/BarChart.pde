@@ -6,7 +6,7 @@ class BarChart  //<>//
   ArrayList<Flight> flightList = new ArrayList();
   ArrayList<Flight> outgoingFlights = new ArrayList();
   int[] flightCount, destinationCount;
-  int number;
+  
 
   BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
@@ -69,6 +69,7 @@ class BarChart  //<>//
   void drawBarChartForOutgoingFlights()
   {
     fill(0);
+    stroke(0);
     rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);
     rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
     int point = CHART_BUFFER;

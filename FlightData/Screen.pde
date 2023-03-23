@@ -34,7 +34,12 @@ class Screen {
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
-        //insert code to return widget event
+        Widget myWidget = (Widget) widgetList.get(i);
+        event = myWidget.getEvent(mouseX, mouseY);
+        if(event != -1)
+        {
+          return event;
+        }
       }
     }
     return NO_EVENT;

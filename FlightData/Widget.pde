@@ -30,13 +30,13 @@ class Widget {
   
   void hover(int mX, int mY)  {
     hasBorder = false;
-    if (mX > x && mX < x+width && mY > y && mY < y+height) {
+    if (mX > this.x && mX < x+ this.widgetWidth && mY > this.y && mY < y+this.widgetHeight) {
       hasBorder = true;
     }
   }
   
   int getEvent(int mX, int mY) {
-    if (mX > x && mX < x+width && mY > y && mY < y+height) {
+    if (mX > this.x && mX < this.x+this.widgetWidth && mY > this.y && mY < this.y+this.widgetHeight) {
       return event;
     }
     return NO_EVENT;
