@@ -63,33 +63,39 @@ class Screen {
       break;
 
       case TOP_LEFT_SCREEN:
-      mapImage.resize(SCREENX * 3, SCREENY * 3);
-      image(mapImage, 0, 0);
-      for (int i = 0; i < airportList.size(); i++)
-      {
-        Airport myAirport = (Airport) airportList.get(i);
-        myAirport.draw(TOP_LEFT_SCREEN);
-      }
+      setScreen(0, 0, TOP_LEFT_SCREEN);
       break;
 
       case TOP_MID_SCREEN:
-      mapImage.resize(SCREENX * 3, SCREENY * 3);
-      image(mapImage, -SCREENX, 0);
-      for (int i = 0; i < airportList.size(); i++)
-      {
-        Airport myAirport = (Airport) airportList.get(i);
-        myAirport.draw(TOP_MID_SCREEN);
-      }
+      setScreen(1, 0, TOP_MID_SCREEN);
       break;
       
       case TOP_RIGHT_SCREEN:
-      mapImage.resize(SCREENX * 3, SCREENY * 3);
-      image(mapImage, -2 * SCREENX, 0);
-      for (int i = 0; i < airportList.size(); i++)
-      {
-        Airport myAirport = (Airport) airportList.get(i);
-        myAirport.draw(TOP_RIGHT_SCREEN);
-      }
+      setScreen(2, 0, TOP_RIGHT_SCREEN);
+      break;
+      
+      case MID_LEFT_SCREEN:
+      setScreen(0, 1, MID_LEFT_SCREEN);
+      break;
+      
+      case MID_MID_SCREEN:
+      setScreen(1, 1, MID_MID_SCREEN);
+      break;
+      
+      case MID_RIGHT_SCREEN:
+      setScreen(2, 1, MID_RIGHT_SCREEN);
+      break;
+      
+      case BOT_LEFT_SCREEN:
+      setScreen(0, 2, BOT_LEFT_SCREEN);
+      break;
+
+      case BOT_MID_SCREEN:
+      setScreen(1, 2, BOT_MID_SCREEN);
+      break;
+      
+      case BOT_RIGHT_SCREEN:
+      setScreen(2, 2, BOT_RIGHT_SCREEN);
       break;
 
       case(BAR_CHART_SCREEN):
@@ -103,4 +109,15 @@ class Screen {
       break;
     }
   }
+  
+  void setScreen(int widthNo, int heightNo, int ID)
+   {
+     mapImage.resize(SCREENX * 3, SCREENY * 3);
+     image(mapImage, -widthNo * SCREENX, -heightNo * SCREENY);
+     for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(ID);
+      }
+   }
 }

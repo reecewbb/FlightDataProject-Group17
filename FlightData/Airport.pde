@@ -1,6 +1,7 @@
 class Airport
 {
   int x, y, topSideBottom, airportID;
+  float xpos, ypos;
   String name;
   color airportStrokeColor, airportColor, airportTextColor;
 
@@ -63,8 +64,8 @@ class Airport
     fill(airportColor);
     stroke(airportStrokeColor);
     int screenPart = screen;
-    int xpos = x;
-    int ypos = y;
+    xpos = x;
+    ypos = y;
     switch(screenPart)
     {
       case MAP_SCREEN:
@@ -73,18 +74,39 @@ class Airport
       break;
       
       case TOP_LEFT_SCREEN:
-      xpos = x * 3;
-      ypos = y * 3;
+      changeCoordinates(0, 0);
       break;
-      
+
       case TOP_MID_SCREEN:
-      xpos = (x - (SCREENX / 3)) * 3;
-      ypos = y * 3;
+      changeCoordinates(1, 0);
       break;
       
       case TOP_RIGHT_SCREEN:
-      xpos = (x - ((2 * SCREENX) / 3)) * 3;
-      ypos = y * 3;
+      changeCoordinates(2, 0);
+      break;
+      
+      case MID_LEFT_SCREEN:
+      changeCoordinates(0, 1);
+      break;
+      
+      case MID_MID_SCREEN:
+      changeCoordinates(1, 1);
+      break;
+      
+      case MID_RIGHT_SCREEN:
+      changeCoordinates(2, 1);
+      break;
+      
+      case BOT_LEFT_SCREEN:
+      changeCoordinates(0, 2);
+      break;
+
+      case BOT_MID_SCREEN:
+      changeCoordinates(1, 2);
+      break;
+      
+      case BOT_RIGHT_SCREEN:
+      changeCoordinates(2, 2);
       break;
     }
     ellipse(xpos, ypos, AIRPORT_RADIUS, AIRPORT_RADIUS);
@@ -103,5 +125,11 @@ class Airport
       text(name, xpos - AIRPORT_RADIUS, ypos + AIRPORT_RADIUS + 12);
       break;
     }
-  }  
+  }
+  
+  void changeCoordinates(int widthNo, int heightNo)
+     {
+       xpos = (x - (widthNo * (SCREENX / 3))) * 3;
+       ypos = (y - (heightNo * (SCREENY / 3))) * 3;
+     }
 }

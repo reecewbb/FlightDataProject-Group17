@@ -69,17 +69,19 @@ class BarChart
   void drawBarChartForOutgoingFlights()
   {
     setBarChart();
-    double difference = barChartXAxisLength / 50 - 1;                      //only for 50 airports
     int maxValue = findMaxValue();
     if (maxValue != 0)
     {
       int amountOfYValues;
-      if (maxValue > 10) amountOfYValues = MAX_Y_VALUES;
+      if (maxValue > MAX_Y_VALUES) amountOfYValues = MAX_Y_VALUES;
       else amountOfYValues = maxValue;
-      float valueOnY = maxValue / amountOfYValues;
-      float differenceInValue = valueOnY;
+      int valueOnY = maxValue / amountOfYValues;
+      valueOnY++;
+      amountOfYValues = maxValue / valueOnY;
+      amountOfYValues++;
+      int differenceInValue = valueOnY;
       int positionOnY = SCREENY - CHART_BUFFER;
-      int differenceInPosition = barChartYAxisLength / amountOfYValues;
+      float differenceInPosition = barChartYAxisLength/amountOfYValues;
       int xPosition = 80;
       for (int i = 0; i < amountOfYValues; i++)
       {
@@ -87,29 +89,42 @@ class BarChart
         String valueOnYAxis = Integer.toString((int)valueOnY);
         valueOnY += differenceInValue;
         text(valueOnYAxis, xPosition, positionOnY);
+        rect(xPosition + 20, positionOnY, barChartXAxisLength, 0.5); 
       }
 
       fill(#08F4FA);
-      int point = CHART_BUFFER;
-      int widthOfBar = 20;
+      int point = CHART_BUFFER + 20;
       int[] flightCount = createDestinationArray();
-      float yIncrement = barChartYAxisLength/maxValue;
+      float yIncrement = differenceInPosition/differenceInValue;
       int airportCounter = 0;
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport currentAirport = airportList.get(i);
+        String currentAirportName = currentAirport.getAirportName();
+        if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
+        {
+          airportCounter++;
+        }
+      }
+      if(airportCounter > 50) airportCounter = 50;
+      float difference = (barChartXAxisLength / airportCounter) * 0.99;
+      float widthOfBar = difference * 0.8;
+      int airportCounter2 = 0;
       int i = 0;
-      while (airportCounter < 50 && i < airportList.size())
+      while (airportCounter2 < airportCounter && i < airportList.size())
       {
         Airport currentAirport = airportList.get(i);
         String currentAirportName = currentAirport.getAirportName();
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
           textSize(10);
-          point += difference;
           fill(0);
-          text(currentAirportName, point, SCREENY - 70);
+          text(currentAirportName, point + (difference / 2) - 10, SCREENY - 70);
           fill(#08F4FA);
           float barHeight = flightCount[i] * yIncrement;
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
-          airportCounter++;
+          airportCounter2++;
+          point += difference;
         }
         i++;
       }
