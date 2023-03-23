@@ -21,7 +21,7 @@ class Screen {
   int buttonClicked()
   {
     int event;
-    if(screenType == MAP_SCREEN)
+    if (screenType == MAP_SCREEN)
     {
       for (int i = 0; i < airportList.size(); i++)
       {
@@ -29,14 +29,13 @@ class Screen {
         event = myAirport.airportClicked(mouseX, mouseY);
         if (event != -1) return event;
       }
-    }
-    else 
+    } else
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget myWidget = (Widget) widgetList.get(i);
         event = myWidget.getEvent(mouseX, mouseY);
-        if(event != -1)
+        if (event != -1)
         {
           return event;
         }
@@ -51,7 +50,9 @@ class Screen {
     textFont(myFont);
     textSize(10);
     mapImage = loadImage("Blank_US_Map.png");
-    if (screenType == MAP_SCREEN) {
+    switch(screenType) //<>//
+    {
+      case MAP_SCREEN:
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
       for (int i = 0; i < airportList.size(); i++)
@@ -59,26 +60,47 @@ class Screen {
         Airport myAirport = (Airport) airportList.get(i);
         myAirport.draw(MAP_SCREEN);
       }
-    }
-    else if (screenType == TOP_LEFT_SCREEN)
-    {
-      mapImage.resize(SCREENX * 9, SCREENY * 9);
+      break;
+
+      case TOP_LEFT_SCREEN:
+      mapImage.resize(SCREENX * 3, SCREENY * 3);
       image(mapImage, 0, 0);
       for (int i = 0; i < airportList.size(); i++)
       {
         Airport myAirport = (Airport) airportList.get(i);
         myAirport.draw(TOP_LEFT_SCREEN);
       }
-    }
-    else if (screenType == BAR_CHART_SCREEN)
-    {
-      for (int i = 0; i < widgetList.size(); i++) 
+      break;
+
+      case TOP_MID_SCREEN:
+      mapImage.resize(SCREENX * 3, SCREENY * 3);
+      image(mapImage, -SCREENX, 0);
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(TOP_MID_SCREEN);
+      }
+      break;
+      
+      case TOP_RIGHT_SCREEN:
+      mapImage.resize(SCREENX * 3, SCREENY * 3);
+      image(mapImage, -2 * SCREENX, 0);
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(TOP_RIGHT_SCREEN);
+      }
+      break;
+
+      case(BAR_CHART_SCREEN):
+      for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
       BarChart bc = new BarChart(event, myAirports, myFlights);
       bc.draw();
+      break;
     }
   }
 }

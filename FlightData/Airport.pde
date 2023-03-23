@@ -63,25 +63,44 @@ class Airport
     fill(airportColor);
     stroke(airportStrokeColor);
     int screenPart = screen;
+    int xpos = x;
+    int ypos = y;
     switch(screenPart)
     {
       case MAP_SCREEN:
-      int xpos = x;
+      xpos = x;
+      ypos = y;
+      break;
+      
+      case TOP_LEFT_SCREEN:
+      xpos = x * 3;
+      ypos = y * 3;
+      break;
+      
+      case TOP_MID_SCREEN:
+      xpos = (x - (SCREENX / 3)) * 3;
+      ypos = y * 3;
+      break;
+      
+      case TOP_RIGHT_SCREEN:
+      xpos = (x - ((2 * SCREENX) / 3)) * 3;
+      ypos = y * 3;
+      break;
     }
-    ellipse(this.x, this.y, AIRPORT_RADIUS, AIRPORT_RADIUS);
+    ellipse(xpos, ypos, AIRPORT_RADIUS, AIRPORT_RADIUS);
     fill(airportTextColor);
     switch(topSideBottom)
     {
       case ON_TOP:
-      text(this.name, this.x - AIRPORT_RADIUS - 10, this.y - AIRPORT_RADIUS - 5);
+      text(name, xpos - AIRPORT_RADIUS - 10, ypos - AIRPORT_RADIUS - 5);
       break;
       
       case ON_SIDE:
-      text(this.name, this.x + AIRPORT_RADIUS + 5, this.y + 5);
+      text(name, xpos + AIRPORT_RADIUS + 5, ypos + 5);
       break;
       
       case ON_BOTTOM:
-      text(this.name, this.x - AIRPORT_RADIUS, this.y + AIRPORT_RADIUS + 12);
+      text(name, xpos - AIRPORT_RADIUS, ypos + AIRPORT_RADIUS + 12);
       break;
     }
   }  

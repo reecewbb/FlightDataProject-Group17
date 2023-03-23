@@ -41,7 +41,7 @@ void setup() {
 void draw()
 {
   background(255);
-  currentScreen.draw(event, myAirports, myFlights);
+  currentScreen.draw(event, myAirports, myFlights); //<>//
 }
 
 void mousePressed()
