@@ -61,7 +61,7 @@ void mouseMoved()
 
 void importDataFromFile()  {
   try {
-    File myFile = new File("flights2k.csv");
+    File myFile = new File("flights100k.csv"); //<>//
     Scanner input = new Scanner(myFile);
     input.useDelimiter("\n");
     int dataIdentifier = 0;
@@ -73,7 +73,7 @@ void importDataFromFile()  {
       String[] allDataArray = allData.split("[,]", 0);
       for (int i = 0; i < NUMBER_OF_DATAPOINTS + 2; i++)
       {
-        String data = allDataArray[i];
+        String data = allDataArray[i]; //<>//
         if (i == 5 || i == 10)
         {
           data += ", " + allDataArray[i+1];
@@ -234,4 +234,5 @@ void addAirports() {
   myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
   myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
   myAirports.add(new Airport(919, 355, "CID", ON_TOP));
+  myAirports.add(new Airport(370, 348, "OGD", ON_TOP));
 }
