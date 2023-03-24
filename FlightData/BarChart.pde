@@ -59,6 +59,9 @@ class BarChart
   void drawBarChartForOutgoingFlights()
   {
     setBarChart();
+    String chartName = "Number of outgoing flights from ";
+    chartName += airportName;
+    text(chartName, SCREENX/2 - 100, 50);
     int maxValue = findMaxValue();
     if (maxValue != 0)
     {

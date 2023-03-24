@@ -11,7 +11,7 @@ class Airport
     this.y = y;
     this.name = name;
     this.topSideBottom = topSideBottom;
-    airportStrokeColor = color(255);
+    airportStrokeColor = color(0);
     airportColor = color(#FC0808);
     airportTextColor = color(0);
   }
@@ -55,7 +55,7 @@ class Airport
 
   int airportClicked(int mX, int mY)
   {
-    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID;
+    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID + NUMBER_OF_EVENTS;
     else return -1;
   }
 
