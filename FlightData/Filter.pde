@@ -4,7 +4,7 @@ class Filter {
   int widgetFilterPressed;
   String[] splitCurrentName;
   String currentName;
-
+  
   void addAirports(ArrayList<Airport> myAirports) {
     myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
     myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
@@ -137,8 +137,6 @@ class Filter {
     myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
     myAirports.add(new Airport(919, 355, "CID", ON_TOP));
   }
-
-
   /*void whichWidget()
   {
     if(mapScreen.widgetList.get(2).event)
@@ -248,10 +246,5 @@ class Filter {
          }
      }
      previousFilter = currentFilter;  
-  }     
+  }
 }
-  
-    
-    
-    
-  

@@ -27,7 +27,7 @@ class Screen {
       {
         Airport myAirport = (Airport) airportList.get(i);
         event = myAirport.airportClicked(mouseX, mouseY);
-        if (event != -1)
+         if (event != -1)
         {
            return event;
         }
@@ -62,7 +62,7 @@ class Screen {
     textFont(myFont);
     textSize(10);
     mapImage = loadImage("Blank_US_Map.png");
-    switch(screenType) //<>//
+    switch(screenType)
     {
       case MAP_SCREEN:
       mapImage.resize(SCREENX, SCREENY);
