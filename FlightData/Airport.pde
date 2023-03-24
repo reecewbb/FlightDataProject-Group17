@@ -43,10 +43,11 @@ class Airport
 
   void strokeAirport(int mX, int mY)
   {
-    if ( mX < this.x + AIRPORT_RADIUS && mX > this.x - AIRPORT_RADIUS && mY < this.y + AIRPORT_RADIUS && mY > this.y - AIRPORT_RADIUS)
+    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS)
     {
       this.airportStrokeColor = (255);
-    } else
+    } 
+    else
     {
       this.airportStrokeColor = (0);
     }
@@ -54,7 +55,7 @@ class Airport
 
   int airportClicked(int mX, int mY)
   {
-    if ( mX < x + AIRPORT_RADIUS && mX > x - AIRPORT_RADIUS && mY < y + AIRPORT_RADIUS && mY > y - AIRPORT_RADIUS) return airportID;
+    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID;
     else return -1;
   }
 

@@ -6,10 +6,11 @@ PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
+ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
 PImage mapImage;
-Screen mapScreen, chartScreen, currentScreen, topLeft;
+Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight;
 BarChart chart;
-int event;
+int event, backButtonEvent, AKEvent, LVEvent, WZEvent, NoFilterEvent, startZoomEvent, endZoomEvent;
 int previousEvent;
 Filter mapFilter;
 Widget backToMapButton, currF1, currF2, currF3, currF4;
@@ -20,12 +21,11 @@ void settings() {
 
 void setup() {
   background(255);
-  mapScreen = new Screen(MAP_SCREEN);
-  chartScreen = new Screen(BAR_CHART_SCREEN);
+  importDataFromFile();
+  setScreens();
   mapFilter = new Filter();
   mapFilter.addAirports(myAirports);
   currentScreen = mapScreen;
-  importDataFromFile();
   System.out.println(airportNames);
   System.out.println(airportNames.size());
   ellipseMode(RADIUS);
@@ -46,27 +46,36 @@ void draw()
 
 void mousePressed()
 {
-  System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
-  event = currentScreen.buttonClicked();
-  if (event >= 0 && event < myAirports.size())
-  {
-    currentScreen = chartScreen;
-  } else if (event == myAirports.size() + 1)          // if back to map button is clicked
+  System.out.println("x value: " + mouseX + "\ny value: " + mouseY); //<>//
+  event = currentScreen.buttonClicked(); //<>//
+  if (event == BACK_BUTTON_EVENT)          
   {
     currentScreen = mapScreen;
-  } else if (event == myAirports.size() + 2)          // if A-K button is clicked
+  } 
+  else if (event == AK_EVENT)          
   {
-    mapFilter.currentFilter = 1;
-  } else if (event == myAirports.size() + 3)          // if L-V button is pressed
+    mapFilter.currentFilter = AK_FILTER;
+  } 
+  else if (event == LV_EVENT)          
   {
-    mapFilter.currentFilter = 2;
-  } else if (event == myAirports.size() + 4)          // if W-Z button is pressed
+    mapFilter.currentFilter = LV_FILTER;
+  } 
+  else if (event == WZ_EVENT)          
   {
-    mapFilter.currentFilter = 3;
-  } else if (event == myAirports.size() + 5)
+    mapFilter.currentFilter = WZ_FILTER;
+  } 
+  else if (event == NO_FILTER_EVENT)
   {
-    mapFilter.currentFilter = 4;
+    mapFilter.currentFilter = NO_FILTER;
   }
+  else if (event >= TOP_LEFT_EVENT && event < BOT_RIGHT_EVENT)
+  {
+    currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT); //<>//
+  }
+  if (event > BOT_RIGHT_EVENT && event < myAirports.size() + BOT_RIGHT_EVENT)
+  {
+    currentScreen = chartScreen;
+  } 
 }
 
 void mouseMoved()
@@ -80,6 +89,29 @@ void mouseMoved()
   currF2.hover(mouseX, mouseY);
   currF3.hover(mouseX, mouseY);
   currF4.hover(mouseX, mouseY);
+}
+
+void setScreens(){
+  mapScreen = new Screen(MAP_SCREEN);
+  chartScreen = new Screen(BAR_CHART_SCREEN);
+  topLeft = new Screen(TOP_LEFT_SCREEN);
+  topMid = new Screen(TOP_MID_SCREEN);
+  topRight = new Screen(TOP_MID_SCREEN);
+  midLeft = new Screen(MID_LEFT_SCREEN);
+  midMid = new Screen(MID_MID_SCREEN);
+  midRight = new Screen(MID_RIGHT_SCREEN);
+  botLeft = new Screen(BOT_LEFT_SCREEN);
+  botMid = new Screen(BOT_MID_SCREEN);
+  botRight = new Screen(BOT_RIGHT_SCREEN);
+  zoomScreens.add(topLeft);
+  zoomScreens.add(topMid);
+  zoomScreens.add(topRight);
+  zoomScreens.add(midLeft);
+  zoomScreens.add(midMid);
+  zoomScreens.add(midRight);
+  zoomScreens.add(botLeft);
+  zoomScreens.add(botMid);
+  zoomScreens.add(botRight);
 }
 
 void importDataFromFile()

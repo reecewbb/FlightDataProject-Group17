@@ -22,7 +22,35 @@ class Screen {
   int buttonClicked()
   {
     int event;
-    if (screenType == MAP_SCREEN)
+    if (screenType == MAP_SCREEN) //<>//
+    {
+      float mX = mouseX - SCREENX/3;
+      float mY = mouseY - SCREENY/3;
+      event = TOP_LEFT_EVENT;
+      while (mX < SCREENX)
+      {
+        mX -= SCREENX/3;
+        event++;
+      }
+      while (mY < SCREENY)
+      {
+        mY -= SCREENY/3;
+        event += 3;
+      }
+      return event;
+    }
+    /*
+      for (int i = 0; i < widgetList.size(); i++)
+     {
+     Widget myWidget = (Widget) widgetList.get(i);
+     event = myWidget.getEvent(mouseX, mouseY);
+     if (event != -1)
+     {
+     return event;
+     }
+     }
+     */
+    if (screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN)
     {
       for (int i = 0; i < airportList.size(); i++)
       {
@@ -42,7 +70,8 @@ class Screen {
           return event;
         }
       }
-    } else
+    } 
+    else
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
@@ -130,7 +159,7 @@ class Screen {
       {
         event = previousEvent;
       }
-      BarChart bc = new BarChart(event, myAirports, myFlights);
+      BarChart bc = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
       previousEvent = event;
       bc.draw();
       break;
