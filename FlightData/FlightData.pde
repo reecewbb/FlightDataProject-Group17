@@ -10,6 +10,7 @@ PImage mapImage;
 Screen mapScreen, chartScreen, currentScreen, topLeft;
 BarChart chart;
 int event;
+int previousEvent;
 Filter mapFilter;
 Widget backToMapButton, currF1, currF2, currF3, currF4;
 
@@ -33,27 +34,14 @@ void setup() {
     mapScreen.addAirport(myAirports.get(i));
     (myAirports.get(i)).setID(i);
   }
-  backToMapButton = new Widget(20, 20, 80, 30, "Back to Map", color(180), myFont, myAirports.size() + 1);
-  chartScreen.addWidget(backToMapButton);
-  currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, myAirports.size() + 2);
-  currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, myAirports.size() + 3);
-  currF3= new Widget(1500, 750, 65, 20, "[ T - Z ]", color(180), myFont, myAirports.size() + 4);
-  currF4= new Widget(1500, 775, 65, 20, "[ NONE ]", color(180), myFont, myAirports.size() + 5);
-  mapScreen.addWidget(currF1);
-  mapScreen.addWidget(currF2);
-  mapScreen.addWidget(currF3);
-  mapScreen.addWidget(currF4);
+  addWidgets();
 }
 
 
 void draw()
 {
   background(255);
-  currentScreen.draw(event, myAirports, myFlights);
-  if (mapFilter.currentFilter !=0 && mapFilter.currentFilter!=mapFilter.previousFilter)
-  {
-    mapFilter.showAirports(myAirports);
-  }
+  currentScreen.draw(event, myAirports, myFlights, mapFilter);
 }
 
 void mousePressed()
@@ -63,24 +51,19 @@ void mousePressed()
   if (event >= 0 && event < myAirports.size())
   {
     currentScreen = chartScreen;
-  }
-  if (event == myAirports.size() + 1)          // if back to map button is clicked
+  } else if (event == myAirports.size() + 1)          // if back to map button is clicked
   {
     currentScreen = mapScreen;
-  }
-  if (event == myAirports.size() + 2)          // if A-K button is clicked
+  } else if (event == myAirports.size() + 2)          // if A-K button is clicked
   {
     mapFilter.currentFilter = 1;
-  }
-  if (event == myAirports.size() + 3)          // if L-V button is pressed
+  } else if (event == myAirports.size() + 3)          // if L-V button is pressed
   {
     mapFilter.currentFilter = 2;
-  }
-  if (event == myAirports.size() + 4)          // if W-Z button is pressed
+  } else if (event == myAirports.size() + 4)          // if W-Z button is pressed
   {
     mapFilter.currentFilter = 3;
-  }
-  if (event == myAirports.size() + 5)
+  } else if (event == myAirports.size() + 5)
   {
     mapFilter.currentFilter = 4;
   }
@@ -142,4 +125,18 @@ void importDataFromFile()
   catch (Exception e) {
     System.err.println(e);
   }
+}
+
+void addWidgets()
+{
+  backToMapButton = new Widget(20, 20, 80, 30, "Back to Map", color(180), myFont, myAirports.size() + 1);
+  currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, myAirports.size() + 2);
+  currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, myAirports.size() + 3);
+  currF3= new Widget(1500, 750, 65, 20, "[ T - Z ]", color(180), myFont, myAirports.size() + 4);
+  currF4= new Widget(1500, 775, 65, 20, "[ NONE ]", color(180), myFont, myAirports.size() + 5);
+  chartScreen.addWidget(backToMapButton);
+  mapScreen.addWidget(currF1);
+  mapScreen.addWidget(currF2);
+  mapScreen.addWidget(currF3);
+  mapScreen.addWidget(currF4);
 }

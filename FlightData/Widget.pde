@@ -27,14 +27,14 @@ class Widget {
     fill(labelColor);
     text(label, x + 10, y + widgetHeight - 10);
   }
-  
-  void hover(int mX, int mY)  {
+
+  void hover(int mX, int mY) {
     hasBorder = false;
     if (mX > x && mX < x+widgetWidth && mY > y && mY < y+widgetHeight) {
       hasBorder = true;
     }
   }
-  
+
   int getEvent(int mX, int mY) {
     if (mX > x && mX < x+widgetWidth && mY > y && mY < y+widgetHeight) {
       return event;

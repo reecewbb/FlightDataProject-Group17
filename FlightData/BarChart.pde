@@ -4,7 +4,6 @@ class BarChart
   String airportName;
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
-  ArrayList<Flight> outgoingFlights = new ArrayList();
   int[] flightCount, destinationCount;
   int number;
 
@@ -17,15 +16,6 @@ class BarChart
     this.flightList = flightList;
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
-    //for (int i = 0; i < flightList.size(); i++)
-    //{
-    //Flight currentFlight = (Flight) flightList.get(i);
-    //String origin = currentFlight.getOrigin();
-    //if (origin.equals(airportName))
-    //{
-    //outgoingFlights.add(currentFlight);
-    //}
-    //}
   }
 
   public int findMaxValue()
@@ -89,7 +79,7 @@ class BarChart
         String valueOnYAxis = Integer.toString((int)valueOnY);
         valueOnY += differenceInValue;
         text(valueOnYAxis, xPosition, positionOnY);
-        rect(xPosition + 20, positionOnY, barChartXAxisLength, 0.5); 
+        rect(xPosition + 20, positionOnY, barChartXAxisLength, 0.5);
       }
 
       fill(#08F4FA);
@@ -106,7 +96,7 @@ class BarChart
           airportCounter++;
         }
       }
-      if(airportCounter > 50) airportCounter = 50;
+      if (airportCounter > 50) airportCounter = 50;
       float difference = (barChartXAxisLength / airportCounter) * 0.99;
       float widthOfBar = difference * 0.8;
       int airportCounter2 = 0;

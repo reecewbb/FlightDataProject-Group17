@@ -97,8 +97,7 @@ class Flight
       if (cancelledAsInt == 0)
       {
         cancelled = false;
-      } 
-      else
+      } else
       {
         cancelled = true;
       }
@@ -110,8 +109,7 @@ class Flight
       if (divertedAsInt == 0)
       {
         diverted = false;
-      } 
-      else
+      } else
       {
         diverted = true;
       }

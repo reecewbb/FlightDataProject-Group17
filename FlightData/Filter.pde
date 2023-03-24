@@ -4,7 +4,7 @@ class Filter {
   int widgetFilterPressed;
   String[] splitCurrentName;
   String currentName;
-  
+
   void addAirports(ArrayList<Airport> myAirports) {
     myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
     myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
@@ -138,113 +138,110 @@ class Filter {
     myAirports.add(new Airport(919, 355, "CID", ON_TOP));
   }
   /*void whichWidget()
-  {
-    if(mapScreen.widgetList.get(2).event)
-    {
-      widgetFilterPressed = 1;
-    }
-    if(mapScreen.widgetList.get(3).event)
-    {
-      widgetFilterPressed =2;
-    }
-    if(mapScreen.widgetList.get(4))
-    {
-      widgetFilterPressed= 3;
-    }
-  }*/
-  
+   {
+   if(mapScreen.widgetList.get(2).event)
+   {
+   widgetFilterPressed = 1;
+   }
+   if(mapScreen.widgetList.get(3).event)
+   {
+   widgetFilterPressed =2;
+   }
+   if(mapScreen.widgetList.get(4))
+   {
+   widgetFilterPressed= 3;
+   }
+   }*/
+
   void showAirports(ArrayList<Airport> myAirports)
   {
-   //currentFilter = widgetFilterPressed;
-   /*if(currentFilter!=previousFilter)
+    //currentFilter = widgetFilterPressed;
+    /*if(currentFilter!=previousFilter)
      {
-        for(int i=0; i<myAirports.size();i++)
-        {
-          if(myAirports.get(i).x>2000)
-          {
-            myAirports.get(i).x = myAirports.get(i).x - 2000;
-          }
-        }
-     }*/
-     
-     
      for(int i=0; i<myAirports.size();i++)
      {
-        currentName = myAirports.get(i).name;
-        splitCurrentName = currentName.split("");
-         if(currentFilter==1)
-         {
-           if(splitCurrentName[0].equals("A")||splitCurrentName[0].equals("B")||splitCurrentName[0].equals("C")||
-              splitCurrentName[0].equals("D")||splitCurrentName[0].equals("E")||splitCurrentName[0].equals("F")||splitCurrentName[0].equals("G")||
-              splitCurrentName[0].equals("H")||splitCurrentName[0].equals("I")||splitCurrentName[0].equals("J")||splitCurrentName[0].equals("K"))
-              {
-                if(myAirports.get(i).x>2000)
-                {
-                  while(myAirports.get(i).x>2000)
-                  {
-                    myAirports.get(i).x = myAirports.get(i).x-2000;
-                  }
-                }
-                myAirports.get(i).x = myAirports.get(i).x;
-              }
-              else
-              {
-              myAirports.get(i).x = myAirports.get(i).x + 2000;
-              }
-         }
-         
-         if(currentFilter == 2)
-         {
-            if(splitCurrentName[0].equals("L")||splitCurrentName[0].equals("M")||splitCurrentName[0].equals("N")||
-               splitCurrentName[0].equals("O")||splitCurrentName[0].equals("P")||splitCurrentName[0].equals("Q")||splitCurrentName[0].equals("R")||
-               splitCurrentName[0].equals("S"))
-            {
-               if(myAirports.get(i).x>2000)
-               {
-                 while(myAirports.get(i).x>2000)
-                 {
-                   myAirports.get(i).x = myAirports.get(i).x-2000;
-                 }
-               }
-               myAirports.get(i).x = myAirports.get(i).x;
-            }
-            else
-            {
-              myAirports.get(i).x = myAirports.get(i).x + 2000;
-            }
-        }
-        
-        if(currentFilter==3)
-        {
-          if(splitCurrentName[0].equals("T")||splitCurrentName[0].equals("U")||splitCurrentName[0].equals("V")
-             ||splitCurrentName[0].equals("W")||splitCurrentName[0].equals("X")||splitCurrentName[0].equals("Y")||splitCurrentName[0].equals("Z"))
-          {
-                if(myAirports.get(i).x>2000)
-                {
-                   while(myAirports.get(i).x>2000)                   
-                   {
-                     myAirports.get(i).x = myAirports.get(i).x-2000;
-                   }
-                }
-                myAirports.get(i).x = myAirports.get(i).x;
-          }
-          else
-          {
-            myAirports.get(i).x = myAirports.get(i).x + 2000;
-          }
-        }
-        
-         if(currentFilter==4)
-         {
-           if(myAirports.get(i).x>2000)
-           {
-             while(myAirports.get(i).x>2000)
-             {
-               myAirports.get(i).x = myAirports.get(i).x-2000;
-             }
-           }
-         }
+     if(myAirports.get(i).x>2000)
+     {
+     myAirports.get(i).x = myAirports.get(i).x - 2000;
      }
-     previousFilter = currentFilter;  
+     }
+     }*/
+
+
+    for (int i=0; i<myAirports.size(); i++)
+    {
+      currentName = myAirports.get(i).name;
+      splitCurrentName = currentName.split("");
+      if (currentFilter==1)
+      {
+        if (splitCurrentName[0].equals("A")||splitCurrentName[0].equals("B")||splitCurrentName[0].equals("C")||
+          splitCurrentName[0].equals("D")||splitCurrentName[0].equals("E")||splitCurrentName[0].equals("F")||splitCurrentName[0].equals("G")||
+          splitCurrentName[0].equals("H")||splitCurrentName[0].equals("I")||splitCurrentName[0].equals("J")||splitCurrentName[0].equals("K"))
+        {
+          if (myAirports.get(i).x>2000)
+          {
+            while (myAirports.get(i).x>2000)
+            {
+              myAirports.get(i).x = myAirports.get(i).x-2000;
+            }
+          }
+          myAirports.get(i).x = myAirports.get(i).x;
+        } else
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+
+      if (currentFilter == 2)
+      {
+        if (splitCurrentName[0].equals("L")||splitCurrentName[0].equals("M")||splitCurrentName[0].equals("N")||
+          splitCurrentName[0].equals("O")||splitCurrentName[0].equals("P")||splitCurrentName[0].equals("Q")||splitCurrentName[0].equals("R")||
+          splitCurrentName[0].equals("S"))
+        {
+          if (myAirports.get(i).x>2000)
+          {
+            while (myAirports.get(i).x>2000)
+            {
+              myAirports.get(i).x = myAirports.get(i).x-2000;
+            }
+          }
+          myAirports.get(i).x = myAirports.get(i).x;
+        } else
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+
+      if (currentFilter==3)
+      {
+        if (splitCurrentName[0].equals("T")||splitCurrentName[0].equals("U")||splitCurrentName[0].equals("V")
+          ||splitCurrentName[0].equals("W")||splitCurrentName[0].equals("X")||splitCurrentName[0].equals("Y")||splitCurrentName[0].equals("Z"))
+        {
+          if (myAirports.get(i).x>2000)
+          {
+            while (myAirports.get(i).x>2000)
+            {
+              myAirports.get(i).x = myAirports.get(i).x-2000;
+            }
+          }
+          myAirports.get(i).x = myAirports.get(i).x;
+        } else
+        {
+          myAirports.get(i).x = myAirports.get(i).x + 2000;
+        }
+      }
+
+      if (currentFilter==4)
+      {
+        if (myAirports.get(i).x>2000)
+        {
+          while (myAirports.get(i).x>2000)
+          {
+            myAirports.get(i).x = myAirports.get(i).x-2000;
+          }
+        }
+      }
+    }
+    previousFilter = currentFilter;
   }
 }
