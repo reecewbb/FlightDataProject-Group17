@@ -7,13 +7,13 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
-PImage mapImage;
-Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight;
+PImage mapImage, startUS, startAlaska, startHawaii;
+Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen;
 BarChart chart;
-int event, backButtonEvent, AKEvent, LVEvent, WZEvent, NoFilterEvent, startZoomEvent, endZoomEvent;
+int event;
 int previousEvent;
 Filter mapFilter;
-Widget backToMapButton, currF1, currF2, currF3, currF4;
+Widget backToMapButton, currF1, currF2, currF3, currF4, USMapButton, backToStartButton;
 
 void settings() {
   size(SCREENX, SCREENY);
@@ -25,7 +25,6 @@ void setup() {
   setScreens();
   mapFilter = new Filter();
   mapFilter.addAirports(myAirports);
-  currentScreen = mapScreen;
   System.out.println(airportNames);
   System.out.println(airportNames.size());
   ellipseMode(RADIUS);
@@ -68,7 +67,15 @@ void mousePressed()
   {
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
   }
-  if (event > NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
+  else if (event == SELECT_US_EVENT)
+  {
+    currentScreen = mapScreen;
+  }
+  else if (event == BACK_TO_START_EVENT)
+  {
+    currentScreen = startScreen;
+  }
+  else if (event > NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
   {
     currentScreen = chartScreen;
   } 
@@ -120,6 +127,8 @@ void setScreens(){
   botLeft = new Screen(BOT_LEFT_SCREEN);
   botMid = new Screen(BOT_MID_SCREEN);
   botRight = new Screen(BOT_RIGHT_SCREEN);
+  startScreen = new Screen(START_SCREEN);
+  currentScreen = startScreen;
   zoomScreens.add(topLeft);
   zoomScreens.add(topMid);
   zoomScreens.add(topRight);
@@ -179,11 +188,15 @@ void importDataFromFile()
 void addWidgets()
 {
   backToMapButton = new Widget(20, 20, 80, 30, "Back to Map", color(180), myFont, BACK_BUTTON_EVENT);
+  backToStartButton = new Widget(20, 20, 80, 30, "Back to Start", color(180), myFont, BACK_TO_START_EVENT);
+  USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
   currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, AK_EVENT);
   currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, LS_EVENT);
   currF3= new Widget(1500, 750, 65, 20, "[ T - Z ]", color(180), myFont, TZ_EVENT);
   currF4= new Widget(1500, 775, 65, 20, " [ ALL ] ", color(180), myFont, NO_FILTER_EVENT);
   chartScreen.addWidget(backToMapButton);
+  startScreen.addWidget(USMapButton);
+  mapScreen.addWidget(backToStartButton);
   for (int i = 0; i < zoomScreens.size(); i++)
   {
     Screen currentZoom = zoomScreens.get(i);
