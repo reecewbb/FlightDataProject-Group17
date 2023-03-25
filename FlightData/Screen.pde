@@ -110,7 +110,10 @@ class Screen {
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
       String selectArea = "SELECT AREA";
+      textSize(20);
       text(selectArea, SCREENX/2 - textWidth(selectArea)/2, TOP_TEXT_BUFFER);
+      textSize(10);
+      stroke(120);
       rect(0, SCREENY/3, SCREENX, 0.5);
       rect(0, 2 * SCREENY/3, SCREENX, 0.5);
       rect(0, SCREENY/3, SCREENX, 0.5);
@@ -205,12 +208,15 @@ class Screen {
   {
     mapImage.resize(SCREENX * 3, SCREENY * 3);
     image(mapImage, -widthNo * SCREENX, -heightNo * SCREENY);
+    textSize(20);
     text(areaName, SCREENX/2 - 100, 50);
+    textSize(15);
     for (int i = 0; i < myAirports.size(); i++)
     {
       Airport myAirport = (Airport) myAirports.get(i);
       myAirport.draw(ID);
     }
+    textSize(10);
     for (int i = 0; i < widgetList.size(); i++)
     {
       Widget myWidget = (Widget) widgetList.get(i);
