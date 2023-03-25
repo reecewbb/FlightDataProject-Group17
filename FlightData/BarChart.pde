@@ -61,7 +61,7 @@ class BarChart
     setBarChart();
     String chartName = "Number of outgoing flights from ";
     chartName += airportName;
-    text(chartName, SCREENX/2 - 100, 50);
+    text(chartName, SCREENX/2 - textWidth(chartName)/2, TOP_TEXT_BUFFER);
     int maxValue = findMaxValue();
     if (maxValue != 0)
     {
@@ -112,7 +112,7 @@ class BarChart
         {
           textSize(10);
           fill(0);
-          text(currentAirportName, point + (difference / 2) - 10, SCREENY - 70);
+          text(currentAirportName, point + (widthOfBar / 2) - (textWidth(currentAirportName)/2), SCREENY - 70);
           fill(#08F4FA);
           float barHeight = flightCount[i] * yIncrement;
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
