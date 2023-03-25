@@ -1,4 +1,4 @@
-class Screen { //<>//
+class Screen {
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType;
@@ -33,7 +33,7 @@ class Screen { //<>//
           return event;
         }
       }
-      float mX = mouseX - SCREENX/3; //<>//
+      float mX = mouseX - SCREENX/3;
       float mY = mouseY - SCREENY/3;
       event = TOP_LEFT_EVENT;
       while (mX > 0)
@@ -61,7 +61,7 @@ class Screen { //<>//
      */
     if (screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN)
     {
-      for (int i = 0; i < airportList.size(); i++) //<>//
+      for (int i = 0; i < airportList.size(); i++)
       {
         Airport myAirport = (Airport) airportList.get(i);
         event = myAirport.airportClicked(mouseX, mouseY);
@@ -165,7 +165,7 @@ class Screen { //<>//
       break;
 
     case BAR_CHART_SCREEN:
-      for (int i = 0; i < widgetList.size(); i++) //<>//
+      for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();

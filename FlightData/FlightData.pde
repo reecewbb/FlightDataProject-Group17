@@ -29,20 +29,7 @@ void setup() {
   System.out.println(airportNames);
   System.out.println(airportNames.size());
   ellipseMode(RADIUS);
-  for (int i = 0; i < myAirports.size(); i++)
-  {
-    mapScreen.addAirport(myAirports.get(i));
-    topLeft.addAirport(myAirports.get(i));
-    topMid.addAirport(myAirports.get(i));
-    topRight.addAirport(myAirports.get(i));
-    midLeft.addAirport(myAirports.get(i));
-    midMid.addAirport(myAirports.get(i));
-    midRight.addAirport(myAirports.get(i));
-    botLeft.addAirport(myAirports.get(i));
-    botMid.addAirport(myAirports.get(i));
-    botRight.addAirport(myAirports.get(i));
-    (myAirports.get(i)).setID(i);
-  }
+  addAirportsToMaps();
   addWidgets();
 }
 
@@ -101,6 +88,24 @@ void mouseMoved()
   currF2.hover(mouseX, mouseY);
   currF3.hover(mouseX, mouseY);
   currF4.hover(mouseX, mouseY);
+}
+
+void addAirportsToMaps()
+{
+  for (int i = 0; i < myAirports.size(); i++)
+  {
+    mapScreen.addAirport(myAirports.get(i));
+    topLeft.addAirport(myAirports.get(i));
+    topMid.addAirport(myAirports.get(i));
+    topRight.addAirport(myAirports.get(i));
+    midLeft.addAirport(myAirports.get(i));
+    midMid.addAirport(myAirports.get(i));
+    midRight.addAirport(myAirports.get(i));
+    botLeft.addAirport(myAirports.get(i));
+    botMid.addAirport(myAirports.get(i));
+    botRight.addAirport(myAirports.get(i));
+    (myAirports.get(i)).setID(i);
+  }
 }
 
 void setScreens(){

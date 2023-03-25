@@ -136,6 +136,46 @@ class Filter {
     myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
     myAirports.add(new Airport(781, 173, "FAR", ON_TOP));
     myAirports.add(new Airport(919, 355, "CID", ON_TOP));
+    myAirports.add(new Airport(1369, 390, "ILG", ON_TOP));
+    myAirports.add(new Airport(65, 195, "OTH", ON_TOP));
+    myAirports.add(new Airport(810, 474, "ATY", ON_TOP));
+    myAirports.add(new Airport(1314, 402, "HGR", ON_TOP));
+    myAirports.add(new Airport(1255, 277, "IAG", ON_TOP));
+    myAirports.add(new Airport(142, 920, "AKN", ON_TOP));
+    myAirports.add(new Airport(128, 911, "DLG", ON_TOP));
+    myAirports.add(new Airport(114, 811, "OME", ON_TOP));
+    myAirports.add(new Airport(1026, 712, "MEI", ON_TOP));
+    myAirports.add(new Airport(697, 270, "PIR", ON_TOP));
+    myAirports.add(new Airport(406, 458, "CNY", ON_TOP));
+    myAirports.add(new Airport(1333, 213, "OGS", ON_TOP));
+    myAirports.add(new Airport(1008, 749, "PIB", ON_TOP));
+    myAirports.add(new Airport(522, 240, "SHR", ON_TOP));
+    myAirports.add(new Airport(768, 849, "VCT", ON_TOP));
+    myAirports.add(new Airport(552, 375, "LAR", ON_TOP));
+    myAirports.add(new Airport(652, 543, "LBL", ON_TOP));
+    myAirports.add(new Airport(1266, 388, "JST", ON_TOP));
+    myAirports.add(new Airport(868, 317, "MCW", ON_TOP));
+    myAirports.add(new Airport(423, 396, "VEL", ON_TOP));
+    myAirports.add(new Airport(848, 351, "FOD", ON_TOP));
+    myAirports.add(new Airport(999, 439, "DEC", ON_TOP));
+    myAirports.add(new Airport(1285, 462, "SHD", ON_TOP));
+    myAirports.add(new Airport(1066, 315, "MKG", ON_TOP));
+    myAirports.add(new Airport(718, 409, "EAR", ON_TOP));
+    myAirports.add(new Airport(914, 257, "EAU", ON_TOP));
+    myAirports.add(new Airport(850, 545, "JLN", ON_TOP));
+    myAirports.add(new Airport(741, 191, "JMS", ON_TOP));
+    myAirports.add(new Airport(738, 127, "DVL", ON_TOP));
+    myAirports.add(new Airport(987, 171, "CMX", ON_TOP));
+    myAirports.add(new Airport(697, 476, "HYS", ON_TOP));
+    myAirports.add(new Airport(943, 463, "CGI", ON_TOP));
+    myAirports.add(new Airport(437, 352, "RKS", ON_TOP));
+    myAirports.add(new Airport(502, 523, "ALS", ON_TOP));
+    myAirports.add(new Airport(542, 384, "CYS", ON_TOP));
+    myAirports.add(new Airport(597, 356, "BFF", ON_TOP));
+    myAirports.add(new Airport(307, 600, "PRC", ON_TOP));
+    myAirports.add(new Airport(669, 395, "LBF", ON_TOP));
+    myAirports.add(new Airport(543, 259, "GCC", ON_TOP));
+    myAirports.add(new Airport(787, 351, "SUX", ON_TOP));
   }
   /*void whichWidget()
    {
