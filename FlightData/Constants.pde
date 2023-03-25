@@ -18,6 +18,12 @@ final int ALASKA_X_START = 900;
 final int HAWAII_X_START = 550;
 final int TOP_ROW_Y_START = 250;
 final int HAWAII_Y_START = 520;
+final int CURRENT = 0;
+final int START = 1;
+final int SHADOW = 2;
+final int CHART_BUTTON_SIZE = 300;
+final int DEP_X = 1200;
+final int DEP_Y = 150;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;

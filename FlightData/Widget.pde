@@ -44,9 +44,9 @@ class Widget {
     }
   }
 
-  void hover(int mX, int mY) {
+  void hover() {
     hasBorder = false;
-    if (mX > x && mX < x+widgetWidth && mY > y && mY < y+widgetHeight) {
+    if (mouseX > x && mouseX < x+widgetWidth && mouseY > y && mouseY < y+widgetHeight) {
       hasBorder = true;
     }
   }

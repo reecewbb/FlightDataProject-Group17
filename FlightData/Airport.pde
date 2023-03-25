@@ -56,9 +56,9 @@ class Airport
     return name;
   }
 
-  void strokeAirport(int mX, int mY)
+  void strokeAirport()
   {
-    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS)
+    if ( mouseX < xpos + AIRPORT_RADIUS && mouseX > xpos - AIRPORT_RADIUS && mouseY < ypos + AIRPORT_RADIUS && mouseY > ypos - AIRPORT_RADIUS)
     {
       this.airportStrokeColor = (255);
     } 

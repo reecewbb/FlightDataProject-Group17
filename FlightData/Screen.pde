@@ -1,4 +1,4 @@
-class Screen { //<>// //<>//
+class Screen {  //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights;
@@ -10,21 +10,23 @@ class Screen { //<>// //<>//
     textFont(myFont);
     textSize(10);
     mapImage = loadImage("Blank_US_Map.png");
-    startUS = loadImage("Start_US_Map.png");
-    startUS.resize(START_MAP_WIDTH, 0);
-    shadowUS = loadImage("Shadow_US.png");
-    shadowUS.resize(START_MAP_WIDTH + 5, 0);
-    currentUS = startUS;
-    startAlaska = loadImage("Start_Alaska_Map.png");
-    startAlaska.resize(START_MAP_WIDTH, 0);
-    shadowAlaska = loadImage("Shadow_Alaska.png");
-    shadowAlaska.resize(START_MAP_WIDTH + 5, 0);
-    currentAlaska = startAlaska;
-    startHawaii = loadImage("Start_Hawaii_Map.png");
-    startHawaii.resize(START_MAP_WIDTH, 0);
-    shadowHawaii = loadImage("Shadow_Hawaii.png");
-    shadowHawaii.resize(START_MAP_WIDTH + 5, 0);
-    currentHawaii = startHawaii;
+    US = new PImage[3];
+    Alaska = new PImage[3];
+    Hawaii = new PImage[3];
+    Departures = new PImage[3];
+    setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
+    setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
+    setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
+    setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
+  }
+
+  void setShadowArray(PImage[] array, String startName, String shadowName, int size)
+  {
+    array[START] = loadImage(startName);
+    array[SHADOW] = loadImage(shadowName);
+    array[START].resize(size, 0);
+    array[SHADOW].resize(size + 5, 0);
+    array[CURRENT] = array[START];
   }
 
   void setOutgoingFlights(int outgoingFlights)
@@ -71,17 +73,7 @@ class Screen { //<>// //<>//
       }
       return event;
     }
-    /*
-      for (int i = 0; i < widgetList.size(); i++)
-     {
-     Widget myWidget = (Widget) widgetList.get(i);
-     event = myWidget.getEvent(mouseX, mouseY);
-     if (event != -1)
-     {
-     return event;
-     }
-     }
-     */
+
     if (screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN)
     {
       for (int i = 0; i < airportList.size(); i++)
@@ -102,7 +94,8 @@ class Screen { //<>// //<>//
           return event;
         }
       }
-    } else
+    } 
+    else
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
@@ -216,9 +209,9 @@ class Screen { //<>// //<>//
       text(continentalUS, US_X_START + START_MAP_WIDTH/2 - textWidth(continentalUS)/2, TOP_ROW_Y_START - 30);
       text(alaska, ALASKA_X_START + START_MAP_WIDTH/2 - textWidth(alaska)/2, TOP_ROW_Y_START - 30);
       text(hawaii, HAWAII_X_START + START_MAP_WIDTH/2 - textWidth(hawaii)/2, HAWAII_Y_START + 80);
-      image(currentUS, US_X_START, TOP_ROW_Y_START);
-      image(currentAlaska, ALASKA_X_START, TOP_ROW_Y_START);
-      image(currentHawaii, HAWAII_X_START, HAWAII_Y_START);
+      image(US[CURRENT], US_X_START, TOP_ROW_Y_START);
+      image(Alaska[CURRENT], ALASKA_X_START, TOP_ROW_Y_START);
+      image(Hawaii[CURRENT], HAWAII_X_START, HAWAII_Y_START);
       break;
 
     case CHART_SELECT_SCREEN:
@@ -228,39 +221,34 @@ class Screen { //<>// //<>//
         aWidget.draw();
       }
       String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
+      String depString = "CLICK TO VIEW DEPARTURES";
+      Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
+      String airportName= "AIRPORT NAME: " + currentAirport.getAirportName();
       textSize(20);
-      text(outgoingFlightsString, 100, 120);
+      text(airportName, 100, 120);
+      text(outgoingFlightsString, 100, 160);
+      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10);
+      image(Departures[CURRENT], DEP_X, DEP_Y);
       break;
     }
   }
 
-  void hover(int mX, int mY)
+  void hover()
   {
-    if (mX > US_X_START && mX < US_X_START + START_MAP_WIDTH && mY > TOP_ROW_Y_START && mY < TOP_ROW_Y_START + 300)
+    US[CURRENT] = changeShadow(US_X_START, TOP_ROW_Y_START, US[START], US[SHADOW]);
+    Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[SHADOW]);
+    Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[SHADOW]);
+    Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[SHADOW]); //<>//
+  }
+
+  PImage changeShadow(int xpos, int ypos, PImage start, PImage shadow)
+  {
+    if (mouseX > xpos && mouseX < xpos + start.width && mouseY > ypos && mouseY < ypos + start.height)
     {
-      currentUS = shadowUS; //<>//
-    } 
-    else
-    {
-      currentUS = startUS;
-    }
-    
-    if (mX > ALASKA_X_START && mX < ALASKA_X_START + START_MAP_WIDTH && mY > TOP_ROW_Y_START && mY < TOP_ROW_Y_START + 300)
-    {
-      currentAlaska = shadowAlaska; //<>//
-    } 
-    else
-    {
-      currentAlaska = startAlaska;
-    }
-    
-    if (mX > HAWAII_X_START && mX < HAWAII_X_START + START_MAP_WIDTH && mY > HAWAII_Y_START && mY < HAWAII_Y_START + 300)
-    {
-      currentHawaii = shadowHawaii;
-    } 
-    else
-    {
-      currentHawaii = startHawaii;
+      return shadow;
+    } else
+    { //<>//
+      return start;
     }
   }
 

@@ -1,4 +1,4 @@
-import java.util.Scanner; //<>// //<>//
+import java.util.Scanner;  //<>// //<>//
 import java.io.File;
 import java.util.ArrayList;
 
@@ -7,7 +7,8 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
-PImage mapImage, startUS, startAlaska, startHawaii, shadowUS, currentUS, shadowAlaska, currentAlaska, shadowHawaii, currentHawaii;
+PImage mapImage;
+PImage[] US, Alaska, Hawaii, Departures;
 Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen;
 BarChart chart;
 int event, lastAirportSelected;
@@ -46,32 +47,41 @@ void mousePressed()
   if (event == BACK_BUTTON_EVENT)
   {
     currentScreen = mapScreen;
-  } else if (event == AK_EVENT)
+  } 
+  else if (event == AK_EVENT)
   {
     mapFilter.currentFilter = AK_FILTER;
-  } else if (event == LS_EVENT)
+  } 
+  else if (event == LS_EVENT)
   {
     mapFilter.currentFilter = LS_FILTER;
-  } else if (event == TZ_EVENT)
+  } 
+  else if (event == TZ_EVENT)
   {
     mapFilter.currentFilter = TZ_FILTER;
-  } else if (event == NO_FILTER_EVENT)
+  } 
+  else if (event == NO_FILTER_EVENT)
   {
     mapFilter.currentFilter = NO_FILTER;
-  } else if (event >= TOP_LEFT_EVENT && event <= BOT_RIGHT_EVENT)
+  } 
+  else if (event >= TOP_LEFT_EVENT && event <= BOT_RIGHT_EVENT)
   {
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
-  } else if (event == SELECT_US_EVENT)
+  } 
+  else if (event == SELECT_US_EVENT)
   {
     currentScreen = mapScreen;
-  } else if (event == BACK_TO_START_EVENT)
+  } 
+  else if (event == BACK_TO_START_EVENT)
   {
     currentScreen = startScreen;
-  } else if (event == BAR_CHART_EVENT)
+  } 
+  else if (event == BAR_CHART_EVENT)
   {
     event = lastAirportSelected;
     currentScreen = chartScreen;
-  } else if (event >= NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
+  } 
+  else if (event >= NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
   {
     currentScreen = chartSelectionScreen;
     Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
@@ -87,17 +97,17 @@ void mouseMoved()
   {
     for (int i = 0; i < myAirports.size(); i++)
     {
-      myAirports.get(i).strokeAirport(mouseX, mouseY);
+      myAirports.get(i).strokeAirport();
     }
   }
-  backToMapButton.hover(mouseX, mouseY);
-  currF1.hover(mouseX, mouseY);
-  currF2.hover(mouseX, mouseY);
-  currF3.hover(mouseX, mouseY);
-  currF4.hover(mouseX, mouseY);
-  backToStartButton.hover(mouseX, mouseY);
-  barChartButton.hover(mouseX, mouseY);
-  currentScreen.hover(mouseX, mouseY);
+  backToMapButton.hover();
+  currF1.hover();
+  currF2.hover();
+  currF3.hover();
+  currF4.hover();
+  backToStartButton.hover();
+  barChartButton.hover();
+  currentScreen.hover();
 }
 
 void addAirportsToMaps()
@@ -193,7 +203,7 @@ void addWidgets()
 {
   backToMapButton = new Widget(20, 20, 100, 30, "BACK TO MAP", color(180), myFont, BACK_BUTTON_EVENT);
   backToStartButton = new Widget(20, 20, 100, 30, "BACK TO START", color(180), myFont, BACK_TO_START_EVENT);
-  barChartButton = new Widget(1300, 100, 200, 50, "OUTGOING FLIGHTS BAR CHART", color(180), myFont, BAR_CHART_EVENT);
+  barChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, BAR_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
   currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, AK_EVENT);
   currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, LS_EVENT);
