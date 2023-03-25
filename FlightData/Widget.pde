@@ -25,7 +25,7 @@ class Widget {
     fill(widgetColor);
     rect(x, y, widgetWidth, widgetHeight);
     fill(labelColor);
-    text(label, x + 10, y + widgetHeight - 10);
+    text(label, x + widgetWidth/2 - textWidth(label)/2, y + widgetHeight/2 + textAscent()/2);
   }
 
   void hover(int mX, int mY) {
