@@ -193,17 +193,24 @@ class Screen {
     case START_SCREEN:
       String start = "AIRPORT DATA VIEWER";
       String regionSelect = "SELECT REGION";
+      String continentalUS = "CONTINENTAL US";
+      String alaska = "ALASKA";
+      String hawaii = "HAWAII";
       fill(0);
       textSize(50);
       text(start, SCREENX/2 - textWidth(start)/2, 100);
+      textSize(30);
+      text(regionSelect, SCREENX/2 - textWidth(regionSelect)/2, 170);
       textSize(20);
-      text(regionSelect, SCREENX/2 - textWidth(regionSelect)/2, 200);
+      text(continentalUS, 150 + START_MAP_WIDTH/2 - textWidth(continentalUS)/2, 220);
+      text(alaska, 900 + START_MAP_WIDTH/2 - textWidth(alaska)/2, 220);
+      text(hawaii, 550 + START_MAP_WIDTH/2 - textWidth(hawaii)/2, 600);
       startUS.resize(START_MAP_WIDTH, 0);
       startAlaska.resize(START_MAP_WIDTH, 0);
       startHawaii.resize(START_MAP_WIDTH, 0);
       image(startUS, 150, 250);
-      image(startAlaska, 800, 250);
-      image(startHawaii, 500, 520);
+      image(startAlaska, 900, 250);
+      image(startHawaii, 550, 520);
       break;
       
     case CHART_SELECT_SCREEN: //<>//
