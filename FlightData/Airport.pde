@@ -1,6 +1,6 @@
 class Airport
 {
-  int x, y, topSideBottom, airportID;
+  int x, y, topSideBottom, airportID, numberOfOutgoingFlights;
   float xpos, ypos;
   String name;
   color airportStrokeColor, airportColor, airportTextColor;
@@ -19,6 +19,21 @@ class Airport
   public void setID(int airportID)
   {
     this.airportID = airportID;
+  }
+  
+  public int getAmountOfOutgoingFlights(ArrayList<Flight> flightList)
+  {
+    int amount = 0; //<>//
+    for (int i = 0; i < flightList.size(); i++)
+    {
+      Flight currentFlight = flightList.get(i); //<>//
+      String currentAirportName = currentFlight.getOrigin();
+      if (currentAirportName.equals(name))
+      {
+          amount++;
+      }
+    }
+    return amount;
   }
 
   public int getID()
@@ -122,7 +137,7 @@ class Airport
       break;
 
     case ON_BOTTOM:
-      text(name, xpos - AIRPORT_RADIUS, ypos + AIRPORT_RADIUS + 12);
+      text(name, xpos - AIRPORT_RADIUS - 10, ypos + AIRPORT_RADIUS + 12);
       break;
     }
   }

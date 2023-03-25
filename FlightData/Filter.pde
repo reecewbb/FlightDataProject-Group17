@@ -131,7 +131,7 @@ class Filter {
     myAirports.add(new Airport(408, 189, "BZN", ON_TOP));
     myAirports.add(new Airport(827, 818, "IAH", ON_BOTTOM));
     myAirports.add(new Airport(557, 950, "ITO", ON_TOP));
-    myAirports.add(new Airport(137, 583, "BUR", ON_SIDE));
+    myAirports.add(new Airport(137, 583, "BUR", ON_BOTTOM));
     myAirports.add(new Airport(1090, 780, "VPS", ON_TOP));
     myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
     myAirports.add(new Airport(781, 173, "FAR", ON_TOP));

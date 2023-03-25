@@ -1,12 +1,16 @@
 class Screen {
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
-  int screenType;
-  int previousEvent;
+  int screenType, previousEvent, outgoingFlights;
 
   Screen (int screenType)
   {
     this.screenType = screenType;
+  }
+  
+  void setOutgoingFlights(int outgoingFlights)
+  {
+    this.outgoingFlights = outgoingFlights;
   }
 
   void addAirport(Airport airport)
@@ -104,7 +108,7 @@ class Screen {
     startUS = loadImage("Start_US_Map.png");
     startAlaska = loadImage("Start_Alaska_Map.png");
     startHawaii = loadImage("Start_Hawaii_Map.png");
-    switch(screenType) //<>// //<>//
+    switch(screenType) 
     {
     case MAP_SCREEN:
       mapImage.resize(SCREENX, SCREENY);
@@ -181,9 +185,9 @@ class Screen {
       {
         event = previousEvent;
       }
-      BarChart bc = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
+      BarChart outgoingFlightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
       previousEvent = event;
-      bc.draw();
+      outgoingFlightsChart.draw();
       break;
       
     case START_SCREEN:
@@ -200,6 +204,17 @@ class Screen {
       image(startUS, 150, 250);
       image(startAlaska, 800, 250);
       image(startHawaii, 500, 520);
+      break;
+      
+    case CHART_SELECT_SCREEN: //<>//
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
+      textSize(20);
+      text(outgoingFlightsString, 100, 120);
       break;
     }
   }

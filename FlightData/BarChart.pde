@@ -4,56 +4,37 @@ class BarChart
   String airportName, chartName;
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
-  int[] newFlightCount, flightCount, destinationCount;
-  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2;
+  int[] flightCount, destinationCount;
+  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2, amountOfOutgoingFlights;
   float differenceInPosition, yIncrement, difference, widthOfBar;
+  boolean firstTime;
 
   BarChart(int airportID, ArrayList airportList, ArrayList flightList)
   {
     this.barChartYAxisLength = BAR_CHART_Y_AXIS_LENGTH;
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
-    this.airportID = airportID;
+    this.airportID = airportID; //<>//
     this.airportList = airportList;
     this.flightList = flightList;
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
-    chartName = "Number of outgoing flights from " + airportName;
-    maxValue = findMaxValue();
-    if (maxValue != 0)
+    outgoingFlightsCalculation();
+    for (int i = 0; i < destinationCount.length; i++)
     {
-      if (maxValue > MAX_Y_VALUES) amountOfYValues = MAX_Y_VALUES;
-      else amountOfYValues = maxValue;
-      valueOnY = (maxValue / amountOfYValues) + 1;
-      amountOfYValues = (maxValue / valueOnY) + 1;
-      differenceInValue = valueOnY;
-      positionOnY = SCREENY - CHART_BUFFER;
-      differenceInPosition = barChartYAxisLength/amountOfYValues;
-      xPosition = 80;
-      point = CHART_BUFFER + 20;
-      flightCount = createDestinationArray();
-      yIncrement = differenceInPosition/differenceInValue;
-      airportCounter = 0;
-      for (int i = 0; i < airportList.size(); i++)
-      {
-        Airport nextAirport = (Airport) airportList.get(i);
-        String nextAirportName = nextAirport.getAirportName();
-        if (!nextAirportName.equals(airportName) && flightCount[i] != 0)
-        {
-          airportCounter++;
-        }
-      }
-      if (airportCounter > 50) airportCounter = 50;
-      difference = (barChartXAxisLength / airportCounter) * 0.99;
-      widthOfBar = difference * 0.8;
-      airportCounter2 = 0;
+      amountOfOutgoingFlights += destinationCount[i];
     }
+  }
+  
+  public int getAmountOfOutgoingFlights()
+  {
+    return amountOfOutgoingFlights;
   }
 
   public int findMaxValue()
   {
     int maxValue = 0;
     destinationCount = createDestinationArray();
-    for (int i = 0; i < newFlightCount.length; i++)
+    for (int i = 0; i < destinationCount.length; i++)
     {
       int currentValue = destinationCount[i];
       if (currentValue > maxValue) maxValue = currentValue;
@@ -64,7 +45,7 @@ class BarChart
 
   public int[] createDestinationArray()
   {
-    newFlightCount = new int[airportList.size()];
+    int[] newFlightCount = new int[airportList.size()];
     for (int i = 0; i < flightList.size(); i++)
     {
       Flight currentFlight = flightList.get(i);
@@ -123,6 +104,39 @@ class BarChart
     } else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
   }
 
+  void outgoingFlightsCalculation()
+  {
+    chartName = "Number of outgoing flights from " + airportName;
+    maxValue = findMaxValue();
+    if (maxValue != 0)
+    {
+      if (maxValue > MAX_Y_VALUES) amountOfYValues = MAX_Y_VALUES;
+      else amountOfYValues = maxValue;
+      valueOnY = (maxValue / amountOfYValues) + 1;
+      amountOfYValues = (maxValue / valueOnY) + 1;
+      differenceInValue = valueOnY;
+      positionOnY = SCREENY - CHART_BUFFER;
+      differenceInPosition = barChartYAxisLength/amountOfYValues;
+      xPosition = 80;
+      point = CHART_BUFFER + 20;
+      flightCount = createDestinationArray();
+      yIncrement = differenceInPosition/differenceInValue;
+      airportCounter = 0;
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport nextAirport = (Airport) airportList.get(i);
+        String nextAirportName = nextAirport.getAirportName();
+        if (!nextAirportName.equals(airportName) && flightCount[i] != 0)
+        {
+          airportCounter++;
+        }
+      }
+      if (airportCounter > 50) airportCounter = 50;
+      difference = (barChartXAxisLength / airportCounter) * 0.99;
+      widthOfBar = difference * 0.8;
+      airportCounter2 = 0;
+    }
+  }
 
   void setBarChart()
   {
