@@ -36,6 +36,7 @@ class Widget {
     {
       if (hasBorder) stroke(255);
       else stroke(0);
+      textSize(10);
       fill(widgetColor);
       rect(x, y, widgetWidth, widgetHeight);
       fill(labelColor);

@@ -1,4 +1,4 @@
-class Screen {
+class Screen { //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights;
@@ -6,8 +6,27 @@ class Screen {
   Screen (int screenType)
   {
     this.screenType = screenType;
+    myFont=loadFont("Arial-Black-48.vlw");
+    textFont(myFont);
+    textSize(10);
+    mapImage = loadImage("Blank_US_Map.png");
+    startUS = loadImage("Start_US_Map.png");
+    startUS.resize(START_MAP_WIDTH, 0);
+    shadowUS = loadImage("Shadow_US.png");
+    shadowUS.resize(START_MAP_WIDTH + 5, 0);
+    currentUS = startUS;
+    startAlaska = loadImage("Start_Alaska_Map.png");
+    startAlaska.resize(START_MAP_WIDTH, 0);
+    shadowAlaska = loadImage("Shadow_Alaska.png");
+    shadowAlaska.resize(START_MAP_WIDTH + 5, 0);
+    currentAlaska = startAlaska;
+    startHawaii = loadImage("Start_Hawaii_Map.png");
+    startHawaii.resize(START_MAP_WIDTH, 0);
+    shadowHawaii = loadImage("Shadow_Hawaii.png");
+    shadowHawaii.resize(START_MAP_WIDTH + 5, 0);
+    currentHawaii = startHawaii;
   }
-  
+
   void setOutgoingFlights(int outgoingFlights)
   {
     this.outgoingFlights = outgoingFlights;
@@ -83,8 +102,7 @@ class Screen {
           return event;
         }
       }
-    } 
-    else
+    } else
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
@@ -101,14 +119,7 @@ class Screen {
 
   void draw(int event, ArrayList<Airport> myAirports, ArrayList<Flight> myFlights, Filter mapFilter)
   {
-    myFont=loadFont("Arial-Black-48.vlw");
-    textFont(myFont);
-    textSize(10);
-    mapImage = loadImage("Blank_US_Map.png");
-    startUS = loadImage("Start_US_Map.png");
-    startAlaska = loadImage("Start_Alaska_Map.png");
-    startHawaii = loadImage("Start_Hawaii_Map.png");
-    switch(screenType) 
+    switch(screenType)
     {
     case MAP_SCREEN:
       mapImage.resize(SCREENX, SCREENY);
@@ -121,8 +132,8 @@ class Screen {
       rect(0, SCREENY/3, SCREENX, 0.5);
       rect(0, 2 * SCREENY/3, SCREENX, 0.5);
       rect(0, SCREENY/3, SCREENX, 0.5);
-      rect(SCREENX/3,0, 0.5, SCREENY);
-      rect(2 * SCREENX/3,0, 0.5, SCREENY);
+      rect(SCREENX/3, 0, 0.5, SCREENY);
+      rect(2 * SCREENX/3, 0, 0.5, SCREENY);
       for (int i = 0; i < airportList.size(); i++)
       {
         Airport myAirport = (Airport) airportList.get(i);
@@ -189,7 +200,7 @@ class Screen {
       previousEvent = event;
       outgoingFlightsChart.draw();
       break;
-      
+
     case START_SCREEN:
       String start = "AIRPORT DATA VIEWER";
       String regionSelect = "SELECT REGION";
@@ -202,18 +213,15 @@ class Screen {
       textSize(30);
       text(regionSelect, SCREENX/2 - textWidth(regionSelect)/2, 170);
       textSize(20);
-      text(continentalUS, 150 + START_MAP_WIDTH/2 - textWidth(continentalUS)/2, 220);
-      text(alaska, 900 + START_MAP_WIDTH/2 - textWidth(alaska)/2, 220);
-      text(hawaii, 550 + START_MAP_WIDTH/2 - textWidth(hawaii)/2, 600);
-      startUS.resize(START_MAP_WIDTH, 0);
-      startAlaska.resize(START_MAP_WIDTH, 0);
-      startHawaii.resize(START_MAP_WIDTH, 0);
-      image(startUS, 150, 250);
-      image(startAlaska, 900, 250);
-      image(startHawaii, 550, 520);
+      text(continentalUS, US_X_START + START_MAP_WIDTH/2 - textWidth(continentalUS)/2, TOP_ROW_Y_START - 30);
+      text(alaska, ALASKA_X_START + START_MAP_WIDTH/2 - textWidth(alaska)/2, TOP_ROW_Y_START - 30);
+      text(hawaii, HAWAII_X_START + START_MAP_WIDTH/2 - textWidth(hawaii)/2, HAWAII_Y_START + 80);
+      image(currentUS, US_X_START, TOP_ROW_Y_START);
+      image(currentAlaska, ALASKA_X_START, TOP_ROW_Y_START);
+      image(currentHawaii, HAWAII_X_START, HAWAII_Y_START);
       break;
-      
-    case CHART_SELECT_SCREEN: //<>//
+
+    case CHART_SELECT_SCREEN:
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
@@ -223,6 +231,36 @@ class Screen {
       textSize(20);
       text(outgoingFlightsString, 100, 120);
       break;
+    }
+  }
+
+  void hover(int mX, int mY)
+  {
+    if (mX > US_X_START && mX < US_X_START + START_MAP_WIDTH && mY > TOP_ROW_Y_START && mY < TOP_ROW_Y_START + 300)
+    {
+      currentUS = shadowUS; //<>//
+    } 
+    else
+    {
+      currentUS = startUS;
+    }
+    
+    if (mX > ALASKA_X_START && mX < ALASKA_X_START + START_MAP_WIDTH && mY > TOP_ROW_Y_START && mY < TOP_ROW_Y_START + 300)
+    {
+      currentAlaska = shadowAlaska; //<>//
+    } 
+    else
+    {
+      currentAlaska = startAlaska;
+    }
+    
+    if (mX > HAWAII_X_START && mX < HAWAII_X_START + START_MAP_WIDTH && mY > HAWAII_Y_START && mY < HAWAII_Y_START + 300)
+    {
+      currentHawaii = shadowHawaii;
+    } 
+    else
+    {
+      currentHawaii = startHawaii;
     }
   }
 

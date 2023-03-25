@@ -13,6 +13,11 @@ final int BAR_CHART_X_AXIS_LENGTH = 1400;
 final int CHART_BUFFER = 100;
 final int MAX_Y_VALUES = 20;
 final int TOP_TEXT_BUFFER = 50;
+final int US_X_START = 150;
+final int ALASKA_X_START = 900;
+final int HAWAII_X_START = 550;
+final int TOP_ROW_Y_START = 250;
+final int HAWAII_Y_START = 520;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;

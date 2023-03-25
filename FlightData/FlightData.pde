@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.Scanner; //<>// //<>//
 import java.io.File;
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
-PImage mapImage, startUS, startAlaska, startHawaii;
+PImage mapImage, startUS, startAlaska, startHawaii, shadowUS, currentUS, shadowAlaska, currentAlaska, shadowHawaii, currentHawaii;
 Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen;
 BarChart chart;
 int event, lastAirportSelected;
@@ -43,56 +43,47 @@ void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
   event = currentScreen.buttonClicked();
-  if (event == BACK_BUTTON_EVENT)          
+  if (event == BACK_BUTTON_EVENT)
   {
     currentScreen = mapScreen;
-  } 
-  else if (event == AK_EVENT)          
+  } else if (event == AK_EVENT)
   {
     mapFilter.currentFilter = AK_FILTER;
-  } 
-  else if (event == LS_EVENT)          
+  } else if (event == LS_EVENT)
   {
     mapFilter.currentFilter = LS_FILTER;
-  } 
-  else if (event == TZ_EVENT)          
+  } else if (event == TZ_EVENT)
   {
     mapFilter.currentFilter = TZ_FILTER;
-  } 
-  else if (event == NO_FILTER_EVENT)
+  } else if (event == NO_FILTER_EVENT)
   {
     mapFilter.currentFilter = NO_FILTER;
-  }
-  else if (event >= TOP_LEFT_EVENT && event <= BOT_RIGHT_EVENT)
+  } else if (event >= TOP_LEFT_EVENT && event <= BOT_RIGHT_EVENT)
   {
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
-  }
-  else if (event == SELECT_US_EVENT)
+  } else if (event == SELECT_US_EVENT)
   {
     currentScreen = mapScreen;
-  }
-  else if (event == BACK_TO_START_EVENT)
+  } else if (event == BACK_TO_START_EVENT)
   {
     currentScreen = startScreen;
-  }
-  else if (event == BAR_CHART_EVENT)
+  } else if (event == BAR_CHART_EVENT)
   {
-    event = lastAirportSelected; //<>//
+    event = lastAirportSelected;
     currentScreen = chartScreen;
-  }
-  else if (event >= NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS) //<>//
+  } else if (event >= NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
   {
     currentScreen = chartSelectionScreen;
     Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
     int outgoingFlights = currentAirport.getAmountOfOutgoingFlights(myFlights);
     chartSelectionScreen.setOutgoingFlights(outgoingFlights);
     lastAirportSelected = event;
-  } 
+  }
 }
 
 void mouseMoved()
 {
-  if(currentScreen != mapScreen)
+  if (currentScreen != mapScreen)
   {
     for (int i = 0; i < myAirports.size(); i++)
     {
@@ -104,6 +95,9 @@ void mouseMoved()
   currF2.hover(mouseX, mouseY);
   currF3.hover(mouseX, mouseY);
   currF4.hover(mouseX, mouseY);
+  backToStartButton.hover(mouseX, mouseY);
+  barChartButton.hover(mouseX, mouseY);
+  currentScreen.hover(mouseX, mouseY);
 }
 
 void addAirportsToMaps()
@@ -124,7 +118,7 @@ void addAirportsToMaps()
   }
 }
 
-void setScreens(){
+void setScreens() {
   mapScreen = new Screen(MAP_SCREEN);
   chartScreen = new Screen(BAR_CHART_SCREEN);
   topLeft = new Screen(TOP_LEFT_SCREEN);
@@ -199,7 +193,7 @@ void addWidgets()
 {
   backToMapButton = new Widget(20, 20, 100, 30, "BACK TO MAP", color(180), myFont, BACK_BUTTON_EVENT);
   backToStartButton = new Widget(20, 20, 100, 30, "BACK TO START", color(180), myFont, BACK_TO_START_EVENT);
-  barChartButton = new Widget(1300, 100, 200, 50, "OUTGOING FLIGHTS BAR CHART", color(180), myFont, BAR_CHART_EVENT); 
+  barChartButton = new Widget(1300, 100, 200, 50, "OUTGOING FLIGHTS BAR CHART", color(180), myFont, BAR_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
   currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, AK_EVENT);
   currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, LS_EVENT);
