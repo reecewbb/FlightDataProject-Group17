@@ -101,12 +101,16 @@ class Screen {
     textFont(myFont);
     textSize(10);
     mapImage = loadImage("Blank_US_Map.png");
-    switch(screenType)
+    startUS = loadImage("Start_US_Map.png");
+    startAlaska = loadImage("Start_Alaska_Map.png");
+    startHawaii = loadImage("Start_Hawaii_Map.png");
+    switch(screenType) //<>// //<>//
     {
     case MAP_SCREEN:
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
-      text("SELECT AREA", SCREENX/2 - 50, 50);
+      String selectArea = "SELECT AREA";
+      text(selectArea, SCREENX/2 - textWidth(selectArea)/2, TOP_TEXT_BUFFER);
       rect(0, SCREENY/3, SCREENX, 0.5);
       rect(0, 2 * SCREENY/3, SCREENX, 0.5);
       rect(0, SCREENY/3, SCREENX, 0.5);
@@ -124,7 +128,7 @@ class Screen {
       }
       if (mapFilter.currentFilter != 0 && mapFilter.currentFilter != mapFilter.previousFilter)
       {
-        mapFilter.showAirports(myAirports);
+        mapFilter.showAirports(airportList);
       }
       break;
 
@@ -177,6 +181,22 @@ class Screen {
       BarChart bc = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
       previousEvent = event;
       bc.draw();
+      break;
+      
+    case START_SCREEN:
+      String start = "AIRPORT DATA VIEWER";
+      String regionSelect = "SELECT REGION";
+      fill(0);
+      textSize(50);
+      text(start, SCREENX/2 - textWidth(start)/2, 100);
+      textSize(20);
+      text(regionSelect, SCREENX/2 - textWidth(regionSelect)/2, 200);
+      startUS.resize(START_MAP_WIDTH, 0);
+      startAlaska.resize(START_MAP_WIDTH, 0);
+      startHawaii.resize(START_MAP_WIDTH, 0);
+      image(startUS, 150, 250);
+      image(startAlaska, 800, 250);
+      image(startHawaii, 500, 520);
       break;
     }
   }
