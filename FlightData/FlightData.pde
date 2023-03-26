@@ -1,4 +1,4 @@
-import java.util.Scanner;    //<>//
+import java.util.Scanner;     //<>//
 import java.io.File;
 import java.util.ArrayList;
 
@@ -15,13 +15,14 @@ int event, lastAirportSelected;
 int previousEvent;
 Filter mapFilter;
 Widget backToMapButton, currF1, currF2, currF3, currF4, USMapButton, backToStartButton, barChartButton;
+boolean drawingGraph;
 
 void settings() {
   size(SCREENX, SCREENY);
 }
 
 void setup() {
-  background(255);
+  background(WHITE);
   importDataFromFile();
   setScreens();
   mapFilter = new Filter();
@@ -32,12 +33,13 @@ void setup() {
   addAirportsToMaps();
   addWidgets();
   addDataToAirports();
+  drawingGraph = false;
 }
 
 
 void draw()
 {
-  background(255);
+  background(WHITE);
   currentScreen.draw(event, myAirports, myFlights, mapFilter);
 }
 

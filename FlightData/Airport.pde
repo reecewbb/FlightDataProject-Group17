@@ -1,6 +1,6 @@
 class Airport
 {
-  int x, y, topSideBottom, airportID, numberOfOutgoingFlights;
+  int x, y, topSideBottom, airportID, numberOfOutgoingFlights, borderSize;
   float xpos, ypos;
   String name, cityName;
   color airportStrokeColor, airportColor, airportTextColor;
@@ -11,7 +11,7 @@ class Airport
     this.y = y;
     this.name = name;
     this.topSideBottom = topSideBottom;
-    airportStrokeColor = color(0);
+    borderSize = 4;
     airportColor = color(#FC0808);
     airportTextColor = color(0);
   }
@@ -70,11 +70,11 @@ class Airport
   {
     if ( mouseX < xpos + AIRPORT_RADIUS && mouseX > xpos - AIRPORT_RADIUS && mouseY < ypos + AIRPORT_RADIUS && mouseY > ypos - AIRPORT_RADIUS)
     {
-      this.airportStrokeColor = (255);
+      borderSize = 2;
     } 
     else
     {
-      this.airportStrokeColor = (0);
+      borderSize = 1;
     }
   }
 
@@ -87,7 +87,8 @@ class Airport
   void draw(int screen)
   {
     fill(airportColor);
-    stroke(airportStrokeColor);
+    stroke(0);
+    strokeWeight(borderSize);
     int screenPart = screen;
     xpos = x;
     ypos = y;

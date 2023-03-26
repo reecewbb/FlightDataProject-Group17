@@ -71,7 +71,9 @@ class BarChart
   void drawBarChartForOutgoingFlights()
   {
     setBarChart();
+    textSize(20);
     text(chartName, SCREENX/2 - textWidth(chartName)/2, TOP_TEXT_BUFFER);
+    textSize(10);
     if (maxValue != 0)
     {
       for (int i = 0; i < amountOfYValues; i++)
@@ -90,7 +92,6 @@ class BarChart
         String currentAirportName = currentAirport.getAirportName();
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
-          textSize(10);
           fill(0);
           text(currentAirportName, point + (widthOfBar / 2) - (textWidth(currentAirportName)/2), SCREENY - 70);
           fill(#08F4FA);

@@ -34,8 +34,8 @@ class Widget {
   void draw() {
     if(visibleButton)
     {
-      if (hasBorder) stroke(255);
-      else stroke(0);
+      if (hasBorder) strokeWeight(2);
+      else strokeWeight(1);
       textSize(10);
       fill(widgetColor);
       rect(x, y, widgetWidth, widgetHeight);

@@ -33,6 +33,8 @@ final int MID_RIGHT = 5;
 final int BOT_LEFT = 6;
 final int BOT_MID = 7;
 final int BOT_RIGHT = 8;
+final int WHITE = 255;
+final int BLACK = 0;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;

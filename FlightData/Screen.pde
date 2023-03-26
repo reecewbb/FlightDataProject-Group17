@@ -1,4 +1,4 @@
-class Screen { //<>// //<>//
+class Screen { //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights, currentGridHover, screen;
@@ -251,7 +251,7 @@ class Screen { //<>// //<>//
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
-      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>//
+      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>// //<>//
       image(Departures[CURRENT], DEP_X, DEP_Y);
       break;
     }
@@ -259,6 +259,7 @@ class Screen { //<>// //<>//
 
   void drawGrid()
   {
+    strokeWeight(1);
     rect(0, SCREENY/3, SCREENX/3, rectangleWidth[TOP_LEFT][CURRENT]);
     rect(SCREENX/3, 0, rectangleWidth[TOP_LEFT][CURRENT], SCREENY/3);
 
@@ -336,7 +337,7 @@ class Screen { //<>// //<>//
       screenCopy -= 3;
       row++;
     }
-    while(screenCopy > 0)
+    while(screenCopy > 0) //<>//
     { //<>//
       screenCopy--;
       column++;
