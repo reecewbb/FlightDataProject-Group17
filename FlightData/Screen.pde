@@ -1,7 +1,8 @@
-class Screen {  //<>// //<>// //<>// //<>//
+class Screen { //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
-  int screenType, previousEvent, outgoingFlights;
+  int screenType, previousEvent, outgoingFlights, currentGridHover;
+  float[][] rectangleWidth;
 
   Screen (int screenType)
   {
@@ -10,14 +11,21 @@ class Screen {  //<>// //<>// //<>// //<>//
     textFont(myFont);
     textSize(10);
     setImages();
+    rectangleWidth = new float[9][3];
+    for (int i = 0; i < 9; i++)
+    {
+      rectangleWidth[i][START] = 0.5;
+      rectangleWidth[i][CHANGED] = 2;
+      rectangleWidth[i][CURRENT] = rectangleWidth[i][START];
+    }
   }
 
   void setShadowArray(PImage[] array, String startName, String shadowName, int size)
   {
     array[START] = loadImage(startName);
-    array[SHADOW] = loadImage(shadowName);
+    array[CHANGED] = loadImage(shadowName);
     array[START].resize(size, 0);
-    array[SHADOW].resize(size + 5, 0);
+    array[CHANGED].resize(size + 5, 0);
     array[CURRENT] = array[START];
   }
 
@@ -110,7 +118,7 @@ class Screen {  //<>// //<>// //<>// //<>//
           return event;
         }
       }
-    }
+    } //<>//
     return NO_EVENT;
   }
 
@@ -118,7 +126,7 @@ class Screen {  //<>// //<>// //<>// //<>//
   {
     if (event == NO_EVENT)
     {
-       event = previousEvent; //<>//
+      event = previousEvent;
     }
     switch(screenType)
     {
@@ -130,11 +138,39 @@ class Screen {  //<>// //<>// //<>// //<>//
       text(selectArea, SCREENX/2 - textWidth(selectArea)/2, TOP_TEXT_BUFFER);
       textSize(10);
       stroke(120);
-      rect(0, SCREENY/3, SCREENX, 0.5);
-      rect(0, 2 * SCREENY/3, SCREENX, 0.5);
-      rect(0, SCREENY/3, SCREENX, 0.5);
-      rect(SCREENX/3, 0, 0.5, SCREENY);
-      rect(2 * SCREENX/3, 0, 0.5, SCREENY);
+      
+      rect(0, SCREENY/3, SCREENX/3, rectangleWidth[TOP_LEFT][CURRENT]); //<>//
+      rect(SCREENX/3, 0, rectangleWidth[TOP_LEFT][CURRENT], SCREENY/3);
+      
+      rect(SCREENX/3, 0, rectangleWidth[TOP_MID][CURRENT], SCREENY/3);
+      rect(2 * SCREENX/3, 0, rectangleWidth[TOP_MID][CURRENT], SCREENY/3);
+      rect(SCREENX/3, SCREENY/3, SCREENX/3, rectangleWidth[TOP_MID][CURRENT]);
+      
+      rect(2 * SCREENX/3, 0, rectangleWidth[TOP_RIGHT][CURRENT], SCREENY/3);
+      rect(2 * SCREENX/3, SCREENY/3, SCREENX/3, rectangleWidth[TOP_RIGHT][CURRENT]);
+      
+      rect(0, SCREENY/3, SCREENX/3, rectangleWidth[MID_LEFT][CURRENT]);
+      rect(SCREENX/3, SCREENY/3, rectangleWidth[MID_LEFT][CURRENT], SCREENY/3);
+      rect(0, 2 * SCREENY/3, SCREENX/3, rectangleWidth[MID_LEFT][CURRENT]);
+      
+      rect(SCREENX/3, SCREENY/3, SCREENX/3, rectangleWidth[MID_MID][CURRENT]);
+      rect(SCREENX/3, SCREENY/3, rectangleWidth[MID_MID][CURRENT], SCREENY/3);
+      rect(2 * SCREENX/3, SCREENY/3, rectangleWidth[MID_MID][CURRENT], SCREENY/3);
+      rect(SCREENX/3, 2*SCREENY/3, SCREENX/3, rectangleWidth[MID_MID][CURRENT]);
+      
+      rect(2 * SCREENX/3, SCREENY/3, SCREENX/3, rectangleWidth[MID_RIGHT][CURRENT]);
+      rect(2 * SCREENX/3, SCREENY/3, rectangleWidth[MID_RIGHT][CURRENT], SCREENY/3);
+      rect(2 * SCREENX/3, 2 * SCREENY/3, SCREENX/3, rectangleWidth[MID_RIGHT][CURRENT]);
+      
+      rect(0, 2 * SCREENY/3, SCREENX/3, rectangleWidth[BOT_LEFT][CURRENT]);
+      rect(SCREENX/3, 2 * SCREENY/3, rectangleWidth[BOT_LEFT][CURRENT], SCREENY/3);
+      
+      rect(SCREENX/3, 2 * SCREENY/3, rectangleWidth[BOT_MID][CURRENT], SCREENY/3);
+      rect(SCREENX/3, 2*SCREENY/3, SCREENX/3, rectangleWidth[BOT_MID][CURRENT]);
+      rect(2 * SCREENX/3, 2* SCREENY/3, rectangleWidth[BOT_MID][CURRENT], SCREENY/3);
+      
+      rect(2 * SCREENX/3, 2* SCREENY/3, rectangleWidth[BOT_RIGHT][CURRENT], SCREENY/3);
+      rect(2 * SCREENX/3, 2 * SCREENY/3, SCREENX/3, rectangleWidth[BOT_RIGHT][CURRENT]); 
       for (int i = 0; i < airportList.size(); i++)
       {
         Airport myAirport = (Airport) airportList.get(i);
@@ -242,10 +278,19 @@ class Screen {  //<>// //<>// //<>// //<>//
 
   void hover()
   {
-    US[CURRENT] = changeShadow(US_X_START, TOP_ROW_Y_START, US[START], US[SHADOW]);
-    Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[SHADOW]);
-    Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[SHADOW]);
-    Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[SHADOW]);
+    switch (screenType)
+    {
+      case MAP_SCREEN:
+      changeRectWidth();
+      break;
+      
+      case START_SCREEN:
+      US[CURRENT] = changeShadow(US_X_START, TOP_ROW_Y_START, US[START], US[CHANGED]);
+      Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[CHANGED]);
+      Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[CHANGED]);
+      Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[CHANGED]);
+      break;
+    }
   }
 
   PImage changeShadow(int xpos, int ypos, PImage start, PImage shadow)
@@ -253,10 +298,34 @@ class Screen {  //<>// //<>// //<>// //<>//
     if (mouseX > xpos && mouseX < xpos + start.width && mouseY > ypos && mouseY < ypos + start.height)
     {
       return shadow;
-    } else
+    } 
+    else
     {
       return start;
     }
+  }
+
+  void changeRectWidth()
+  {
+    for (int i = 0; i < rectangleWidth.length; i++)
+    {
+      rectangleWidth[i][CURRENT] = rectangleWidth[i][START];
+    }
+    float mX = mouseX - SCREENX/3;
+    float mY = mouseY - SCREENY/3;
+    int screen = TOP_LEFT;
+    while (mX > 0)
+    {
+      mX -= SCREENX/3;
+      screen++;
+    }
+    while (mY > 0)
+    {
+      mY -= SCREENY/3;
+      screen += 3;
+    }
+    rectangleWidth[screen][CURRENT] = rectangleWidth[screen][CHANGED];
+    currentGridHover = screen;
   }
 
   void setScreen(int widthNo, int heightNo, int ID, String areaName)
