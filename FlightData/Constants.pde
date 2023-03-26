@@ -30,7 +30,7 @@ final int MKT_CARRIER_NO = 1;
 final int MKT_CARRIER_FL_NUM_NO = 2;
 final int ORIGIN_NO = 3;
 final int ORIGIN_CITY_NAME_NO = 4;
-final int ORIGIN_STATE_ABR_NO = 5;
+final int ORIGIN_STATE_ABR_NO = 6;
 final int ORIGIN_WAC_NO = 7;
 final int DEST_NO = 8;
 final int DEST_CITY_NAME_NO = 9;
@@ -62,6 +62,17 @@ final int AK_FILTER = 1;
 final int LS_FILTER = 2;
 final int TZ_FILTER = 3;
 final int NO_FILTER = 4;
+//carrier
+final String AA = "American Airlines";
+final String AS = "Alaska Airlines";
+final String B6 = "JetBlue";
+final String DL = "Delta Airlines";
+final String F9 = "Frontier Airlines";
+final String G4 = "Allegiant Air";
+final String HA = "Hawaiian Airlines";
+final String NK = "Spirit Airlines";
+final String UA = "United Airlines";
+final String WN = "Southwest Airlines";
 //events
 final int BACK_BUTTON_EVENT = 0;
 final int AK_EVENT = 1;

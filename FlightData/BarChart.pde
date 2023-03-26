@@ -13,7 +13,7 @@ class BarChart
   {
     this.barChartYAxisLength = BAR_CHART_Y_AXIS_LENGTH;
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
-    this.airportID = airportID; //<>//
+    this.airportID = airportID;
     this.airportList = airportList;
     this.flightList = flightList;
     Airport currentAirport = (Airport) airportList.get(airportID);

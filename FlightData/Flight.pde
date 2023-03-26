@@ -27,6 +27,12 @@ class Flight
     return dest;
   }
 
+  public String getCityName()
+  {
+    String cityName = originCityName + ", " + originStateAbr;
+    return cityName;
+  }
+  
   public void setData(String data, int dataType)
   {
     switch(dataType)

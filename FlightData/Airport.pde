@@ -2,7 +2,7 @@ class Airport
 {
   int x, y, topSideBottom, airportID, numberOfOutgoingFlights;
   float xpos, ypos;
-  String name;
+  String name, cityName;
   color airportStrokeColor, airportColor, airportTextColor;
 
   Airport(int x, int y, String name, int topSideBottom)
@@ -21,12 +21,22 @@ class Airport
     this.airportID = airportID;
   }
   
+  public void setCityName(String cityName)
+  {
+    this.cityName = cityName;
+  }
+  
+  public String getCityName()
+  {
+    return cityName;
+  }
+  
   public int getAmountOfOutgoingFlights(ArrayList<Flight> flightList)
   {
-    int amount = 0; //<>//
+    int amount = 0;
     for (int i = 0; i < flightList.size(); i++)
     {
-      Flight currentFlight = flightList.get(i); //<>//
+      Flight currentFlight = flightList.get(i);
       String currentAirportName = currentFlight.getOrigin();
       if (currentAirportName.equals(name))
       {

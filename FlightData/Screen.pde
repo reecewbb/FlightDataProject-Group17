@@ -1,4 +1,4 @@
-class Screen {  //<>// //<>//
+class Screen {  //<>// //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights;
@@ -9,15 +9,7 @@ class Screen {  //<>// //<>//
     myFont=loadFont("Arial-Black-48.vlw");
     textFont(myFont);
     textSize(10);
-    mapImage = loadImage("Blank_US_Map.png");
-    US = new PImage[3];
-    Alaska = new PImage[3];
-    Hawaii = new PImage[3];
-    Departures = new PImage[3];
-    setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
-    setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
-    setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
-    setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
+    setImages();
   }
 
   void setShadowArray(PImage[] array, String startName, String shadowName, int size)
@@ -27,6 +19,19 @@ class Screen {  //<>// //<>//
     array[START].resize(size, 0);
     array[SHADOW].resize(size + 5, 0);
     array[CURRENT] = array[START];
+  }
+
+  void setImages()
+  {
+    mapImage = loadImage("Blank_US_Map.png");
+    US = new PImage[3];
+    Alaska = new PImage[3];
+    Hawaii = new PImage[3];
+    Departures = new PImage[3];
+    setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
+    setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
+    setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
+    setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
   }
 
   void setOutgoingFlights(int outgoingFlights)
@@ -94,8 +99,7 @@ class Screen {  //<>// //<>//
           return event;
         }
       }
-    } 
-    else
+    } else
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
@@ -112,6 +116,10 @@ class Screen {  //<>// //<>//
 
   void draw(int event, ArrayList<Airport> myAirports, ArrayList<Flight> myFlights, Filter mapFilter)
   {
+    if (event == NO_EVENT)
+    {
+       event = previousEvent; //<>//
+    }
     switch(screenType)
     {
     case MAP_SCREEN:
@@ -180,14 +188,10 @@ class Screen {  //<>// //<>//
       break;
 
     case BAR_CHART_SCREEN:
-      for (int i = 0; i < widgetList.size(); i++)
+      for (int i = 0; i < widgetList.size(); i++) //<>//
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
-      }
-      if (event == NO_EVENT)
-      {
-        event = previousEvent;
       }
       BarChart outgoingFlightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
       previousEvent = event;
@@ -223,10 +227,13 @@ class Screen {  //<>// //<>//
       String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
       String depString = "CLICK TO VIEW DEPARTURES";
       Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
-      String airportName= "AIRPORT NAME: " + currentAirport.getAirportName();
+      previousEvent = event; //<>//
+      String airportName= "AIRPORT: " + currentAirport.getAirportName();
+      String cityName = "CITY:  " + currentAirport.getCityName();
       textSize(20);
       text(airportName, 100, 120);
-      text(outgoingFlightsString, 100, 160);
+      text(cityName, 100, 160);
+      text(outgoingFlightsString, 100, 200);
       text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10);
       image(Departures[CURRENT], DEP_X, DEP_Y);
       break;
@@ -238,7 +245,7 @@ class Screen {  //<>// //<>//
     US[CURRENT] = changeShadow(US_X_START, TOP_ROW_Y_START, US[START], US[SHADOW]);
     Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[SHADOW]);
     Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[SHADOW]);
-    Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[SHADOW]); //<>//
+    Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[SHADOW]);
   }
 
   PImage changeShadow(int xpos, int ypos, PImage start, PImage shadow)
@@ -247,7 +254,7 @@ class Screen {  //<>// //<>//
     {
       return shadow;
     } else
-    { //<>//
+    {
       return start;
     }
   }

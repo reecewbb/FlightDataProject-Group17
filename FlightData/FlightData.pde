@@ -1,4 +1,4 @@
-import java.util.Scanner;  //<>// //<>//
+import java.util.Scanner;   //<>//
 import java.io.File;
 import java.util.ArrayList;
 
@@ -31,6 +31,7 @@ void setup() {
   ellipseMode(RADIUS);
   addAirportsToMaps();
   addWidgets();
+  addDataToAirports();
 }
 
 
@@ -124,7 +125,30 @@ void addAirportsToMaps()
     botLeft.addAirport(myAirports.get(i));
     botMid.addAirport(myAirports.get(i));
     botRight.addAirport(myAirports.get(i));
-    (myAirports.get(i)).setID(i);
+  }
+}
+
+void addDataToAirports()
+{
+  for (int i = 0; i < myAirports.size(); i++)
+  {
+    Airport currentAirport = (Airport) myAirports.get(i);
+    currentAirport.setID(i);
+    String airportName = currentAirport.getAirportName();
+    boolean hasStateName = false;
+    int  j = 0;
+    while(!hasStateName && j < myFlights.size())
+    {
+      Flight currentFlight = (Flight) myFlights.get(j);
+      String origin = currentFlight.getOrigin();
+      if(airportName.equals(origin))
+      {
+        String currentCityName = currentFlight.getCityName();
+        currentAirport.setCityName(currentCityName);
+        hasStateName = true;
+      }
+      j++;
+    }
   }
 }
 
@@ -170,6 +194,7 @@ void importDataFromFile()
       for (int i = 0; i < NUMBER_OF_DATAPOINTS + 2; i++)
       {
         String data = allDataArray[i];
+        data = data.replaceAll("\"", "");
         if (i == 5 || i == 10)
         {
           data += ", " + allDataArray[i+1];
