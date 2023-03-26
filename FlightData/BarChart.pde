@@ -76,6 +76,7 @@ class BarChart
     textSize(10);
     if (maxValue != 0)
     {
+      strokeWeight(1);
       for (int i = 0; i < amountOfYValues; i++)
       {
         positionOnY -= differenceInPosition;
@@ -86,16 +87,25 @@ class BarChart
       }
       fill(#08F4FA);
       int i = 0;
+      strokeWeight(2);
       while (airportCounter2 < airportCounter && i < airportList.size())
       {
         Airport currentAirport = airportList.get(i);
         String currentAirportName = currentAirport.getAirportName();
+        String cityName = currentAirport.getCityName();
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
           fill(0);
           text(currentAirportName, point + (widthOfBar / 2) - (textWidth(currentAirportName)/2), SCREENY - 70);
-          fill(#08F4FA);
           float barHeight = flightCount[i] * yIncrement;
+          pushMatrix();
+          textSize(12);
+          translate(point + widthOfBar/2, SCREENY - CHART_BUFFER - barHeight - 10);
+          rotate(-HALF_PI);
+          text(cityName, 0, 0);
+          popMatrix();
+          textSize(10);
+          fill(#08F4FA);
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
           airportCounter2++;
           point += difference;
@@ -132,7 +142,7 @@ class BarChart
           airportCounter++;
         }
       }
-      if (airportCounter > 50) airportCounter = 50;
+      if (airportCounter > 40) airportCounter = 40;
       difference = (barChartXAxisLength / airportCounter) * 0.99;
       widthOfBar = difference * 0.8;
       airportCounter2 = 0;
@@ -143,6 +153,7 @@ class BarChart
   {
     fill(0);
     stroke(0);
+    strokeWeight(1);
     rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);
     rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
     text("0", 80, SCREENY - CHART_BUFFER);
