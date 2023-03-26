@@ -1,4 +1,4 @@
-class Screen { //<>//
+class Screen { //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights, currentGridHover, screen;
@@ -118,7 +118,8 @@ class Screen { //<>//
           return event;
         }
       }
-    } else //<>//
+    } 
+    else 
     {
       for (int i = 0; i < widgetList.size(); i++)
       {
@@ -243,14 +244,14 @@ class Screen { //<>//
       String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
       String depString = "CLICK TO VIEW DEPARTURES";
       Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
-      previousEvent = event; //<>//
+      previousEvent = event; 
       String airportName= "AIRPORT: " + currentAirport.getAirportName();
       String cityName = "CITY:  " + currentAirport.getCityName();
       textSize(20);
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
-      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10);
+      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>//
       image(Departures[CURRENT], DEP_X, DEP_Y);
       break;
     }
@@ -305,6 +306,9 @@ class Screen { //<>//
       US[CURRENT] = changeShadow(US_X_START, TOP_ROW_Y_START, US[START], US[CHANGED]);
       Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[CHANGED]);
       Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[CHANGED]);
+      break;
+      
+    case CHART_SELECT_SCREEN:
       Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[CHANGED]);
       break;
     }
@@ -333,11 +337,11 @@ class Screen { //<>//
       row++;
     }
     while(screenCopy > 0)
-    {
+    { //<>//
       screenCopy--;
       column++;
     }
-    textSize(15); //<>//
+    textSize(15); 
     text(areaNames[screen], (column * SCREENX / 3) + (SCREENX / 6) - (textWidth(areaNames[screen])/2), row * SCREENY / 3 + textAscent() * 2);
   }
   
