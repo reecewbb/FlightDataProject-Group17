@@ -276,5 +276,27 @@ void addAirports() {
   myAirports.add(new Airport(669, 395, "LBF", ON_TOP));
   myAirports.add(new Airport(543, 259, "GCC", ON_TOP));
   myAirports.add(new Airport(787, 351, "SUX", ON_TOP));
-  
+  myAirports.add(new Airport(913, 508, "TBN", ON_TOP));
+  myAirports.add(new Airport(1242, 484, "LWB", ON_TOP));
+  myAirports.add(new Airport(1235, 425, "CKB", ON_TOP));
+  myAirports.add(new Airport(556, 486, "PUB", ON_TOP));
+  myAirports.add(new Airport(464, 301, "RIW", ON_TOP));
+  myAirports.add(new Airport(338, 610, "PAN", ON_TOP));
+  myAirports.add(new Airport(667, 515, "DDC", ON_TOP));
+  myAirports.add(new Airport(772, 489, "SLN", ON_TOP));
+  myAirports.add(new Airport(576, 697, "HOB", ON_TOP));
+  myAirports.add(new Airport(461, 247, "COD", ON_TOP));
+  myAirports.add(new Airport(171, 481, "BIH", ON_TOP));
+  myAirports.add(new Airport(1502, 94, "PQI", ON_TOP));
+  myAirports.add(new Airport(616, 177, "DIK", ON_TOP));
+  myAirports.add(new Airport(, , "SPN", ON_TOP));
+  myAirports.add(new Airport(, , "GUM", ON_TOP));
+  myAirports.add(new Airport(, , "LBE", ON_TOP));
+  myAirports.add(new Airport(, , "ACY", ON_TOP));
+  myAirports.add(new Airport(, , "ITO", ON_TOP));
+  myAirports.add(new Airport(, , "SCK", ON_TOP));
+  myAirports.add(new Airport(, , "USA", ON_TOP));
+  myAirports.add(new Airport(, , "PSM", ON_TOP));
+  myAirports.add(new Airport(, , "LCK", ON_TOP));  
+  myAirports.add(new Airport(, , "BLV", ON_TOP));
 }

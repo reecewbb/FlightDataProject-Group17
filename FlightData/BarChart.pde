@@ -1,4 +1,4 @@
-class BarChart  //<>//
+class BarChart  //<>// //<>//
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
   String airportName;
@@ -14,7 +14,7 @@ class BarChart  //<>//
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
     this.airportID = airportID;
     this.airportList = airportList;
-    this.flightList = flightList; //<>//
+    this.flightList = flightList; //<>// //<>//
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
     //for (int i = 0; i < flightList.size(); i++)
