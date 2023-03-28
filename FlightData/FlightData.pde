@@ -7,14 +7,14 @@ ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
-PImage mapImage;
+PImage mapImage, alaskaMapImage, hawaiiMapImage;
 PImage[] US, Alaska, Hawaii, Departures;
-Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen;
+Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen;
 BarChart chart;
 int event, lastAirportSelected;
 int previousEvent;
 Filter mapFilter;
-Widget backToMapButton, currF1, currF2, currF3, currF4, USMapButton, backToStartButton, barChartButton;
+Widget backToMapButton, currF1, currF2, currF3, currF4, USMapButton, backToStartButton, barChartButton, alaskaMapButton, hawaiiMapButton;
 boolean drawingGraph;
 
 void settings() {
@@ -74,6 +74,14 @@ void mousePressed()
   else if (event == SELECT_US_EVENT)
   {
     currentScreen = mapScreen;
+  }
+    else if (event == SELECT_ALASKA_EVENT)
+  {
+    currentScreen = alaskaScreen;
+  }
+     else if (event == SELECT_HAWAII_EVENT)
+  {
+    currentScreen = hawaiiScreen;
   } 
   else if (event == BACK_TO_START_EVENT)
   {
@@ -155,6 +163,8 @@ void addDataToAirports()
 }
 
 void setScreens() {
+  alaskaScreen = new Screen(ALASKA_SCREEN);
+  hawaiiScreen = new Screen(HAWAII_SCREEN);
   mapScreen = new Screen(MAP_SCREEN);
   chartScreen = new Screen(BAR_CHART_SCREEN);
   topLeft = new Screen(TOP_LEFT_SCREEN);
@@ -232,6 +242,8 @@ void addWidgets()
   backToStartButton = new Widget(20, 20, 100, 30, "BACK TO START", color(180), myFont, BACK_TO_START_EVENT);
   barChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, BAR_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
+  alaskaMapButton = new Widget(ALASKA_X_START, TOP_ROW_Y_START, START_MAP_WIDTH, 300, SELECT_ALASKA_EVENT);
+  hawaiiMapButton = new Widget(HAWAII_X_START, HAWAII_Y_START, START_MAP_WIDTH, 300, SELECT_HAWAII_EVENT);
   currF1= new Widget(1500, 700, 65, 20, "[ A - K ]", color(180), myFont, AK_EVENT);
   currF2= new Widget(1500, 725, 65, 20, "[ L - S ]", color(180), myFont, LS_EVENT);
   currF3= new Widget(1500, 750, 65, 20, "[ T - Z ]", color(180), myFont, TZ_EVENT);
@@ -240,7 +252,11 @@ void addWidgets()
   chartSelectionScreen.addWidget(backToMapButton);
   chartSelectionScreen.addWidget(barChartButton);
   startScreen.addWidget(USMapButton);
+  startScreen.addWidget(alaskaMapButton);
+  startScreen.addWidget(hawaiiMapButton);
   mapScreen.addWidget(backToStartButton);
+  alaskaScreen.addWidget(backToStartButton);
+  hawaiiScreen.addWidget(backToStartButton);
   for (int i = 0; i < zoomScreens.size(); i++)
   {
     Screen currentZoom = zoomScreens.get(i);

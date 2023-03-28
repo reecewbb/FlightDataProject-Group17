@@ -68,6 +68,8 @@ final int BOT_RIGHT_SCREEN = 9;
 final int BAR_CHART_SCREEN = 10;
 final int START_SCREEN = 11;
 final int CHART_SELECT_SCREEN = 12;
+final int ALASKA_SCREEN=13;
+final int HAWAII_SCREEN=14;
 //filters
 final int AK_FILTER = 1;
 final int LS_FILTER = 2;
@@ -102,4 +104,6 @@ final int BOT_RIGHT_EVENT = 13;
 final int SELECT_US_EVENT = 14;
 final int BACK_TO_START_EVENT = 15;
 final int BAR_CHART_EVENT = 16;
-final int NUMBER_OF_EVENTS = 17;
+final int SELECT_ALASKA_EVENT = 17;
+final int SELECT_HAWAII_EVENT = 18;
+final int NUMBER_OF_EVENTS = 19;

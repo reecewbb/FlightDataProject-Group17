@@ -51,6 +51,8 @@ class Screen {  //<>//
     setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
     setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
     setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
+    alaskaMapImage = loadImage("Start_Alaska_Map.png");
+    hawaiiMapImage = loadImage("Start_Hawaii_Map.png");    
   }
 
   void setOutgoingFlights(int outgoingFlights)
@@ -253,6 +255,26 @@ class Screen {  //<>//
       text(outgoingFlightsString, 100, 200);
       text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>// //<>// //<>//
       image(Departures[CURRENT], DEP_X, DEP_Y);
+      break;
+      
+      case ALASKA_SCREEN:
+       for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      alaskaMapImage.resize(SCREENX, SCREENY);
+      image(alaskaMapImage, 0, 0);
+      break;
+      
+      case HAWAII_SCREEN:
+       for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      hawaiiMapImage.resize(SCREENX, SCREENY);
+      image(hawaiiMapImage, 0, 0);
       break;
     }
   }
