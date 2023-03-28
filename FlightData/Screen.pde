@@ -43,6 +43,8 @@ class Screen { //<>//
   void setImages()
   {
     mapImage = loadImage("Blank_US_Map.png");
+    alaskaMapImage = loadImage("Start_Alaska_Map.png");
+    hawaiiMapImage = loadImage("Start_Hawaii_Map.png");
     US = new PImage[3];
     Alaska = new PImage[3];
     Hawaii = new PImage[3];
@@ -59,10 +61,10 @@ class Screen { //<>//
   {
     this.outgoingFlights = outgoingFlights;
   }
-  
+
   void setQuery (int query)
   {
-     this.query = query;
+    this.query = query;
   }
 
   void addAirport(Airport airport)
@@ -241,6 +243,30 @@ class Screen { //<>//
       text(arrString, ARR_X + Arrivals[CURRENT].width/2 - textWidth(arrString)/2, ARR_Y + Arrivals[CURRENT].height + 30);
       image(Departures[CURRENT], DEP_X, DEP_Y);
       image(Arrivals[CURRENT], ARR_X, ARR_Y);
+      break;
+
+    case ALASKA_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      alaskaMapImage.resize(int(SCREENX * 0.9), 0);
+      image(alaskaMapImage, 50, 100);
+      textSize(30);
+      text("ALASKA", SCREENX/2 - (textWidth(areaNames[screen])/2), textAscent() * 2);
+      break;
+
+    case HAWAII_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      hawaiiMapImage.resize(0, int(SCREENY*1.1));
+      image(hawaiiMapImage, 220, 0);
+      textSize(30);
+      text("HAWAII", SCREENX/2 - (textWidth(areaNames[screen])/2), textAscent() * 2);
       break;
     }
   }
