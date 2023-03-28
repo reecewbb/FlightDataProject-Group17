@@ -210,7 +210,7 @@ class Screen {  //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart outgoingFlightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
+      BarChart outgoingFlightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights, INCOMING);
       previousEvent = event;
       outgoingFlightsChart.draw();
       break;
@@ -251,7 +251,7 @@ class Screen {  //<>//
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
-      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>// //<>// //<>//
+      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>// //<>//
       image(Departures[CURRENT], DEP_X, DEP_Y);
       break;
     }
@@ -337,8 +337,8 @@ class Screen {  //<>//
       screenCopy -= 3;
       row++;
     }
-    while(screenCopy > 0) //<>// //<>//
-    { //<>//
+    while(screenCopy > 0) //<>//
+    {
       screenCopy--;
       column++;
     }
