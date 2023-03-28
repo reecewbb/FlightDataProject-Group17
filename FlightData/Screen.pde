@@ -1,10 +1,10 @@
-class Screen {  //<>//
+class Screen { //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
-  int screenType, previousEvent, outgoingFlights, currentGridHover, screen;
+  int screenType, previousEvent, outgoingFlights, currentGridHover, screen, query;
   float[][] rectangleWidth;
   String[] areaNames;
-  
+
   Screen (int screenType)
   {
     this.screenType = screenType;
@@ -47,15 +47,22 @@ class Screen {  //<>//
     Alaska = new PImage[3];
     Hawaii = new PImage[3];
     Departures = new PImage[3];
+    Arrivals = new PImage[3];
     setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
     setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
     setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
     setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
+    setShadowArray(Arrivals, "arrivals.png", "shadow_arrivals.png", CHART_BUTTON_SIZE);
   }
 
   void setOutgoingFlights(int outgoingFlights)
   {
     this.outgoingFlights = outgoingFlights;
+  }
+  
+  void setQuery (int query)
+  {
+     this.query = query;
   }
 
   void addAirport(Airport airport)
@@ -71,17 +78,17 @@ class Screen {  //<>//
   int buttonClicked()
   {
     int event;
+    for (int i = 0; i < widgetList.size(); i++)
+    {
+      Widget myWidget = (Widget) widgetList.get(i);
+      event = myWidget.getEvent(mouseX, mouseY);
+      if (event != -1)
+      {
+        return event;
+      }
+    }
     if (screenType == MAP_SCREEN)
     {
-      for (int i = 0; i < widgetList.size(); i++)
-      {
-        Widget myWidget = (Widget) widgetList.get(i);
-        event = myWidget.getEvent(mouseX, mouseY);
-        if (event != -1)
-        {
-          return event;
-        }
-      }
       float mX = mouseX - SCREENX/3;
       float mY = mouseY - SCREENY/3;
       event = TOP_LEFT_EVENT;
@@ -97,34 +104,12 @@ class Screen {  //<>//
       }
       return event;
     }
-
     if (screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN)
     {
       for (int i = 0; i < airportList.size(); i++)
       {
         Airport myAirport = (Airport) airportList.get(i);
         event = myAirport.airportClicked(mouseX, mouseY);
-        if (event != -1)
-        {
-          return event;
-        }
-      }
-      for (int i = 0; i < widgetList.size(); i++)
-      {
-        Widget myWidget = (Widget) widgetList.get(i);
-        event = myWidget.getEvent(mouseX, mouseY);
-        if (event != -1)
-        {
-          return event;
-        }
-      }
-    } 
-    else 
-    {
-      for (int i = 0; i < widgetList.size(); i++)
-      {
-        Widget myWidget = (Widget) widgetList.get(i);
-        event = myWidget.getEvent(mouseX, mouseY);
         if (event != -1)
         {
           return event;
@@ -205,14 +190,14 @@ class Screen {  //<>//
       break;
 
     case BAR_CHART_SCREEN:
-      for (int i = 0; i < widgetList.size(); i++) 
+      for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart outgoingFlightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights);
+      BarChart flightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights, query);
       previousEvent = event;
-      outgoingFlightsChart.draw();
+      flightsChart.draw();
       break;
 
     case START_SCREEN:
@@ -243,16 +228,19 @@ class Screen {  //<>//
       }
       String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
       String depString = "CLICK TO VIEW DEPARTURES";
+      String arrString = "CLICK TO VIEW ARRIVALS";
       Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
-      previousEvent = event; 
-      String airportName= "AIRPORT: " + currentAirport.getAirportName();
-      String cityName = "CITY:  " + currentAirport.getCityName();
+      previousEvent = event;
+      String airportName = "AIRPORT: " + currentAirport.getAirportName();
+      String cityName = "CITY: " + currentAirport.getCityName();
       textSize(20);
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
-      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10); //<>// //<>// //<>//
+      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10);
+      text(arrString, ARR_X + Arrivals[CURRENT].width/2 - textWidth(arrString)/2, ARR_Y + Arrivals[CURRENT].height + 30);
       image(Departures[CURRENT], DEP_X, DEP_Y);
+      image(Arrivals[CURRENT], ARR_X, ARR_Y);
       break;
     }
   }
@@ -308,9 +296,10 @@ class Screen {  //<>//
       Alaska[CURRENT] = changeShadow(ALASKA_X_START, TOP_ROW_Y_START, Alaska[START], Alaska[CHANGED]);
       Hawaii[CURRENT] = changeShadow(HAWAII_X_START, HAWAII_Y_START, Hawaii[START], Hawaii[CHANGED]);
       break;
-      
+
     case CHART_SELECT_SCREEN:
       Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[CHANGED]);
+      Arrivals[CURRENT] = changeShadow(ARR_X, ARR_Y, Arrivals[START], Arrivals[CHANGED]);
       break;
     }
   }
@@ -325,27 +314,27 @@ class Screen {  //<>//
       return start;
     }
   }
-  
-  
+
+
   void drawAreaName()
   {
     int screenCopy = screen;
     int row = 0;
     int column = 0;
-    while(screenCopy > 2)
+    while (screenCopy > 2)
     {
       screenCopy -= 3;
       row++;
     }
-    while(screenCopy > 0) //<>// //<>//
-    { //<>//
+    while (screenCopy > 0)
+    {
       screenCopy--;
       column++;
     }
-    textSize(15); 
+    textSize(15);
     text(areaNames[screen], (column * SCREENX / 3) + (SCREENX / 6) - (textWidth(areaNames[screen])/2), row * SCREENY / 3 + textAscent() * 2);
   }
-  
+
   int checkScreen()
   {
     float mX = mouseX - SCREENX/3;
