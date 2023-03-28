@@ -74,7 +74,7 @@ class BarChart
         }
       }
     }
-    return newFlightCount;
+    return newFlightCount; //<>//
   }
 
   void draw()
