@@ -20,15 +20,15 @@ class Screen { //<>//
       rectangleWidth[i][CURRENT] = rectangleWidth[i][START];
     }
     areaNames = new String[9];
-    areaNames[TOP_LEFT] = "NORTH WEST";
-    areaNames[TOP_MID] = "NORTH CENTRAL US";
-    areaNames[TOP_RIGHT] = "NORTH EAST US";
-    areaNames[MID_LEFT] = "WEST US";
-    areaNames[MID_MID] = "CENTRAL US";
-    areaNames[MID_RIGHT] = "EAST US";
-    areaNames[BOT_LEFT] = "SOUTH WEST US";
-    areaNames[BOT_MID] = "SOUTH CENTRAL US";
-    areaNames[BOT_RIGHT] = "SOUTH EAST US";
+    areaNames[TOP_LEFT] = "North West US";
+    areaNames[TOP_MID] = "North Central US";
+    areaNames[TOP_RIGHT] = "North East US";
+    areaNames[MID_LEFT] = "West US";
+    areaNames[MID_MID] = "Central US";
+    areaNames[MID_RIGHT] = "East US";
+    areaNames[BOT_LEFT] = "South West US";
+    areaNames[BOT_MID] = "South Central US";
+    areaNames[BOT_RIGHT] = "South East US";
   }
 
   void setShadowArray(PImage[] array, String startName, String shadowName, int size)
@@ -106,7 +106,7 @@ class Screen { //<>//
       }
       return event;
     }
-    if (screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN)
+    if ((screenType >= TOP_LEFT_SCREEN && screenType <= BOT_RIGHT_SCREEN) || screenType == ALASKA_SCREEN || screenType == HAWAII_SCREEN)
     {
       for (int i = 0; i < airportList.size(); i++)
       {
@@ -133,7 +133,7 @@ class Screen { //<>//
       fill(BLACK);
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
-      String selectArea = "SELECT AREA";
+      String selectArea = "Select area";
       textSize(20);
       text(selectArea, SCREENX/2, TOP_TEXT_BUFFER);
       textSize(10);
@@ -154,6 +154,8 @@ class Screen { //<>//
         mapFilter.showAirports(airportList);
       }
       drawAreaName();
+      textSize(20);
+      text("Sort", FILTER_WIDGET_X + FILTER_WIDGET_WIDTH / 2, 690);
       break;
 
     case TOP_LEFT_SCREEN:
@@ -198,17 +200,17 @@ class Screen { //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart flightsChart = new BarChart(event - NUMBER_OF_EVENTS, myAirports, myFlights, query);
+      BarChart flightsChart = new BarChart(event - CHART_SELECTION_EVENT, myAirports, myFlights, query);
       previousEvent = event;
       flightsChart.draw();
       break;
 
     case START_SCREEN:
       String start = "AIRPORT DATA VIEWER";
-      String regionSelect = "SELECT REGION";
-      String continentalUS = "CONTINENTAL US";
-      String alaska = "ALASKA";
-      String hawaii = "HAWAII";
+      String regionSelect = "Select Region";
+      String continentalUS = "Continental US";
+      String alaska = "Alaska";
+      String hawaii = "Hawaii";
       fill(0);
       textSize(50);
       text(start, SCREENX/2, 100);
@@ -229,14 +231,14 @@ class Screen { //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
-      String depString = "CLICK TO VIEW DEPARTURES";
-      String arrString = "CLICK TO VIEW ARRIVALS";
-      if(event < NUMBER_OF_EVENTS) event = previousEvent;
-      Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
+      String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
+      String depString = "Click to view departures";
+      String arrString = "Click to view arrivals";
+      if(event < CHART_SELECTION_EVENT) event = previousEvent;
+      Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
       previousEvent = event;
-      String airportName = "AIRPORT: " + currentAirport.getAirportName();
-      String cityName = "CITY: " + currentAirport.getCityName();
+      String airportName = "Airport: " + currentAirport.getAirportName();
+      String cityName = "City: " + currentAirport.getCityName();
       fill(BLACK);
       textSize(20);
       textAlign(LEFT);
@@ -256,6 +258,11 @@ class Screen { //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(MAP_SCREEN);
+      }
       alaskaMapImage.resize(int(SCREENX * 0.9), 0);
       image(alaskaMapImage, 50, 100);
       textSize(30);
@@ -267,6 +274,11 @@ class Screen { //<>//
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
+      }
+      for (int i = 0; i < airportList.size(); i++)
+      {
+        Airport myAirport = (Airport) airportList.get(i);
+        myAirport.draw(MAP_SCREEN);
       }
       hawaiiMapImage.resize(0, int(SCREENY*1.1));
       image(hawaiiMapImage, 220, 0);

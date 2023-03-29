@@ -1,6 +1,6 @@
 class Airport
 {
-  int x, y, topSideBottom, airportID, numberOfOutgoingFlights, borderSize;
+  int x, y, topSideBottom, airportID, numberOfOutgoingFlights, borderSize, region;
   float xpos, ypos;
   String name, cityName;
   color airportStrokeColor, airportColor, airportTextColor;
@@ -14,6 +14,18 @@ class Airport
     borderSize = 4;
     airportColor = color(AIRPORT_COLOUR);
     airportTextColor = color(0);
+    region = US_REGION;
+  }
+  
+  Airport(int x, int y, String name, int topSideBottom, int region)
+  {
+    this(x, y, name, topSideBottom);
+    this.region = region;
+  }
+  
+  public int getRegion ()
+  {
+   return region;
   }
 
   public void setID(int airportID)
@@ -80,7 +92,7 @@ class Airport
 
   int airportClicked(int mX, int mY)
   {
-    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID + NUMBER_OF_EVENTS;
+    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID + CHART_SELECTION_EVENT;
     else return -1;
   }
 
@@ -140,15 +152,15 @@ class Airport
     switch(topSideBottom)
     {
     case ON_TOP:
-      text(name, xpos - AIRPORT_RADIUS, ypos - AIRPORT_RADIUS - 5);
+      text(name, xpos, ypos - AIRPORT_RADIUS - 5);
       break;
 
     case ON_SIDE:
-      text(name, xpos + AIRPORT_RADIUS + 10, ypos + 5);
+      text(name, xpos + AIRPORT_RADIUS + 15, ypos + 5);
       break;
 
     case ON_BOTTOM:
-      text(name, xpos - AIRPORT_RADIUS, ypos + AIRPORT_RADIUS + 12);
+      text(name, xpos, ypos + AIRPORT_RADIUS + 12);
       break;
     }
   }

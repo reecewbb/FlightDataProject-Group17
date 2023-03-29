@@ -1,4 +1,4 @@
-import java.util.Scanner;    
+import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,12 +9,13 @@ ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
 PImage mapImage, alaskaMapImage, hawaiiMapImage;
 PImage[] US, Alaska, Hawaii, Departures, Arrivals;
-Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen;
+Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
 BarChart chart;
 int event, lastAirportSelected;
 int previousEvent;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
+Widget backToAlaskaMapButton, backToHawaiiMapButton;
 boolean drawingGraph;
 
 void settings() {
@@ -35,6 +36,7 @@ void setup() {
   addWidgets();
   addDataToAirports();
   drawingGraph = false;
+  allButton.setColour();
 }
 
 
@@ -48,80 +50,90 @@ void mousePressed()
 {
   System.out.println("x value: " + mouseX + "\ny value: " + mouseY);
   event = currentScreen.buttonClicked();
-  if (event == BACK_BUTTON_EVENT)
+  int eventNo = event;
+  if (event >= CHART_SELECTION_EVENT && event < myAirports.size() + CHART_SELECTION_EVENT)
   {
-    currentScreen = mapScreen;
-  } 
-  else if (event == AK_EVENT)
+    eventNo = CHART_SELECTION_EVENT;
+  }
+  switch(eventNo)
   {
+  case BACK_BUTTON_EVENT:
+    currentScreen = regionScreen;
+    break;
+
+  case AK_EVENT:
     mapFilter.currentFilter = AK_FILTER;
     AKButton.setColour();
     LSButton.unsetColour();
     TZButton.unsetColour();
     allButton.unsetColour();
-  } 
-  else if (event == LS_EVENT)
-  {
+    break;
+
+  case LS_EVENT:
     mapFilter.currentFilter = LS_FILTER;
     AKButton.unsetColour();
     LSButton.setColour();
     TZButton.unsetColour();
     allButton.unsetColour();
-  } 
-  else if (event == TZ_EVENT)
-  {
+    break;
+
+  case TZ_EVENT:
     mapFilter.currentFilter = TZ_FILTER;
     AKButton.unsetColour();
     LSButton.unsetColour();
     TZButton.setColour();
     allButton.unsetColour();
-  } 
-  else if (event == NO_FILTER_EVENT)
-  {
+    break;
+
+  case NO_FILTER_EVENT:
     mapFilter.currentFilter = NO_FILTER;
     AKButton.unsetColour();
     LSButton.unsetColour();
     TZButton.unsetColour();
     allButton.setColour();
-  } 
-  else if (event >= TOP_LEFT_EVENT && event <= BOT_RIGHT_EVENT)
-  {
+    break;
+
+  case TOP_LEFT_EVENT: case TOP_MID_EVENT: case TOP_RIGHT_EVENT: case MID_LEFT_EVENT: case MID_MID_EVENT: case MID_RIGHT_EVENT: case BOT_LEFT_EVENT: case BOT_MID_EVENT: case BOT_RIGHT_EVENT:
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
-  } 
-  else if (event == SELECT_US_EVENT)
-  {
+    break;
+
+  case SELECT_US_EVENT:
     currentScreen = mapScreen;
-  } 
-  else if (event == BACK_TO_START_EVENT)
-  {
+    regionScreen = currentScreen;
+    break;
+
+  case BACK_TO_START_EVENT:
     currentScreen = startScreen;
-  } 
-  else if (event == OUTGOING_BAR_CHART_EVENT || event == INCOMING_BAR_CHART_EVENT)
-  {
+    break;
+
+  case OUTGOING_BAR_CHART_EVENT: case INCOMING_BAR_CHART_EVENT:
     if (event == OUTGOING_BAR_CHART_EVENT) chartScreen.setQuery(OUTGOING);
     if (event == INCOMING_BAR_CHART_EVENT) chartScreen.setQuery(INCOMING);
     event = lastAirportSelected;
     currentScreen = chartScreen;
-  }
-  else if (event == SELECT_ALASKA_EVENT)
-  {
+    break;
+
+  case SELECT_ALASKA_EVENT:
     currentScreen = alaskaScreen;
-  }
-  else if (event == SELECT_HAWAII_EVENT)
-  {
+    regionScreen = currentScreen;
+    break;
+
+  case SELECT_HAWAII_EVENT:
     currentScreen = hawaiiScreen;
-  }
-  else if (event == BACK_SELECTION_EVENT)
-  {
+    regionScreen = currentScreen;
+    break;
+
+  case BACK_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
-  }
-  else if (event >= NUMBER_OF_EVENTS && event < myAirports.size() + NUMBER_OF_EVENTS)
-  {
+    break;
+
+  case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
-    Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
+    Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
     int outgoingFlights = currentAirport.getAmountOfOutgoingFlights(myFlights);
     chartSelectionScreen.setOutgoingFlights(outgoingFlights);
     lastAirportSelected = event;
+    break;
   }
 }
 
@@ -148,35 +160,48 @@ void mouseMoved()
 
 void addAirportsToMaps()
 {
-  for (int i = 0; i < myAirports.size(); i++)
+  for (Airport currentAirport : myAirports)
   {
-    mapScreen.addAirport(myAirports.get(i));
-    topLeft.addAirport(myAirports.get(i));
-    topMid.addAirport(myAirports.get(i));
-    topRight.addAirport(myAirports.get(i));
-    midLeft.addAirport(myAirports.get(i));
-    midMid.addAirport(myAirports.get(i));
-    midRight.addAirport(myAirports.get(i));
-    botLeft.addAirport(myAirports.get(i));
-    botMid.addAirport(myAirports.get(i));
-    botRight.addAirport(myAirports.get(i));
+    switch(currentAirport.getRegion())
+    {
+    case US_REGION:
+      mapScreen.addAirport(currentAirport);
+      topLeft.addAirport(currentAirport);
+      topMid.addAirport(currentAirport);
+      topRight.addAirport(currentAirport);
+      midLeft.addAirport(currentAirport);
+      midMid.addAirport(currentAirport);
+      midRight.addAirport(currentAirport);
+      botLeft.addAirport(currentAirport);
+      botMid.addAirport(currentAirport);
+      botRight.addAirport(currentAirport);
+      break;
+
+    case ALASKA_REGION:
+      alaskaScreen.addAirport(currentAirport);
+      break;
+
+    case HAWAII_REGION:
+      hawaiiScreen.addAirport(currentAirport);
+      break;
+    }
   }
 }
 
 void addDataToAirports()
 {
-  for (int i = 0; i < myAirports.size(); i++)
+  int i = 0;
+  for (Airport currentAirport : myAirports)
   {
-    Airport currentAirport = (Airport) myAirports.get(i);
     currentAirport.setID(i);
     String airportName = currentAirport.getAirportName();
     boolean hasStateName = false;
     int  j = 0;
-    while(!hasStateName && j < myFlights.size())
+    while (!hasStateName && j < myFlights.size())
     {
       Flight currentFlight = (Flight) myFlights.get(j);
       String origin = currentFlight.getOrigin();
-      if(airportName.equals(origin))
+      if (airportName.equals(origin))
       {
         String currentCityName = currentFlight.getCityName();
         currentAirport.setCityName(currentCityName);
@@ -184,10 +209,12 @@ void addDataToAirports()
       }
       j++;
     }
+    i++;
   }
 }
 
-void setScreens() {
+void setScreens()
+{
   alaskaScreen = new Screen(ALASKA_SCREEN);
   hawaiiScreen = new Screen(HAWAII_SCREEN);
   mapScreen = new Screen(MAP_SCREEN);
@@ -265,16 +292,16 @@ void addWidgets()
 {
   alaskaMapButton = new Widget(ALASKA_X_START, TOP_ROW_Y_START, START_MAP_WIDTH, 300, SELECT_ALASKA_EVENT);
   hawaiiMapButton = new Widget(HAWAII_X_START, HAWAII_Y_START, START_MAP_WIDTH, 300, SELECT_HAWAII_EVENT);
-  backToSelectionButton = new Widget(20, 20, (int) textWidth("BACK") + 50, 30, "<- Back", color(WIDGET_COLOUR), myFont, BACK_SELECTION_EVENT, WHITE);
-  backToMapButton = new Widget(20, 20, (int) textWidth("BACK") + 50, 30, "<- Back", color(WIDGET_COLOUR), myFont, BACK_BUTTON_EVENT, WHITE);
-  backToStartButton = new Widget(20, 20, (int) textWidth("BACK") + 50, 30, "<- Back", color(WIDGET_COLOUR), myFont, BACK_TO_START_EVENT, WHITE);
+  backToSelectionButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_SELECTION_EVENT, WHITE);
+  backToMapButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_BUTTON_EVENT, WHITE);
+  backToStartButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_TO_START_EVENT, WHITE);
   outgoingBarChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, OUTGOING_BAR_CHART_EVENT);
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
-  AKButton= new Widget(1500, 700, 65, 20, "[ A - K ]", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
-  LSButton= new Widget(1500, 725, 65, 20, "[ L - S ]", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
-  TZButton= new Widget(1500, 750, 65, 20, "[ T - Z ]", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
-  allButton= new Widget(1500, 775, 65, 20, "[ ALL ]", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
+  AKButton= new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
+  LSButton= new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
+  TZButton= new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
+  allButton= new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
   chartScreen.addWidget(backToSelectionButton);
   chartSelectionScreen.addWidget(backToMapButton);
   chartSelectionScreen.addWidget(outgoingBarChartButton);
@@ -289,6 +316,10 @@ void addWidgets()
   {
     Screen currentZoom = zoomScreens.get(i);
     currentZoom.addWidget(backToMapButton);
+    currentZoom.addWidget(AKButton);
+    currentZoom.addWidget(LSButton);
+    currentZoom.addWidget(TZButton);
+    currentZoom.addWidget(allButton);
   }
   mapScreen.addWidget(AKButton);
   mapScreen.addWidget(LSButton);
