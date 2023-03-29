@@ -12,7 +12,7 @@ class Airport
     this.name = name;
     this.topSideBottom = topSideBottom;
     borderSize = 4;
-    airportColor = color(#FC0808);
+    airportColor = color(AIRPORT_COLOUR);
     airportTextColor = color(0);
   }
 
@@ -87,7 +87,7 @@ class Airport
   void draw(int screen)
   {
     fill(airportColor);
-    stroke(0);
+    stroke(WHITE);
     strokeWeight(borderSize);
     int screenPart = screen;
     xpos = x;
@@ -140,15 +140,15 @@ class Airport
     switch(topSideBottom)
     {
     case ON_TOP:
-      text(name, xpos - AIRPORT_RADIUS - 10, ypos - AIRPORT_RADIUS - 5);
+      text(name, xpos - AIRPORT_RADIUS, ypos - AIRPORT_RADIUS - 5);
       break;
 
     case ON_SIDE:
-      text(name, xpos + AIRPORT_RADIUS + 5, ypos + 5);
+      text(name, xpos + AIRPORT_RADIUS + 10, ypos + 5);
       break;
 
     case ON_BOTTOM:
-      text(name, xpos - AIRPORT_RADIUS - 10, ypos + AIRPORT_RADIUS + 12);
+      text(name, xpos - AIRPORT_RADIUS, ypos + AIRPORT_RADIUS + 12);
       break;
     }
   }

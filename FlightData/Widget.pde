@@ -4,11 +4,11 @@ class Widget {
   int event;
   color widgetColor, labelColor;
   PFont widgetFont;
-  boolean hasBorder;
+  boolean hasBorder, setBorder;
   boolean visibleButton;
 
   Widget(int x, int y, int widgetWidth, int widgetHeight, String label,
-    color widgetColor, PFont widgetFont, int event) {
+    color widgetColor, PFont widgetFont, int event, color labelColor) {
     this.x=x;
     this.y=y;
     this.widgetWidth = widgetWidth;
@@ -17,7 +17,7 @@ class Widget {
     this.event=event;
     this.widgetColor=widgetColor;
     this.widgetFont=widgetFont;
-    labelColor= color(0);
+    this.labelColor= labelColor;
     visibleButton = true;
   }
   
@@ -29,6 +29,17 @@ class Widget {
     this.widgetHeight = widgetHeight;
     this.event = event;
     visibleButton = false;
+    hasBorder = false;
+  }
+  
+  void setColour()
+  {
+    widgetColor = AIRPORT_COLOUR;
+  }
+  
+  void unsetColour()
+  {
+    widgetColor = WIDGET_COLOUR;
   }
 
   void draw() {
@@ -36,16 +47,18 @@ class Widget {
     {
       if (hasBorder) strokeWeight(2);
       else strokeWeight(1);
-      textSize(10);
+      stroke(WHITE);
+      textSize(15);
       fill(widgetColor);
-      rect(x, y, widgetWidth, widgetHeight);
+      rect(x, y, widgetWidth, widgetHeight, 10);
       fill(labelColor);
-      text(label, x + widgetWidth/2 - textWidth(label)/2, y + widgetHeight/2 + textAscent()/2);
+      textAlign(CENTER);
+      text(label, x + widgetWidth/2, y + widgetHeight/2 + textAscent()/2);
     }
   }
 
   void hover() {
-    hasBorder = false;
+    if(!setBorder) hasBorder = false;
     if (mouseX > x && mouseX < x+widgetWidth && mouseY > y && mouseY < y+widgetHeight) {
       hasBorder = true;
     }

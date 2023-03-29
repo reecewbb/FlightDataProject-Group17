@@ -39,6 +39,8 @@ final int WHITE = 255;
 final int BLACK = 0;
 final int INCOMING = 0;
 final int OUTGOING = 1;
+final color WIDGET_COLOUR = #2FBEE8;
+final color AIRPORT_COLOUR = #127A98;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;
@@ -111,4 +113,5 @@ final int OUTGOING_BAR_CHART_EVENT = 16;
 final int INCOMING_BAR_CHART_EVENT = 17;
 final int SELECT_ALASKA_EVENT = 18;
 final int SELECT_HAWAII_EVENT = 19;
-final int NUMBER_OF_EVENTS = 20;
+final int BACK_SELECTION_EVENT = 20;
+final int NUMBER_OF_EVENTS = 21;

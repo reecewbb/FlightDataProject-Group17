@@ -8,7 +8,7 @@ class Screen { //<>//
   Screen (int screenType)
   {
     this.screenType = screenType;
-    myFont=loadFont("Arial-Black-48.vlw");
+    myFont=loadFont("MicrosoftJhengHeiUIRegular-40.vlw");
     textFont(myFont);
     textSize(10);
     setImages();
@@ -130,11 +130,12 @@ class Screen { //<>//
     switch(screenType)
     {
     case MAP_SCREEN:
+      fill(BLACK);
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
       String selectArea = "SELECT AREA";
       textSize(20);
-      text(selectArea, SCREENX/2 - textWidth(selectArea)/2, TOP_TEXT_BUFFER);
+      text(selectArea, SCREENX/2, TOP_TEXT_BUFFER);
       textSize(10);
       stroke(120);
       drawGrid();
@@ -210,13 +211,13 @@ class Screen { //<>//
       String hawaii = "HAWAII";
       fill(0);
       textSize(50);
-      text(start, SCREENX/2 - textWidth(start)/2, 100);
+      text(start, SCREENX/2, 100);
       textSize(30);
-      text(regionSelect, SCREENX/2 - textWidth(regionSelect)/2, 170);
+      text(regionSelect, SCREENX/2, 170);
       textSize(20);
-      text(continentalUS, US_X_START + START_MAP_WIDTH/2 - textWidth(continentalUS)/2, TOP_ROW_Y_START - 30);
-      text(alaska, ALASKA_X_START + START_MAP_WIDTH/2 - textWidth(alaska)/2, TOP_ROW_Y_START - 30);
-      text(hawaii, HAWAII_X_START + START_MAP_WIDTH/2 - textWidth(hawaii)/2, HAWAII_Y_START + 80);
+      text(continentalUS, US_X_START + START_MAP_WIDTH/2, TOP_ROW_Y_START - 30);
+      text(alaska, ALASKA_X_START + START_MAP_WIDTH/2, TOP_ROW_Y_START - 30);
+      text(hawaii, HAWAII_X_START + START_MAP_WIDTH/2, HAWAII_Y_START + 80);
       image(US[CURRENT], US_X_START, TOP_ROW_Y_START);
       image(Alaska[CURRENT], ALASKA_X_START, TOP_ROW_Y_START);
       image(Hawaii[CURRENT], HAWAII_X_START, HAWAII_Y_START);
@@ -231,16 +232,20 @@ class Screen { //<>//
       String outgoingFlightsString = "TOTAL NUMBER OF OUTGOING FLIGHTS: " + Integer.toString(outgoingFlights);
       String depString = "CLICK TO VIEW DEPARTURES";
       String arrString = "CLICK TO VIEW ARRIVALS";
+      if(event < NUMBER_OF_EVENTS) event = previousEvent;
       Airport currentAirport = myAirports.get(event - NUMBER_OF_EVENTS);
       previousEvent = event;
       String airportName = "AIRPORT: " + currentAirport.getAirportName();
       String cityName = "CITY: " + currentAirport.getCityName();
+      fill(BLACK);
       textSize(20);
+      textAlign(LEFT);
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
-      text(depString, DEP_X + Departures[CURRENT].width/2 - textWidth(depString)/2, DEP_Y + Departures[CURRENT].height + 10);
-      text(arrString, ARR_X + Arrivals[CURRENT].width/2 - textWidth(arrString)/2, ARR_Y + Arrivals[CURRENT].height + 30);
+      textAlign(CENTER);
+      text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
+      text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
       image(Departures[CURRENT], DEP_X, DEP_Y);
       image(Arrivals[CURRENT], ARR_X, ARR_Y);
       break;
@@ -254,7 +259,7 @@ class Screen { //<>//
       alaskaMapImage.resize(int(SCREENX * 0.9), 0);
       image(alaskaMapImage, 50, 100);
       textSize(30);
-      text("ALASKA", SCREENX/2 - (textWidth(areaNames[screen])/2), textAscent() * 2);
+      text("ALASKA", SCREENX/2, textAscent() * 2);
       break;
 
     case HAWAII_SCREEN:
@@ -266,7 +271,7 @@ class Screen { //<>//
       hawaiiMapImage.resize(0, int(SCREENY*1.1));
       image(hawaiiMapImage, 220, 0);
       textSize(30);
-      text("HAWAII", SCREENX/2 - (textWidth(areaNames[screen])/2), textAscent() * 2);
+      text("HAWAII", SCREENX/2, textAscent() * 2);
       break;
     }
   }
@@ -357,8 +362,9 @@ class Screen { //<>//
       screenCopy--;
       column++;
     }
+    fill(BLACK);
     textSize(15);
-    text(areaNames[screen], (column * SCREENX / 3) + (SCREENX / 6) - (textWidth(areaNames[screen])/2), row * SCREENY / 3 + textAscent() * 2);
+    text(areaNames[screen], (column * SCREENX / 3) + (SCREENX / 6), row * SCREENY / 3 + textAscent() * 2);
   }
 
   int checkScreen()
@@ -391,13 +397,14 @@ class Screen { //<>//
 
   void setScreen(int widthNo, int heightNo, int ID)
   {
+    fill(BLACK);
     mapImage.resize(SCREENX * 3, SCREENY * 3);
     image(mapImage, -widthNo * SCREENX, -heightNo * SCREENY);
     textSize(20);
-    text(areaNames[ID - 1], SCREENX/2 - textWidth(areaNames[ID - 1])/2, 50);
+    text(areaNames[ID - 1], SCREENX/2, 50);
     String selectAirport = "SELECT AIRPORT";
     textSize(15);
-    text(selectAirport, SCREENX/2 - textWidth(selectAirport)/2, TOP_TEXT_BUFFER + 50);
+    text(selectAirport, SCREENX/2, TOP_TEXT_BUFFER + 50);
     for (int i = 0; i < myAirports.size(); i++)
     {
       Airport myAirport = (Airport) myAirports.get(i);

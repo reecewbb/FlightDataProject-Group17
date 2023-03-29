@@ -86,7 +86,7 @@ class BarChart
   {
     setBarChart();
     textSize(20);
-    text(chartName, SCREENX/2 - textWidth(chartName)/2, TOP_TEXT_BUFFER);
+    text(chartName, SCREENX/2, TOP_TEXT_BUFFER);
     textSize(10);
     if (maxValue != 0)
     {
@@ -99,7 +99,7 @@ class BarChart
         text(valueOnYAxis, xPosition, positionOnY);
         rect(xPosition + 20, positionOnY, barChartXAxisLength, 0.5);
       }
-      fill(#08F4FA);
+      fill(#2FBEE8);
       int i = 0;
       strokeWeight(2);
       while (airportCounter2 < airportCounter && i < airportList.size())
@@ -114,10 +114,12 @@ class BarChart
           float barHeight = flightCount[i] * yIncrement;
           pushMatrix();
           textSize(12);
+          textAlign(LEFT);
           translate(point + widthOfBar/2, SCREENY - CHART_BUFFER - barHeight - 10);
           rotate(-HALF_PI);
           text(cityName, 0, 0);
           popMatrix();
+          textAlign(CENTER);
           textSize(10);
           fill(#08F4FA);
           rect(point, SCREENY - CHART_BUFFER, widthOfBar, -barHeight);
