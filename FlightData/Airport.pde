@@ -156,11 +156,36 @@ class Airport
       break;
 
     case ON_SIDE:
-      text(name, xpos + AIRPORT_RADIUS + 15, ypos + 5);
+      text(name, xpos + AIRPORT_RADIUS + 25, ypos + 5);
       break;
 
     case ON_BOTTOM:
       text(name, xpos, ypos + AIRPORT_RADIUS + 12);
+      break;
+      
+    case ON_SIDE_FAR_TOPRIGHT:
+      text(name, xpos+68, ypos - AIRPORT_RADIUS - 12 );
+      stroke(0);
+      line(xpos, ypos, xpos+40, ypos-AIRPORT_RADIUS - 22);
+
+      break; 
+      
+      case ON_SIDE_FAR_BOTTOMLEFT:
+      text(name, xpos - AIRPORT_RADIUS - 45, ypos + 23);
+      stroke(0);
+      line(xpos, ypos, xpos - AIRPORT_RADIUS - 25, ypos + 15);
+      break;
+      
+      case ON_SIDE_FAR_MIDDLERIGHT:
+      text(name, xpos + AIRPORT_RADIUS + 60, ypos+10 );
+      stroke(0);
+      line(xpos, ypos, xpos + AIRPORT_RADIUS + 35, ypos);
+      break;
+      
+      case ON_TOP_FAR:
+      text(name, xpos, ypos-50 );
+      stroke(0);
+      line(xpos, ypos, xpos, ypos-45);
       break;
     }
   }
