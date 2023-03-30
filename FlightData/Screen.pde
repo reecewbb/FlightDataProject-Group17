@@ -1,6 +1,6 @@
 class Screen { //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
-  ArrayList airportList = new ArrayList();
+  ArrayList<Airport> airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights, currentGridHover, screen, query;
   float[][] rectangleWidth;
   String[] areaNames;
@@ -434,10 +434,9 @@ class Screen { //<>// //<>// //<>//
     String selectAirport = "SELECT AIRPORT";
     textSize(15);
     text(selectAirport, SCREENX/2, TOP_TEXT_BUFFER + 50);
-    for (int i = 0; i < myAirports.size(); i++)
+    for (Airport currentAirport : airportList)
     {
-      Airport myAirport = (Airport) myAirports.get(i);
-      myAirport.draw(ID);
+      currentAirport.draw(ID);
     }
     textSize(10);
     for (int i = 0; i < widgetList.size(); i++)
