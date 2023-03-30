@@ -348,6 +348,7 @@ class Screen {   //<>//
         aWidget.draw();
       }
       searchBar.draw();
+     
     }
   }
 

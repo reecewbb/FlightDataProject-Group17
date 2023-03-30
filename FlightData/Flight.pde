@@ -21,6 +21,22 @@ class Flight
   {
     return mktCarrier;
   }
+  
+  public String getStatus(){
+    String corN="";
+    if(cancelled == true){
+      corN = "Cancelled";
+    }
+    
+    if(diverted == true){
+      corN = "Diverted";
+    }
+    
+    if(diverted == false && cancelled == false){
+      corN = "Arrived";
+    }
+    return corN;
+  }
 
   public String getOrigin()
   {

@@ -1,5 +1,7 @@
 class Search {
   String dataReturned ="";
+  String typeBar = "|";
+
   boolean alreadyRun=true;
   void searchTyping() {
     if (key==CODED) {
@@ -32,6 +34,7 @@ class Search {
               String[] departsAt = currentFlight.getDepartureTime().split("");
               String[] arrivesAt = currentFlight.getArrivalTime().split("");
               dataReturned = text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
+              "\nStatus: " + currentFlight.getStatus() +
                 "\nDestination Airport Code: " + currentFlight.getDest() +
                 "\nDate of Departure: " + currentFlight.getFlightDate() +
                 "\nEstimated Departure Time: " + EDT[0] + EDT[1] + ":" + EDT[2] + EDT[3] +
@@ -39,7 +42,7 @@ class Search {
                 "\nActual Departure Time: " + departsAt[0]+departsAt[1]+":"+departsAt[2]+departsAt[3]
                 + "\nActual Arrival Time: " + arrivesAt[0] + arrivesAt[1]+ ":" + arrivesAt[2] + arrivesAt[3]  +
                 "\nDeparture City: " + currentFlight.getCityName() + "\nArrival City: " + currentFlight.getArrivalCityName()+
-                "\nDistance: " + currentFlight.getDistance() + " miles";
+                "\nDistance: " + currentFlight.getDistance() + " miles" ;
               gotFlight = true;
             }
             catch(ArrayIndexOutOfBoundsException exception) {
@@ -49,12 +52,13 @@ class Search {
         }
         println ("ENTER");
         if (gotFlight==true) {
-          println("Hurra!");
+          println("Found");
           text1="";
           alreadyRun=true;
         } // if
         else {
           dataReturned= "Flight not found";
+          text1="";
           alreadyRun=true;
         }
       } // else if
@@ -62,9 +66,16 @@ class Search {
         text1+=key; //<>//
       } // else
       // output
-      //println (text1);
     } // else
   } // func
+  
+  void flashingTypingYoke(){
+    float s = second()%2;
+    if(s==0)
+    {float barDist = (text1.length()*12)-1.5;
+    text(typeBar, 166 + barDist, 47);}
+  }
+  
   void draw() {
     stroke(BLACK);
     rect(150, 25, 210, 30);
@@ -75,5 +86,6 @@ class Search {
     text(text1, 160, 50);
     text(dataReturned, 160, 75); //<>//
     textAlign(CENTER);
+    flashingTypingYoke();
   }
 }

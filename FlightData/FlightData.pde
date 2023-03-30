@@ -50,6 +50,9 @@ void draw()
   background(WHITE);
   currentScreen.draw(event, myAirports, myFlights, mapFilter);
 }
+void keyPressed(){
+        searchBar.searchTyping();
+      }
 
 void mousePressed()
 {
