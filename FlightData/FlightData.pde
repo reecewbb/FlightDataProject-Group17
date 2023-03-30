@@ -173,6 +173,7 @@ void mouseMoved()
   backToSelectionButton.hover();
   outgoingBarChartButton.hover();
   incomingBarChartButton.hover();
+  searchScreenButton.hover();
   pieChartButton.hover();
   currentScreen.hover();
 }

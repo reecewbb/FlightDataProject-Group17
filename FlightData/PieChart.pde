@@ -165,14 +165,18 @@ class PieChart
          arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(numberConvertedToDegrees));
          lastAngle += radians(numberConvertedToDegrees);
        }
-       rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
        String airlineName = airlineNames[i];
+       if(percentRounded != 0)
+       {
+         textAlign(LEFT);
+         textSize(15);
+         fill(arcColor);
+         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
+         text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+         yForKey -= 35;
+       }
        fill(BLACK);
-       textAlign(LEFT);
-       textSize(15);
-       text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
        textAlign(CENTER);
-       yForKey -= 35;
      }
    }
  }

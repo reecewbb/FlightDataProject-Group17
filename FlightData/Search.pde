@@ -66,12 +66,12 @@ class Search {
     } // else
   } // func
   void draw() {
-    stroke(0);
+    stroke(BLACK);
     rect(150, 25, 210, 30);
     textAlign(LEFT);
     textFont(myFont);
     textSize(20);
-    fill(0);
+    fill(BLACK);
     text(text1, 160, 50);
     text(dataReturned, 160, 75); //<>//
     textAlign(CENTER);
