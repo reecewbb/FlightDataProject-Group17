@@ -103,3 +103,7 @@ final int SELECT_US_EVENT = 14;
 final int BACK_TO_START_EVENT = 15;
 final int BAR_CHART_EVENT = 16;
 final int NUMBER_OF_EVENTS = 17;
+//Regions 
+final int USA = 0;
+final int HAWAII = 1;
+final int ALASKA = 2;

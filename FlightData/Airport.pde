@@ -4,6 +4,7 @@ class Airport
   float xpos, ypos;
   String name, cityName;
   color airportStrokeColor, airportColor, airportTextColor;
+  int region;
 
   Airport(int x, int y, String name, int topSideBottom)
   {
@@ -14,8 +15,31 @@ class Airport
     borderSize = 4;
     airportColor = color(#FC0808);
     airportTextColor = color(0);
+    region = USA;
   }
-
+  
+  Airport(int x, int y, String name, int topSideBottom, int region)
+  {
+    this.x = x;
+    this.y = y;
+    this.name = name;
+    this.topSideBottom = topSideBottom;
+    borderSize = 4;
+    airportColor = color(#FC0808);
+    airportTextColor = color(0);
+    switch(region)
+    {
+      case HAWAII:
+      region = HAWAII;
+      
+      case ALASKA:
+      region = ALASKA;
+      break;
+      
+      default:
+    }
+  }
+  
   public void setID(int airportID)
   {
     this.airportID = airportID;

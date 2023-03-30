@@ -40,7 +40,9 @@ void setup() {
 void draw()
 {
   background(WHITE);
-  currentScreen.draw(event, myAirports, myFlights, mapFilter);
+  //currentScreen.draw(event, myAirports, myFlights, mapFilter);
+  PieChart pc = new PieChart(10, myAirports, myFlights);
+  pc.draw();
 }
 
 void mousePressed()

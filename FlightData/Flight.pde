@@ -33,6 +33,11 @@ class Flight
     return cityName;
   }
   
+  public String getMktCarrier()
+  {
+    return mktCarrier;
+  }
+  
   public void setData(String data, int dataType)
   {
     switch(dataType)
