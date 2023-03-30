@@ -80,6 +80,22 @@ class PieChart
      }
    }
    
+   public String getMostCommonAirline()
+   {
+     int highestTotal = 0;
+     String mostCommonAirline = "null";
+     for(int i = 0; i < airlineFlightsTotal.length; i++)
+     {
+       int currentAirlineTotal = airlineFlightsTotal[i];
+       if(currentAirlineTotal > highestTotal)
+       {
+         highestTotal = currentAirlineTotal;
+         mostCommonAirline = airlineNames[i];
+       }
+     }
+     return mostCommonAirline;
+   }
+   
    void draw()
    {
      stroke(BLACK);

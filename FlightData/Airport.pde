@@ -56,6 +56,20 @@ class Airport
     }
     return amount;
   }
+  
+  public int getAmountOfIncomingFlights(ArrayList<Flight> flightList)
+  {
+    int amount = 0;
+    for (Flight currentFlight : flightList)
+    {
+      String currentAirportName = currentFlight.getDest();
+      if (currentAirportName.equals(name))
+      {
+        amount++;
+      }
+    }
+    return amount;
+  }
 
   public int getID()
   {

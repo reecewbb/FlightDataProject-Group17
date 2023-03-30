@@ -13,7 +13,7 @@ Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft
 Screen pieChartScreen;
 BarChart chart;
 int event, lastAirportSelected;
-int previousEvent;
+int previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
 Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton;
@@ -129,14 +129,16 @@ void mousePressed()
     break;
     
   case PIE_CHART_EVENT:
-    currentScreen = pieChartScreen; //<>//
+    currentScreen = pieChartScreen;  //<>//
     break;
 
   case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
     Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
     int outgoingFlights = currentAirport.getAmountOfOutgoingFlights(myFlights);
+    int incomingFlights = currentAirport.getAmountOfIncomingFlights(myFlights);
     chartSelectionScreen.setOutgoingFlights(outgoingFlights);
+    chartSelectionScreen.setIncomingFlights(incomingFlights);
     lastAirportSelected = event;
     break;
   }

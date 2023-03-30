@@ -1,7 +1,7 @@
 class Screen { //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
-  int screenType, previousEvent, outgoingFlights, currentGridHover, screen, query;
+  int screenType, outgoingFlights, currentGridHover, screen, query, incomingFlights;
   float[][] rectangleWidth;
   String[] areaNames;
 
@@ -62,6 +62,11 @@ class Screen { //<>// //<>// //<>//
   void setOutgoingFlights(int outgoingFlights)
   {
     this.outgoingFlights = outgoingFlights;
+  }
+  
+  void setIncomingFlights(int incomingFlights)
+  {
+    this.incomingFlights = incomingFlights;
   }
 
   void setQuery (int query)
@@ -127,7 +132,7 @@ class Screen { //<>// //<>// //<>//
   {
     if (event == NO_EVENT)
     {
-      event = previousEvent;
+      event = previousEventScreen;
     }
     switch(screenType)
     {
@@ -202,8 +207,8 @@ class Screen { //<>// //<>// //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart flightsChart = new BarChart(event - CHART_SELECTION_EVENT, myAirports, myFlights, query); //<>//
-      previousEvent = event;
+      BarChart flightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, query);
+      previousEventScreen = event; //<>//
       flightsChart.draw();
       break;
 
@@ -234,13 +239,14 @@ class Screen { //<>// //<>// //<>//
         aWidget.draw();
       }
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
+      String incomingFlightsString = "Total number of incoming flights: " + Integer.toString(incomingFlights);
+      String mostCommonAirline = "Most common airline: ";
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
       String airString = "Click to view airlines";
-      if(event < CHART_SELECTION_EVENT) event = previousEvent;
+      if(event <= CHART_SELECTION_EVENT) event = lastAirportSelected;
       Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
-      previousEvent = event;
-      String airportName = "Airport: " + currentAirport.getAirportName();
+      String airportName = "Airport: " + currentAirport.getAirportName(); //<>//
       String cityName = "City: " + currentAirport.getCityName();
       fill(BLACK);
       textSize(20);
@@ -248,6 +254,7 @@ class Screen { //<>// //<>// //<>//
       text(airportName, 100, 120);
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
+      text(incomingFlightsString, 100, 240);
       textAlign(CENTER);
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
@@ -292,13 +299,13 @@ class Screen { //<>// //<>// //<>//
       break;
       
     case PIE_CHART_SCREEN:
-      for (int i = 0; i < widgetList.size(); i++) //<>//
+      for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      PieChart airlinesChart = new PieChart(23, myAirports, myFlights);
-      previousEvent = event;
+      PieChart airlinesChart = new PieChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights); //<>//
+      previousEventScreen = event;
       airlinesChart.draw();
       break;
     }
