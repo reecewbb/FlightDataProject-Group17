@@ -129,7 +129,7 @@ void mousePressed()
     regionScreen = currentScreen;
     break;
 
-  case BACK_SELECTION_EVENT: //<>//
+  case BACK_SELECTION_EVENT: //<>// //<>//
     currentScreen = chartSelectionScreen;
     break;
     

@@ -1,7 +1,7 @@
 class BarChart
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
-  String airportName, chartName;
+  String airportName, chartName, highestOutgoingName, highestIncomingName;
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
   int[] flightCount, queryCount;
@@ -49,17 +49,25 @@ class BarChart
   public int[] createDestinationArray()
   {
     int[] newFlightCount = new int[airportList.size()];
+    highestOutgoing = 0;
+    highestIncoming = 0;
     for (Flight currentFlight : flightList)
     {
       String originAirport = currentFlight.getOrigin();
       String destAirport = currentFlight.getDest();
-      for (Airport currentAirport : airportList)
+      for (int i = 0; i < myAirports.size(); i++)
       {
+        Airport currentAirport = myAirports.get(i);
         if(query == OUTGOING)
         {
           if (currentAirport.getAirportName().equals(destAirport) && originAirport.equals(airportName))
           {
             newFlightCount[currentAirport.getID()]++;
+            if(newFlightCount[currentAirport.getID()] > highestOutgoing)
+            {
+              highestOutgoing = newFlightCount[currentAirport.getID()];
+              highestOutgoingName = currentAirport.getAirportName();
+            }
           }
         }
         else if (query == INCOMING)
@@ -67,16 +75,31 @@ class BarChart
           if (currentAirport.getAirportName().equals(originAirport) && destAirport.equals(airportName))
           {
             newFlightCount[currentAirport.getID()]++;
+            if(newFlightCount[currentAirport.getID()] > highestIncoming)
+            {
+              highestIncoming = newFlightCount[currentAirport.getID()];
+              highestIncomingName = currentAirport.getAirportName(); //<>//
+            }
           }
         }
       }
     }
     return newFlightCount;
   }
-
+  
+  public String getHighestIncomingName()
+  {
+    return highestIncomingName;
+  }
+  
+  public String getHighestOutgoingName()
+  {
+    return highestOutgoingName;
+  }
+  
   void draw()
   {
-    drawBarChartForOutgoingFlights(); //<>//
+    drawBarChartForOutgoingFlights(); 
   }
 
   void drawBarChartForOutgoingFlights()

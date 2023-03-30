@@ -1,4 +1,4 @@
-class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
+class Screen {  //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
   int screenType, outgoingFlights, currentGridHover, screen, incomingFlights;
@@ -250,11 +250,15 @@ class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
       if (event <= CHART_SELECTION_EVENT) event = lastAirportSelected;
       Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
       airlinesChart = new PieChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights);
+      outgoingFlightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, OUTGOING);
+      incomingFlightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, INCOMING);
       String airportName = "Airport: " + currentAirport.getAirportName();
       String cityName = "City: " + currentAirport.getCityName();
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
       String incomingFlightsString = "Total number of incoming flights: " + Integer.toString(incomingFlights);
       String mostCommonAirline = "Most popular airline: " + airlinesChart.getMostCommonAirline();
+      String mostPopularDestination = "Most popular destination: " + outgoingFlightsChart.getHighestOutgoingName();
+      String mostPopularOrigin = "Most popular origin: " + outgoingFlightsChart.getHighestIncomingName();
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
       String airString = "Click to view airlines";
@@ -266,6 +270,8 @@ class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
       text(outgoingFlightsString, 100, 200);
       text(incomingFlightsString, 100, 240);
       text(mostCommonAirline, 100, 280);
+      text(mostPopularDestination, 100, 320);
+      text(mostPopularOrigin, 100, 360);
       textAlign(CENTER);
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
