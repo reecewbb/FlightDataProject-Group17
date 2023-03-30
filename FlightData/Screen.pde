@@ -1,4 +1,4 @@
-class Screen { //<>// //<>//
+class Screen { //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights, currentGridHover, screen, query;
@@ -202,7 +202,7 @@ class Screen { //<>// //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart flightsChart = new BarChart(event - CHART_SELECTION_EVENT, myAirports, myFlights, query);
+      BarChart flightsChart = new BarChart(event - CHART_SELECTION_EVENT, myAirports, myFlights, query); //<>//
       previousEvent = event;
       flightsChart.draw();
       break;
@@ -292,14 +292,14 @@ class Screen { //<>// //<>//
       break;
       
     case PIE_CHART_SCREEN:
-      for (int i = 0; i < widgetList.size(); i++)
+      for (int i = 0; i < widgetList.size(); i++) //<>//
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      //PieChart airlinesChart = new PieChart(event - CHART_SELECTION_EVENT, myAirports, myFlights);
-      //previousEvent = event;
-      //airlinesChart.draw();
+      PieChart airlinesChart = new PieChart(23, myAirports, myFlights);
+      previousEvent = event;
+      airlinesChart.draw();
       break;
     }
   }

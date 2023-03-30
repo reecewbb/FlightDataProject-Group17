@@ -16,6 +16,11 @@ class Flight
       this.arrTime + ", " + ((cancelled) ? 1 : 0) + ", " + ((diverted) ? 1 : 0) + ", " + this.distance;
     return allJoinedData;
   }
+  
+  public String getMktCarrier()
+  {
+    return mktCarrier;
+  }
 
   public String getOrigin()
   {
