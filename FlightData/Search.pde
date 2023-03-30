@@ -33,7 +33,7 @@ class Search {
               String[] EAT = currentFlight.getEstimatedArrivalTime().split("");
               String[] departsAt = currentFlight.getDepartureTime().split("");
               String[] arrivesAt = currentFlight.getArrivalTime().split("");
-              dataReturned = text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
+              dataReturned = "Flight Number: " + text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
               "\nStatus: " + currentFlight.getStatus() +
                 "\nDestination Airport Code: " + currentFlight.getDest() +
                 "\nDate of Departure: " + currentFlight.getFlightDate() +
@@ -57,7 +57,7 @@ class Search {
           alreadyRun=true;
         } // if
         else {
-          dataReturned= "Flight not found";
+          dataReturned= "Flight not found. Please try again.\nAirline carrier prefixes supported include:\nAA, AS, B6, DL, F9, G4, HA, NK, UA, WN. ";
           text1="";
           alreadyRun=true;
         }
@@ -84,7 +84,7 @@ class Search {
     textSize(20);
     fill(BLACK);
     text(text1, 160, 50);
-    text(dataReturned, 160, 75); //<>//
+    text(dataReturned, 150, 80); //<>//
     textAlign(CENTER);
     flashingTypingYoke();
   }
