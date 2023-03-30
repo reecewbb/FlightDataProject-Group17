@@ -8,14 +8,15 @@ ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
 PImage mapImage, alaskaMapImage, hawaiiMapImage;
-PImage[] US, Alaska, Hawaii, Departures, Arrivals;
+PImage[] US, Alaska, Hawaii, Departures, Arrivals, Airlines;
 Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
+Screen pieChartScreen;
 BarChart chart;
 int event, lastAirportSelected;
 int previousEvent;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
-Widget backToAlaskaMapButton, backToHawaiiMapButton;
+Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton;
 boolean drawingGraph;
 
 void settings() {
@@ -126,6 +127,10 @@ void mousePressed()
   case BACK_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
     break;
+    
+  case PIE_CHART_EVENT:
+    currentScreen = pieChartScreen; //<>//
+    break;
 
   case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
@@ -141,9 +146,9 @@ void mouseMoved()
 {
   if (currentScreen != mapScreen)
   {
-    for (int i = 0; i < myAirports.size(); i++)
+    for (Airport currentAirport: myAirports)
     {
-      myAirports.get(i).strokeAirport();
+      currentAirport.strokeAirport();
     }
   }
   backToMapButton.hover();
@@ -155,6 +160,7 @@ void mouseMoved()
   backToSelectionButton.hover();
   outgoingBarChartButton.hover();
   incomingBarChartButton.hover();
+  pieChartButton.hover();
   currentScreen.hover();
 }
 
@@ -230,6 +236,7 @@ void setScreens()
   botRight = new Screen(BOT_RIGHT_SCREEN);
   startScreen = new Screen(START_SCREEN);
   chartSelectionScreen = new Screen(CHART_SELECT_SCREEN);
+  pieChartScreen = new Screen(PIE_CHART_SCREEN);
   currentScreen = startScreen;
   zoomScreens.add(topLeft);
   zoomScreens.add(topMid);
@@ -297,24 +304,26 @@ void addWidgets()
   backToStartButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_TO_START_EVENT, WHITE);
   outgoingBarChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, OUTGOING_BAR_CHART_EVENT);
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
+  pieChartButton = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
   AKButton= new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
   LSButton= new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
   TZButton= new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
   allButton= new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
   chartScreen.addWidget(backToSelectionButton);
+  pieChartScreen.addWidget(backToSelectionButton);
   chartSelectionScreen.addWidget(backToMapButton);
   chartSelectionScreen.addWidget(outgoingBarChartButton);
   chartSelectionScreen.addWidget(incomingBarChartButton);
+  chartSelectionScreen.addWidget(pieChartButton);
   startScreen.addWidget(USMapButton);
   startScreen.addWidget(alaskaMapButton);
   startScreen.addWidget(hawaiiMapButton);
   mapScreen.addWidget(backToStartButton);
   alaskaScreen.addWidget(backToStartButton);
   hawaiiScreen.addWidget(backToStartButton);
-  for (int i = 0; i < zoomScreens.size(); i++)
+  for (Screen currentZoom : zoomScreens)
   {
-    Screen currentZoom = zoomScreens.get(i);
     currentZoom.addWidget(backToMapButton);
     currentZoom.addWidget(AKButton);
     currentZoom.addWidget(LSButton);

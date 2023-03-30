@@ -5,7 +5,8 @@ class Filter {
   String[] splitCurrentName;
   String currentName;
 
-  void addAirports(ArrayList<Airport> myAirports) {
+  void addAirports(ArrayList<Airport> myAirports)
+  {
     myAirports.add(new Airport(1410, 335, "JFK", ON_BOTTOM));
     myAirports.add(new Airport(130, 580, "LAX", ON_TOP));
     myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));
@@ -277,37 +278,10 @@ class Filter {
     myAirports.add(new Airport(1271, 686, "HHH", ON_SIDE));
     myAirports.add(new Airport(1249, 504, "ROA", ON_TOP));
   }
-  /*void whichWidget()
-   {
-   if(mapScreen.widgetList.get(2).event)
-   {
-   widgetFilterPressed = 1;
-   }
-   if(mapScreen.widgetList.get(3).event)
-   {
-   widgetFilterPressed =2;
-   }
-   if(mapScreen.widgetList.get(4))
-   {
-   widgetFilterPressed= 3;
-   }
-   }*/
+
 
   void showAirports(ArrayList<Airport> myAirports)
   {
-    //currentFilter = widgetFilterPressed;
-    /*if(currentFilter!=previousFilter)
-     {
-     for(int i=0; i<myAirports.size();i++)
-     {
-     if(myAirports.get(i).x>2000)
-     {
-     myAirports.get(i).x = myAirports.get(i).x - 2000;
-     }
-     }
-     }*/
-
-
     for (int i=0; i<myAirports.size(); i++)
     {
       currentName = myAirports.get(i).name;
@@ -331,7 +305,6 @@ class Filter {
           myAirports.get(i).x = myAirports.get(i).x + 2000;
         }
       }
-
       if (currentFilter == 2)
       {
         if (splitCurrentName[0].equals("L")||splitCurrentName[0].equals("M")||splitCurrentName[0].equals("N")||
@@ -351,7 +324,6 @@ class Filter {
           myAirports.get(i).x = myAirports.get(i).x + 2000;
         }
       }
-
       if (currentFilter==3)
       {
         if (splitCurrentName[0].equals("T")||splitCurrentName[0].equals("U")||splitCurrentName[0].equals("V")
@@ -370,7 +342,6 @@ class Filter {
           myAirports.get(i).x = myAirports.get(i).x + 2000;
         }
       }
-
       if (currentFilter==4)
       {
         if (myAirports.get(i).x>2000)

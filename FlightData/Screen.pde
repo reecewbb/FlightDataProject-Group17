@@ -1,4 +1,4 @@
-class Screen { //<>//
+class Screen { //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList airportList = new ArrayList();
   int screenType, previousEvent, outgoingFlights, currentGridHover, screen, query;
@@ -50,11 +50,13 @@ class Screen { //<>//
     Hawaii = new PImage[3];
     Departures = new PImage[3];
     Arrivals = new PImage[3];
+    Airlines = new PImage[3];
     setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
     setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
     setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
     setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
     setShadowArray(Arrivals, "arrivals.png", "shadow_arrivals.png", CHART_BUTTON_SIZE);
+    setShadowArray(Airlines, "airline_logos.png", "airline_logos_shadow.png", CHART_BUTTON_SIZE);
   }
 
   void setOutgoingFlights(int outgoingFlights)
@@ -234,6 +236,7 @@ class Screen { //<>//
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
+      String airString = "Click to view airlines";
       if(event < CHART_SELECTION_EVENT) event = previousEvent;
       Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
       previousEvent = event;
@@ -248,8 +251,10 @@ class Screen { //<>//
       textAlign(CENTER);
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
+      text(airString, PIE_X + Airlines[CURRENT].width/2, PIE_Y + Airlines[CURRENT].height + 30);
       image(Departures[CURRENT], DEP_X, DEP_Y);
       image(Arrivals[CURRENT], ARR_X, ARR_Y);
+      image(Airlines[CURRENT], PIE_X, PIE_Y);
       break;
 
     case ALASKA_SCREEN:
@@ -284,6 +289,17 @@ class Screen { //<>//
       image(hawaiiMapImage, 220, 0);
       textSize(30);
       text("HAWAII", SCREENX/2, textAscent() * 2);
+      break;
+      
+    case PIE_CHART_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      //PieChart airlinesChart = new PieChart(event - CHART_SELECTION_EVENT, myAirports, myFlights);
+      //previousEvent = event;
+      //airlinesChart.draw();
       break;
     }
   }
@@ -343,6 +359,7 @@ class Screen { //<>//
     case CHART_SELECT_SCREEN:
       Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[CHANGED]);
       Arrivals[CURRENT] = changeShadow(ARR_X, ARR_Y, Arrivals[START], Arrivals[CHANGED]);
+      Airlines[CURRENT] = changeShadow(PIE_X, PIE_Y, Airlines[START], Airlines[CHANGED]);
       break;
     }
   }

@@ -35,9 +35,8 @@ class BarChart
   {
     int maxValue = 0;
     queryCount = createDestinationArray();
-    for (int i = 0; i < queryCount.length; i++)
+    for (int currentValue : queryCount)
     {
-      int currentValue = queryCount[i];
       if (currentValue > maxValue)
       {
         maxValue = currentValue;
@@ -50,9 +49,8 @@ class BarChart
   public int[] createDestinationArray()
   {
     int[] newFlightCount = new int[airportList.size()];
-    for (int i = 0; i < flightList.size(); i++)
+    for (Flight currentFlight : flightList)
     {
-      Flight currentFlight = flightList.get(i);
       String originAirport = currentFlight.getOrigin();
       String destAirport = currentFlight.getDest();
       for (int j = 0; j < airportList.size(); j++)

@@ -23,7 +23,7 @@ class Airport
     this.region = region;
   }
   
-  public int getRegion ()
+  public int getRegion()
   {
    return region;
   }
@@ -46,9 +46,8 @@ class Airport
   public int getAmountOfOutgoingFlights(ArrayList<Flight> flightList)
   {
     int amount = 0;
-    for (int i = 0; i < flightList.size(); i++)
+    for (Flight currentFlight : flightList)
     {
-      Flight currentFlight = flightList.get(i);
       String currentAirportName = currentFlight.getOrigin();
       if (currentAirportName.equals(name))
       {
