@@ -1,4 +1,4 @@
-class Screen {  //<>// //<>// //<>//
+class Screen {   //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
   int screenType, outgoingFlights, currentGridHover, screen, incomingFlights;
@@ -222,6 +222,11 @@ class Screen {  //<>// //<>// //<>//
       break;
 
     case START_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
       String start = "AIRPORT DATA VIEWER";
       String regionSelect = "Select Region";
       String continentalUS = "Continental US";
@@ -335,6 +340,14 @@ class Screen {  //<>// //<>// //<>//
       previousEventScreen = event;
       incomingFlightsChart.draw();
       break;
+      
+    case SEARCH_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      searchBar.draw();
     }
   }
 
