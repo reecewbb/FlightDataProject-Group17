@@ -1,7 +1,7 @@
 class Screen { //<>// //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
-  int screenType, outgoingFlights, currentGridHover, screen, query, incomingFlights;
+  int screenType, outgoingFlights, currentGridHover, screen, incomingFlights;
   float[][] rectangleWidth;
   String[] areaNames;
 
@@ -63,15 +63,10 @@ class Screen { //<>// //<>// //<>//
   {
     this.outgoingFlights = outgoingFlights;
   }
-  
+
   void setIncomingFlights(int incomingFlights)
   {
     this.incomingFlights = incomingFlights;
-  }
-
-  void setQuery (int query)
-  {
-    this.query = query;
   }
 
   void addAirport(Airport airport)
@@ -201,15 +196,15 @@ class Screen { //<>// //<>// //<>//
       setScreen(2, 2, BOT_RIGHT_SCREEN);
       break;
 
-    case BAR_CHART_SCREEN:
+    case OUTGOING_BAR_CHART_SCREEN:
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      BarChart flightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, query);
-      previousEventScreen = event; //<>//
-      flightsChart.draw();
+      outgoingFlightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, OUTGOING);
+      previousEventScreen = event;
+      outgoingFlightsChart.draw();
       break;
 
     case START_SCREEN:
@@ -238,16 +233,17 @@ class Screen { //<>// //<>// //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
+      if (event <= CHART_SELECTION_EVENT) event = lastAirportSelected;
+      Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
+      airlinesChart = new PieChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights);
+      String airportName = "Airport: " + currentAirport.getAirportName();
+      String cityName = "City: " + currentAirport.getCityName();
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
       String incomingFlightsString = "Total number of incoming flights: " + Integer.toString(incomingFlights);
-      String mostCommonAirline = "Most common airline: ";
+      String mostCommonAirline = "Most popular airline: " + airlinesChart.getMostCommonAirline();
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
       String airString = "Click to view airlines";
-      if(event <= CHART_SELECTION_EVENT) event = lastAirportSelected;
-      Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
-      String airportName = "Airport: " + currentAirport.getAirportName(); //<>//
-      String cityName = "City: " + currentAirport.getCityName();
       fill(BLACK);
       textSize(20);
       textAlign(LEFT);
@@ -255,6 +251,7 @@ class Screen { //<>// //<>// //<>//
       text(cityName, 100, 160);
       text(outgoingFlightsString, 100, 200);
       text(incomingFlightsString, 100, 240);
+      text(mostCommonAirline, 100, 280);
       textAlign(CENTER);
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
@@ -297,16 +294,26 @@ class Screen { //<>// //<>// //<>//
       textSize(30);
       text("HAWAII", SCREENX/2, textAscent() * 2);
       break;
-      
+
     case PIE_CHART_SCREEN:
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      PieChart airlinesChart = new PieChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights); //<>//
       previousEventScreen = event;
       airlinesChart.draw();
+      break;
+
+    case INCOMING_BAR_CHART_SCREEN:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      incomingFlightsChart = new BarChart(lastAirportSelected - CHART_SELECTION_EVENT, myAirports, myFlights, INCOMING);
+      previousEventScreen = event;
+      incomingFlightsChart.draw();
       break;
     }
   }

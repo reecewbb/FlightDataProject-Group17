@@ -5,7 +5,7 @@ class BarChart
   ArrayList<Airport> airportList = new ArrayList();
   ArrayList<Flight> flightList = new ArrayList();
   int[] flightCount, queryCount;
-  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2, amountOfQuery, query;
+  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2, amountOfQuery, query, highestOutgoing, highestIncoming;
   float differenceInPosition, yIncrement, difference, widthOfBar;
   boolean firstTime;
 
@@ -53,9 +53,8 @@ class BarChart
     {
       String originAirport = currentFlight.getOrigin();
       String destAirport = currentFlight.getDest();
-      for (int j = 0; j < airportList.size(); j++)
+      for (Airport currentAirport : airportList)
       {
-        Airport currentAirport = airportList.get(j);
         if(query == OUTGOING)
         {
           if (currentAirport.getAirportName().equals(destAirport) && originAirport.equals(airportName))
@@ -77,7 +76,7 @@ class BarChart
 
   void draw()
   {
-    drawBarChartForOutgoingFlights();
+    drawBarChartForOutgoingFlights(); //<>//
   }
 
   void drawBarChartForOutgoingFlights()
@@ -108,7 +107,7 @@ class BarChart
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
           fill(0);
-          text(currentAirportName, point + (widthOfBar / 2) - (textWidth(currentAirportName)/2), SCREENY - 70);
+          text(currentAirportName, point + (widthOfBar / 2), SCREENY - 70);
           float barHeight = flightCount[i] * yIncrement;
           pushMatrix();
           textSize(12);
@@ -168,6 +167,7 @@ class BarChart
     fill(0);
     stroke(0);
     strokeWeight(1);
+    textSize(10);
     rect(CHART_BUFFER, SCREENY - CHART_BUFFER, barChartXAxisLength, 10);
     rect(CHART_BUFFER, CHART_BUFFER, 10, barChartYAxisLength);
     text("0", 80, SCREENY - CHART_BUFFER);

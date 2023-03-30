@@ -4,7 +4,7 @@ class PieChart
    
    int diameterOfPieChart;
    int airportID;
-   String airportName;
+   String airportName, chartName;
    ArrayList<Airport> airportList = new ArrayList();
    ArrayList<Flight> flightList = new ArrayList();
    int totalNumberOfFlightsToAndFrom;
@@ -24,6 +24,7 @@ class PieChart
      this.setAirlines();
      this.setAirlineNames();
      this.getNumberOfFlightsForAirlinesAndTotal();
+     chartName = "Airlines at " + airportName;
    }
    
    
@@ -98,6 +99,9 @@ class PieChart
    
    void draw()
    {
+     textSize(20);
+     fill(BLACK);
+     text(chartName, SCREENX/2, TOP_TEXT_BUFFER);
      stroke(BLACK);
      float lastAngle = 0; //<>//
      int xForKey = 1295;
@@ -107,8 +111,8 @@ class PieChart
      {
        float numerator = airlineFlightsTotal[i];
        float fraction = numerator / totalNumberOfFlightsToAndFrom;
-       float percent = fraction * 100;
-       float percentRounded = Math.round(percent * 100) / 100;
+       int bigPercent = (int) (fraction * 10000);
+       float percentRounded = (float) bigPercent / 100;
        float numberConvertedToDegrees = fraction * 360;
        color arcColor = 0;
        switch(i)
@@ -166,7 +170,7 @@ class PieChart
        fill(BLACK);
        textAlign(LEFT);
        textSize(15);
-       text("-  " + airlineName + "  -  " + percent + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+       text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
        textAlign(CENTER);
        yForKey -= 35;
      }

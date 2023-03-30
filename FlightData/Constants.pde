@@ -80,12 +80,13 @@ final int MID_RIGHT_SCREEN = 6;
 final int BOT_LEFT_SCREEN = 7;
 final int BOT_MID_SCREEN = 8;
 final int BOT_RIGHT_SCREEN = 9;
-final int BAR_CHART_SCREEN = 10;
+final int OUTGOING_BAR_CHART_SCREEN = 10;
 final int START_SCREEN = 11;
 final int CHART_SELECT_SCREEN = 12;
 final int ALASKA_SCREEN = 13;
 final int HAWAII_SCREEN = 14;
 final int PIE_CHART_SCREEN = 15;
+final int INCOMING_BAR_CHART_SCREEN = 16;
 //filters
 final int AK_FILTER = 1;
 final int LS_FILTER = 2;

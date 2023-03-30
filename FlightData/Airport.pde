@@ -178,7 +178,7 @@ class Airport
     case ON_SIDE_FAR_TOPRIGHT:
       text(name, xpos+68, ypos - AIRPORT_RADIUS - 12 );
       stroke(0);
-      line(xpos, ypos, xpos+40, ypos-AIRPORT_RADIUS - 22);
+      line(xpos, ypos, xpos+40, ypos - AIRPORT_RADIUS - 22);
       break;
 
     case ON_SIDE_FAR_BOTTOMLEFT:
