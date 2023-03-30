@@ -1,22 +1,33 @@
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
-
+String text1 ="";
 PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
 PImage mapImage, alaskaMapImage, hawaiiMapImage;
+<<<<<<< Updated upstream
 PImage[] US, Alaska, Hawaii, Departures, Arrivals, Airlines;
 Screen mapScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
 Screen pieChartScreen, outgoingChartScreen, incomingChartScreen;
+=======
+PImage[] US, Alaska, Hawaii, Departures, Arrivals;
+Screen mapScreen, chartScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, 
+alaskaScreen, hawaiiScreen, regionScreen, searchScreen;
+>>>>>>> Stashed changes
 BarChart chart;
 int event, lastAirportSelected;
 int previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
+<<<<<<< Updated upstream
 Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton;
+=======
+Widget backToAlaskaMapButton, backToHawaiiMapButton, searchScreenButton;
+Search searchBar;
+>>>>>>> Stashed changes
 boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart;
@@ -30,6 +41,7 @@ void setup() {
   textAlign(CENTER);
   importDataFromFile();
   setScreens();
+  searchBar = new Search();
   mapFilter = new Filter();
   mapFilter.addAirports(myAirports);
   System.out.println(airportNames);
@@ -40,6 +52,7 @@ void setup() {
   addDataToAirports();
   drawingGraph = false;
   allButton.setColour();
+  
 }
 
 
@@ -47,6 +60,16 @@ void draw()
 {
   background(WHITE);
   currentScreen.draw(event, myAirports, myFlights, mapFilter);
+  
+ /* if(currentScreen==searchScreen){
+   searchBar.keyPressed();
+   searchBar.draw();
+  }*/
+
+}
+
+void keyPressed(){
+  searchBar.searchTyping();
 }
 
 void mousePressed()
@@ -133,9 +156,16 @@ void mousePressed()
     currentScreen = chartSelectionScreen;
     break;
     
+<<<<<<< Updated upstream
   case PIE_CHART_EVENT:
     currentScreen = pieChartScreen;  
     break;
+=======
+  case SELECT_SEARCH_EVENT:
+    currentScreen = searchScreen;
+     //<>//
+    break;  
+>>>>>>> Stashed changes
 
   case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
@@ -244,7 +274,11 @@ void setScreens()
   botRight = new Screen(BOT_RIGHT_SCREEN);
   startScreen = new Screen(START_SCREEN);
   chartSelectionScreen = new Screen(CHART_SELECT_SCREEN);
+<<<<<<< Updated upstream
   pieChartScreen = new Screen(PIE_CHART_SCREEN);
+=======
+  searchScreen = new Screen(SEARCH_SCREEN);
+>>>>>>> Stashed changes
   currentScreen = startScreen;
   zoomScreens.add(topLeft);
   zoomScreens.add(topMid);
@@ -318,9 +352,15 @@ void addWidgets()
   LSButton= new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
   TZButton= new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
   allButton= new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
+<<<<<<< Updated upstream
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
   pieChartScreen.addWidget(backToSelectionButton);
+=======
+  searchScreenButton = new Widget(1457, 98, FILTER_WIDGET_WIDTH+10, FILTER_WIDGET_HEIGHT, " SEARCH>", color(WIDGET_COLOUR), myFont, SELECT_SEARCH_EVENT, WHITE);
+  searchScreen.addWidget(backToStartButton);
+  chartScreen.addWidget(backToSelectionButton);
+>>>>>>> Stashed changes
   chartSelectionScreen.addWidget(backToMapButton);
   chartSelectionScreen.addWidget(outgoingBarChartButton);
   chartSelectionScreen.addWidget(incomingBarChartButton);
@@ -328,6 +368,7 @@ void addWidgets()
   startScreen.addWidget(USMapButton);
   startScreen.addWidget(alaskaMapButton);
   startScreen.addWidget(hawaiiMapButton);
+  startScreen.addWidget(searchScreenButton);
   mapScreen.addWidget(backToStartButton);
   alaskaScreen.addWidget(backToStartButton);
   hawaiiScreen.addWidget(backToStartButton);

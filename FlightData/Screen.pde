@@ -239,6 +239,11 @@ class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
       image(US[CURRENT], US_X_START, TOP_ROW_Y_START);
       image(Alaska[CURRENT], ALASKA_X_START, TOP_ROW_Y_START);
       image(Hawaii[CURRENT], HAWAII_X_START, HAWAII_Y_START);
+       for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
       break;
 
     case CHART_SELECT_SCREEN:
@@ -308,13 +313,20 @@ class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
       textSize(30);
       text("HAWAII", SCREENX/2, textAscent() * 2);
       break;
+<<<<<<< Updated upstream
 
     case PIE_CHART_SCREEN:
       for (int i = 0; i < widgetList.size(); i++)
+=======
+      
+    case SEARCH_SCREEN:
+          for (int i = 0; i < widgetList.size(); i++)
+>>>>>>> Stashed changes
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
+<<<<<<< Updated upstream
       previousEventScreen = event;
       airlinesChart.draw();
       break;
@@ -329,6 +341,9 @@ class Screen { //<>// //<>// //<>// //<>// //<>// //<>//
       previousEventScreen = event;
       incomingFlightsChart.draw();
       break;
+=======
+      searchBar.draw(); //<>//
+>>>>>>> Stashed changes
     }
   }
 

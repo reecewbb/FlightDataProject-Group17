@@ -38,6 +38,50 @@ class Flight
     return cityName;
   }
   
+  public String getArrivalCityName(){
+    String ac = destCityName + ", " + destStateAbr;
+    return ac;
+  }
+  
+  public String getFlightNumber(){
+    String fn = mktCarrier + mktCarrierFlNum;
+    return fn;
+  }
+  
+  public String getDepartureTime(){
+    String departureTime = depTime;
+    return departureTime;
+  }
+  
+  public String getArrivalTime(){
+    String arrivalTime = arrTime;
+    return arrivalTime;
+  }
+  
+  public String getEstimatedDepartureTime(){
+    String edt = crsDepTime;
+    return edt;
+  }
+  
+  public String getEstimatedArrivalTime(){
+    String eat = crsArrTime;
+    return eat;
+  }
+  
+  public String getDistance(){
+  return String.valueOf(distance);
+  }
+  
+  public String getFlightDate(){
+    String fd = flightDate;
+    fd = fd.replaceAll(" ", "");
+    fd = fd.replaceAll("AM", "");
+    fd = fd.replaceAll("PM", "");
+    //fd = fd.replaceAll(":", "");
+    fd=fd.substring(0, fd.length()-8);
+    return fd;
+  }
+  
   public void setData(String data, int dataType)
   {
     switch(dataType)

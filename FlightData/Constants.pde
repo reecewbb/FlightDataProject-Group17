@@ -60,7 +60,7 @@ final int ORIGIN_STATE_ABR_NO = 6;
 final int ORIGIN_WAC_NO = 7;
 final int DEST_NO = 8;
 final int DEST_CITY_NAME_NO = 9;
-final int DEST_STATE_ABR_NO = 10;
+final int DEST_STATE_ABR_NO = 11;
 final int DEST_WAC_NO = 12;
 final int CRS_DEP_TIME_NO = 13;
 final int DEP_TIME_NO = 14;
@@ -83,10 +83,16 @@ final int BOT_RIGHT_SCREEN = 9;
 final int OUTGOING_BAR_CHART_SCREEN = 10;
 final int START_SCREEN = 11;
 final int CHART_SELECT_SCREEN = 12;
+<<<<<<< Updated upstream
 final int ALASKA_SCREEN = 13;
 final int HAWAII_SCREEN = 14;
 final int PIE_CHART_SCREEN = 15;
 final int INCOMING_BAR_CHART_SCREEN = 16;
+=======
+final int ALASKA_SCREEN=13;
+final int HAWAII_SCREEN=14;
+final int SEARCH_SCREEN =15;
+>>>>>>> Stashed changes
 //filters
 final int AK_FILTER = 1;
 final int LS_FILTER = 2;
@@ -125,7 +131,11 @@ final int INCOMING_BAR_CHART_EVENT = 17;
 final int SELECT_ALASKA_EVENT = 18;
 final int SELECT_HAWAII_EVENT = 19;
 final int BACK_SELECTION_EVENT = 20;
+<<<<<<< Updated upstream
 final int PIE_CHART_EVENT = 21;
+=======
+final int SELECT_SEARCH_EVENT = 21;
+>>>>>>> Stashed changes
 final int CHART_SELECTION_EVENT = 22; //has to be last
 //regions
 final int US_REGION = 0;
