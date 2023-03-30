@@ -12,7 +12,6 @@ class Filter {
     myAirports.add(new Airport(1330, 420, "DCA", ON_TOP));
     myAirports.add(new Airport(150, 50, "SEA", ON_BOTTOM));
     myAirports.add(new Airport(1320, 900, "FLL", ON_BOTTOM));
-    myAirports.add(new Airport(450, 890, "HNL", ON_TOP, HAWAII_REGION));
     myAirports.add(new Airport(1015, 340, "ORD", ON_TOP));
     myAirports.add(new Airport(240, 540, "LAS", ON_TOP));
     myAirports.add(new Airport(990, 260, "ATW", ON_TOP));
@@ -24,7 +23,6 @@ class Filter {
     myAirports.add(new Airport(60, 390, "SMF", ON_TOP));
     myAirports.add(new Airport(600, 650, "LBB", ON_TOP));
     myAirports.add(new Airport(760, 710, "DFW", ON_TOP));
-    myAirports.add(new Airport(500, 910, "OGG", ON_TOP, HAWAII_REGION));
     myAirports.add(new Airport(1395, 340, "EWR", ON_TOP));
     myAirports.add(new Airport(380, 260, "IDA", ON_TOP));
     myAirports.add(new Airport(304, 631, "PHX", ON_TOP));
@@ -36,8 +34,6 @@ class Filter {
     myAirports.add(new Airport(1251, 763, "JAX", ON_TOP));
     myAirports.add(new Airport(754, 896, "CRP", ON_TOP));
     myAirports.add(new Airport(983, 598, "MEM", ON_TOP));
-    myAirports.add(new Airport(173, 940, "ADQ", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(190, 886, "ANC", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(47, 422, "SFO", ON_TOP));
     myAirports.add(new Airport(1428, 325, "LGA", ON_TOP));
     myAirports.add(new Airport(156, 620, "SNA", ON_SIDE));
@@ -82,7 +78,6 @@ class Filter {
     myAirports.add(new Airport(74, 138, "MFR", ON_TOP));
     myAirports.add(new Airport(745, 779, "AUS", ON_TOP));
     myAirports.add(new Airport(659, 113, "MOT", ON_TOP));
-    myAirports.add(new Airport(112, 875, "BET", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(473, 575, "ABQ", ON_TOP));
     myAirports.add(new Airport(976, 715, "JAN", ON_TOP));
     myAirports.add(new Airport(485, 394, "HDN", ON_TOP));
@@ -92,12 +87,10 @@ class Filter {
     myAirports.add(new Airport(623, 267, "RAP", ON_TOP));
     myAirports.add(new Airport(1240, 872, "SRQ", ON_BOTTOM));
     myAirports.add(new Airport(986, 346, "RFD", ON_TOP));
-    myAirports.add(new Airport(192, 729, "BRW", ON_BOTTOM, ALASKA_REGION));
     myAirports.add(new Airport(1123, 456, "CVG", ON_BOTTOM));
     myAirports.add(new Airport(81, 419, "SCK", ON_TOP));
     myAirports.add(new Airport(1251, 579, "CLT", ON_TOP));
     myAirports.add(new Airport(870, 541, "SGF", ON_TOP));
-    myAirports.add(new Airport(233, 754, "SCC", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(1325, 887, "PBI", ON_SIDE));
     myAirports.add(new Airport(141, 379, "RNO", ON_TOP));
     myAirports.add(new Airport(1464, 287, "PVD", ON_TOP));
@@ -106,22 +99,12 @@ class Filter {
     myAirports.add(new Airport(1296, 661, "CHS", ON_TOP));
     myAirports.add(new Airport(1014, 312, "MKE", ON_TOP));
     myAirports.add(new Airport(78, 532, "SMX", ON_TOP));
-    myAirports.add(new Airport(528, 952, "KOA", ON_TOP, HAWAII_REGION));
     myAirports.add(new Airport(1291, 276, "ROC", ON_TOP));
-    myAirports.add(new Airport(327, 943, "JNU", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(362, 978, "KTN", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(237, 906, "CDV", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(273, 917, "YAK", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(871, 712, "SHV", ON_TOP));
     myAirports.add(new Airport(853, 576, "XNA", ON_TOP));
-    myAirports.add(new Airport(1344, 612, "SIT", ON_TOP));
     myAirports.add(new Airport(268, 236, "BOI", ON_TOP));
-    myAirports.add(new Airport(406, 868, "LIH", ON_TOP, HAWAII_REGION));
-    myAirports.add(new Airport(337, 953, "PSG", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(336, 961, "WRG", ON_TOP, ALASKA_REGION)); // ON TOP OF ANOTHER
     myAirports.add(new Airport(350, 121, "MSO", ON_TOP));
     myAirports.add(new Airport(361, 377, "SLC", ON_TOP));
-    myAirports.add(new Airport(220, 823, "FAI", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(469, 199, "BIL", ON_TOP));
     myAirports.add(new Airport(673, 167, "BIS", ON_TOP));
     myAirports.add(new Airport(327, 643, "AZA", ON_SIDE));
@@ -131,7 +114,6 @@ class Filter {
     myAirports.add(new Airport(1408, 319, "HPN", ON_TOP));
     myAirports.add(new Airport(408, 189, "BZN", ON_TOP));
     myAirports.add(new Airport(827, 818, "IAH", ON_BOTTOM));
-    myAirports.add(new Airport(557, 950, "ITO", ON_TOP, HAWAII_REGION));
     myAirports.add(new Airport(137, 583, "BUR", ON_BOTTOM));
     myAirports.add(new Airport(1090, 780, "VPS", ON_TOP));
     myAirports.add(new Airport(1332, 476, "RIC", ON_TOP));
@@ -142,9 +124,6 @@ class Filter {
     myAirports.add(new Airport(810, 474, "ATY", ON_TOP));
     myAirports.add(new Airport(1314, 402, "HGR", ON_TOP));
     myAirports.add(new Airport(1255, 277, "IAG", ON_TOP));
-    myAirports.add(new Airport(142, 920, "AKN", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(128, 911, "DLG", ON_TOP, ALASKA_REGION));
-    myAirports.add(new Airport(114, 811, "OME", ON_TOP, ALASKA_REGION));
     myAirports.add(new Airport(1026, 712, "MEI", ON_TOP));
     myAirports.add(new Airport(697, 270, "PIR", ON_TOP));
     myAirports.add(new Airport(406, 458, "CNY", ON_TOP));
@@ -236,7 +215,6 @@ class Filter {
     myAirports.add(new Airport(849, 232, "STC", ON_TOP));
     myAirports.add(new Airport(1560, 875, "BQN", ON_TOP));
     myAirports.add(new Airport(1499, 970, "PSE", ON_TOP));
-    myAirports.add(new Airport(313, 952, "SIT", ON_TOP));
     myAirports.add(new Airport(366, 99, "FCA", ON_TOP));
     myAirports.add(new Airport(196, 85, "EAT", ON_TOP));
     myAirports.add(new Airport(136, 62, "PAE", ON_TOP));
@@ -247,8 +225,6 @@ class Filter {
     myAirports.add(new Airport(391, 164, "HLN", ON_TOP));
     myAirports.add(new Airport(86, 311, "RDD", ON_TOP));
     myAirports.add(new Airport(196, 111, "YKM", ON_TOP));
-    myAirports.add(new Airport(37, 968, "ADK", ON_TOP));
-    myAirports.add(new Airport(141, 779, "OTZ", ON_TOP));
     myAirports.add(new Airport(1450, 267, "ORH", ON_TOP));
     myAirports.add(new Airport(1329, 290, "ITH", ON_TOP));
     myAirports.add(new Airport(1188, 474, "HTS", ON_TOP));
@@ -277,6 +253,31 @@ class Filter {
     myAirports.add(new Airport(1269, 786, "DAB", ON_TOP));
     myAirports.add(new Airport(1271, 686, "HHH", ON_SIDE));
     myAirports.add(new Airport(1249, 504, "ROA", ON_TOP));
+    //ALASKA REGION
+    myAirports.add(new Airport(873, 137, "BRW", ON_TOP, ALASKA_REGION));
+    myAirports.add(new Airport(1021, 180, "SCC", ON_BOTTOM, ALASKA_REGION));
+    myAirports.add(new Airport(989, 387, "FAI", ON_BOTTOM, ALASKA_REGION));
+    myAirports.add(new Airport(751, 283, "OTZ", ON_SIDE, ALASKA_REGION));
+    myAirports.add(new Airport(1474, 730, "KTN", ON_SIDE_FAR_TOPRIGHT, ALASKA_REGION));
+    myAirports.add(new Airport(1408, 668, "WRG", ON_SIDE_FAR_MIDDLERIGHT, ALASKA_REGION));
+    myAirports.add(new Airport(1396, 655, "PSG", ON_SIDE_FAR_TOPRIGHT, ALASKA_REGION));
+    myAirports.add(new Airport(1371, 641, "JNU", ON_TOP_FAR, ALASKA_REGION));
+    myAirports.add(new Airport(1197, 591, "YAK", ON_SIDE_FAR_TOPRIGHT, ALASKA_REGION));
+    myAirports.add(new Airport(1090, 576, "CDV", ON_TOP, ALASKA_REGION));
+    myAirports.add(new Airport(966, 548, "ANC", ON_TOP, ALASKA_REGION));
+    myAirports.add(new Airport(924, 721, "ADQ", ON_SIDE_FAR_MIDDLERIGHT, ALASKA_REGION));
+    myAirports.add(new Airport(842, 674, "AKN", ON_SIDE, ALASKA_REGION));
+    myAirports.add(new Airport(794, 658, "DLG", ON_TOP, ALASKA_REGION));
+    myAirports.add(new Airport(727, 569, "BET", ON_SIDE, ALASKA_REGION));
+    myAirports.add(new Airport(710, 400, "OME", ON_TOP, ALASKA_REGION));
+    myAirports.add(new Airport(572, 863, "ADK", ON_SIDE, ALASKA_REGION));
+    myAirports.add(new Airport(1319, 661, "SIT", ON_SIDE_FAR_BOTTOMLEFT , ALASKA_REGION));
+    //HAWAII REGION
+    myAirports.add(new Airport(1162, 698, "ITO", ON_SIDE_FAR_MIDDLERIGHT, HAWAII_REGION));
+    myAirports.add(new Airport(441, 317, "LIH", ON_TOP, HAWAII_REGION));
+    myAirports.add(new Airport(1040, 727, "KOA", ON_SIDE_FAR_BOTTOMLEFT, HAWAII_REGION));
+    myAirports.add(new Airport(920, 505, "OGG", ON_SIDE_FAR_TOPRIGHT, HAWAII_REGION));
+    myAirports.add(new Airport(666, 400, "HNL", ON_TOP_FAR, HAWAII_REGION));
   }
 
 

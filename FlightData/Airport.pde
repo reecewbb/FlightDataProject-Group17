@@ -16,33 +16,33 @@ class Airport
     airportTextColor = color(0);
     region = US_REGION;
   }
-  
+
   Airport(int x, int y, String name, int topSideBottom, int region)
   {
     this(x, y, name, topSideBottom);
     this.region = region;
   }
-  
+
   public int getRegion()
   {
-   return region;
+    return region;
   }
 
   public void setID(int airportID)
   {
     this.airportID = airportID;
   }
-  
+
   public void setCityName(String cityName)
   {
     this.cityName = cityName;
   }
-  
+
   public String getCityName()
   {
     return cityName;
   }
-  
+
   public int getAmountOfOutgoingFlights(ArrayList<Flight> flightList)
   {
     int amount = 0;
@@ -51,7 +51,7 @@ class Airport
       String currentAirportName = currentFlight.getOrigin();
       if (currentAirportName.equals(name))
       {
-          amount++;
+        amount++;
       }
     }
     return amount;
@@ -82,8 +82,7 @@ class Airport
     if ( mouseX < xpos + AIRPORT_RADIUS && mouseX > xpos - AIRPORT_RADIUS && mouseY < ypos + AIRPORT_RADIUS && mouseY > ypos - AIRPORT_RADIUS)
     {
       borderSize = 2;
-    } 
-    else
+    } else
     {
       borderSize = 1;
     }
@@ -160,6 +159,30 @@ class Airport
 
     case ON_BOTTOM:
       text(name, xpos, ypos + AIRPORT_RADIUS + 12);
+      break;
+
+    case ON_SIDE_FAR_TOPRIGHT:
+      text(name, xpos+68, ypos - AIRPORT_RADIUS - 12 );
+      stroke(0);
+      line(xpos, ypos, xpos+40, ypos-AIRPORT_RADIUS - 22);
+      break;
+
+    case ON_SIDE_FAR_BOTTOMLEFT:
+      text(name, xpos - AIRPORT_RADIUS - 45, ypos + 23);
+      stroke(0);
+      line(xpos, ypos, xpos - AIRPORT_RADIUS - 25, ypos + 15);
+      break;
+
+    case ON_SIDE_FAR_MIDDLERIGHT:
+      text(name, xpos + AIRPORT_RADIUS + 60, ypos+10 );
+      stroke(0);
+      line(xpos, ypos, xpos + AIRPORT_RADIUS + 35, ypos);
+      break;
+
+    case ON_TOP_FAR:
+      text(name, xpos, ypos-50 );
+      stroke(0);
+      line(xpos, ypos, xpos, ypos-45);
       break;
     }
   }
