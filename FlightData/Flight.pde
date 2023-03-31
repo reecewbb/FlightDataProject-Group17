@@ -24,7 +24,7 @@ class Flight
   
   public String getStatus(){
     String corN="";
-    if(cancelled == true || arrTime==null){
+    if(cancelled == true || arrTime==null){ //<>//
       corN = "Cancelled";
       return corN;
     }
@@ -102,6 +102,8 @@ class Flight
     fd = fd.replaceAll("PM", "");
     //fd = fd.replaceAll(":", "");
     fd=fd.substring(0, fd.length()-8);
+    String[] irishDate = fd.split("/");
+    fd = irishDate[1] + "/" + irishDate[0] + "/" + irishDate[2];
     return fd;
   }
   

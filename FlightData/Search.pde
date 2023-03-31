@@ -1,5 +1,8 @@
 class Search {
   String dataReturned ="";
+  String extraData="";
+  String thirdDataString="";
+  String fourthDataString="";
   String typeBar = "|";
 
   boolean alreadyRun=true;
@@ -23,25 +26,32 @@ class Search {
         } // if
       } // if
       else if (key==RETURN || key==ENTER) {
+        int countData=0;
+        dataReturned="";
+        extraData="";
+        String[] flightNoAndDate= text1.split(",");
         boolean gotFlight = false;
         for (int i =0; i< myFlights.size(); i++) {
+          //if(gotFlight== true){break;}
           Flight currentFlight = myFlights.get(i);
           String currentFlightNumber = currentFlight.getFlightNumber();
-          if (currentFlightNumber.equals(text1)) {
-              dataReturned = "Flight Number: " + text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
+          if (currentFlightNumber.equals(flightNoAndDate[0]) && currentFlight.getFlightDate().equals(flightNoAndDate[1]) && countData<3) {
+            countData++;
+              dataReturned += "Flight Number: " + flightNoAndDate[0] + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
               "\nStatus: " + currentFlight.getStatus() +
                 "\nDestination Airport Code: " + currentFlight.getDest() +
-                "\nDate of Departure: " + currentFlight.getFlightDate() +
-                "\nEstimated Departure Time: " + depArrTimeFormatter(currentFlight.getEstimatedDepartureTime()) +
+                "\nDate of Departure: " + currentFlight.getFlightDate();
+                if(!currentFlight.getStatus().equals("Cancelled")||!currentFlight.getStatus().equals("Diverted")){
+                dataReturned += "\nEstimated Departure Time: " + depArrTimeFormatter(currentFlight.getEstimatedDepartureTime()) +
                 "\nEstimated Arrival Time: " + depArrTimeFormatter(currentFlight.getEstimatedArrivalTime()) +
                 "\nActual Departure Time: " + depArrTimeFormatter(currentFlight.getDepartureTime())
-                + "\nActual Arrival Time: " + depArrTimeFormatter(currentFlight.getArrivalTime())  +
-                "\nDeparture City: " + currentFlight.getCityName() + 
+                + "\nActual Arrival Time: " + depArrTimeFormatter(currentFlight.getArrivalTime());};
+               dataReturned +="\nDeparture City: " + currentFlight.getCityName() + 
                 "\nArrival City: " + currentFlight.getArrivalCityName()+
-                "\nDistance: " + currentFlight.getDistance() + " miles" ;
+                "\nDistance: " + currentFlight.getDistance() + " miles\n\n" ;
               gotFlight = true;
-            
-          }
+            }
+
         }
         println ("ENTER");
         if (gotFlight==true) {
@@ -65,7 +75,7 @@ class Search {
   void flashingTypingYoke(){
     float s = second()%2;
     if(s==0)
-    {float barDist = (text1.length()*12)-1.5;
+    {float barDist = (text1.length()*12)-4;
     text(typeBar, 166 + barDist, 47);}
   }
   
@@ -83,12 +93,17 @@ class Search {
   void draw() {
     stroke(BLACK);
     rect(150, 25, 210, 30);
+
     textAlign(LEFT);
     textFont(myFont);
     textSize(20);
     fill(BLACK);
+    text("Enter a flight number followed by the departure date, separated by a comma, in the format DD/MM/YYYY", 380, 50);
     text(text1, 160, 50);
     text(dataReturned, 150, 80);
+    //text(extraData, 550, 80);
+    //text(thirdDataString, 900, 80);
+    //text(fourthDataString,1200, 80);
     textAlign(CENTER);
     flashingTypingYoke();
   }
