@@ -24,16 +24,23 @@ class Flight
   
   public String getStatus(){
     String corN="";
-    if(cancelled == true){
+    if(cancelled == true || arrTime==null){
       corN = "Cancelled";
+      return corN;
     }
     
     if(diverted == true){
       corN = "Diverted";
     }
     
-    if(diverted == false && cancelled == false){
+    if(diverted == false && cancelled == false && Float.valueOf(getEstimatedArrivalTime()) >= Float.valueOf(getArrivalTime())){
       corN = "Arrived";
+      return corN;
+    }
+    
+    if(Float.valueOf(getEstimatedArrivalTime()) < Float.valueOf(getArrivalTime())){
+      corN = "Late";
+      return corN;
     }
     return corN;
   }

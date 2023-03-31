@@ -28,26 +28,19 @@ class Search {
           Flight currentFlight = myFlights.get(i);
           String currentFlightNumber = currentFlight.getFlightNumber();
           if (currentFlightNumber.equals(text1)) {
-            try {
-              String[] EDT = currentFlight.getEstimatedDepartureTime().split("");
-              String[] EAT = currentFlight.getEstimatedArrivalTime().split("");
-              String[] departsAt = currentFlight.getDepartureTime().split("");
-              String[] arrivesAt = currentFlight.getArrivalTime().split("");
               dataReturned = "Flight Number: " + text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
               "\nStatus: " + currentFlight.getStatus() +
                 "\nDestination Airport Code: " + currentFlight.getDest() +
                 "\nDate of Departure: " + currentFlight.getFlightDate() +
-                "\nEstimated Departure Time: " + EDT[0] + EDT[1] + ":" + EDT[2] + EDT[3] +
-                "\nEstimated Arrival Time: " + EAT[0] + EAT[1] + ":" + EAT[2] + EAT[3] +
-                "\nActual Departure Time: " + departsAt[0]+departsAt[1]+":"+departsAt[2]+departsAt[3]
-                + "\nActual Arrival Time: " + arrivesAt[0] + arrivesAt[1]+ ":" + arrivesAt[2] + arrivesAt[3]  +
-                "\nDeparture City: " + currentFlight.getCityName() + "\nArrival City: " + currentFlight.getArrivalCityName()+
+                "\nEstimated Departure Time: " + depArrTimeFormatter(currentFlight.getEstimatedDepartureTime()) +
+                "\nEstimated Arrival Time: " + depArrTimeFormatter(currentFlight.getEstimatedArrivalTime()) +
+                "\nActual Departure Time: " + depArrTimeFormatter(currentFlight.getDepartureTime())
+                + "\nActual Arrival Time: " + depArrTimeFormatter(currentFlight.getArrivalTime())  +
+                "\nDeparture City: " + currentFlight.getCityName() + 
+                "\nArrival City: " + currentFlight.getArrivalCityName()+
                 "\nDistance: " + currentFlight.getDistance() + " miles" ;
               gotFlight = true;
-            }
-            catch(ArrayIndexOutOfBoundsException exception) {
-              dataReturned= "Flight not found";
-            }
+            
           }
         }
         println ("ENTER");
@@ -76,6 +69,17 @@ class Search {
     text(typeBar, 166 + barDist, 47);}
   }
   
+  String depArrTimeFormatter(String time){
+    if(time==null){
+      return "N/A";
+    }
+    try{ //<>//
+    String[] timeSplit = time.split("");
+    String toReturn = timeSplit[0] + timeSplit[1] +":" + timeSplit[2] + timeSplit[3];
+    return toReturn; }
+    catch(ArrayIndexOutOfBoundsException exception){return "N/A";}
+  }
+  
   void draw() {
     stroke(BLACK);
     rect(150, 25, 210, 30);
@@ -84,7 +88,7 @@ class Search {
     textSize(20);
     fill(BLACK);
     text(text1, 160, 50);
-    text(dataReturned, 150, 80); //<>//
+    text(dataReturned, 150, 80);
     textAlign(CENTER);
     flashingTypingYoke();
   }
