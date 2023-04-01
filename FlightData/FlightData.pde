@@ -1,7 +1,9 @@
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
+import de.bezier.data.sql.*; 
 
+PostgreSQL pgsql;
 PFont myFont;
 ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
@@ -27,6 +29,32 @@ void settings() {
 }
 
 void setup() {
+  String user     = "postgres";
+  String pass     = "group17";
+  String database = "AirlineData";
+  pgsql = new PostgreSQL( this, "localhost", database, user, pass );
+  if ( pgsql.connect() )
+    {
+        // query the number of entries in table "weather"
+        pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
+        
+        // results found?
+        if ( pgsql.next() )
+        {
+            // nice, then let's report them back
+            println( "number of rows in table airlineData: " + pgsql.getInt(1) );
+        }
+        
+        // now let's query for last 10 entries in "weather"
+        pgsql.query( "SELECT * FROM airlinedata LIMIT 10" );
+        
+        // anything found?
+        while( pgsql.next() )
+        {
+            // splendid, here's what we've found ..
+            println( pgsql.getString("DEST") );
+        }
+    }
   background(WHITE);
   textAlign(CENTER);
   importDataFromFile();
