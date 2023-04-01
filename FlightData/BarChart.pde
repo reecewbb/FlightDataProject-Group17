@@ -1,4 +1,4 @@
-class BarChart
+class BarChart //<>//
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
   String airportName, chartName, highestOutgoingName, highestIncomingName;
@@ -49,57 +49,43 @@ class BarChart
   public int[] createDestinationArray()
   {
     int[] newFlightCount = new int[airportList.size()];
-    highestOutgoing = 0;
-    highestIncoming = 0;
-    for (Flight currentFlight : flightList)
+    for (int i = 0; i < myAirports.size(); i++)
     {
-      String originAirport = currentFlight.getOrigin();
-      String destAirport = currentFlight.getDest();
-      for (int i = 0; i < myAirports.size(); i++)
+      Airport currentAirport = myAirports.get(i);
+      String currentName = currentAirport.getAirportName();
+      if (query == OUTGOING)
       {
-        Airport currentAirport = myAirports.get(i);
-        if(query == OUTGOING)
+        pgsql.query("SELECT COUNT(*) AS connection_count FROM airlinedata WHERE ORIGIN = '" + airportName + "' AND DEST = '" + currentName + "';");
+        if ( pgsql.next())
         {
-          if (currentAirport.getAirportName().equals(destAirport) && originAirport.equals(airportName))
-          {
-            newFlightCount[currentAirport.getID()]++;
-            if(newFlightCount[currentAirport.getID()] > highestOutgoing)
-            {
-              highestOutgoing = newFlightCount[currentAirport.getID()];
-              highestOutgoingName = currentAirport.getAirportName();
-            }
-          }
+          newFlightCount[i] = pgsql.getInt(1);
         }
-        else if (query == INCOMING)
+      } 
+      else if (query == INCOMING)
+      {
+        pgsql.query("SELECT COUNT(*) AS connection_count FROM airlinedata WHERE ORIGIN = '" + currentName + "' AND DEST = '" + airportName + "';");
+        if ( pgsql.next())
         {
-          if (currentAirport.getAirportName().equals(originAirport) && destAirport.equals(airportName))
-          {
-            newFlightCount[currentAirport.getID()]++;
-            if(newFlightCount[currentAirport.getID()] > highestIncoming)
-            {
-              highestIncoming = newFlightCount[currentAirport.getID()];
-              highestIncomingName = currentAirport.getAirportName(); //<>//
-            }
-          }
+          newFlightCount[i] = pgsql.getInt(1);
         }
       }
     }
-    return newFlightCount;
+    return newFlightCount; //<>//
   }
-  
+
   public String getHighestIncomingName()
   {
     return highestIncomingName;
   }
-  
+
   public String getHighestOutgoingName()
   {
     return highestOutgoingName;
   }
-  
+
   void draw()
   {
-    drawBarChartForOutgoingFlights(); 
+    drawBarChartForOutgoingFlights();
   }
 
   void drawBarChartForOutgoingFlights()

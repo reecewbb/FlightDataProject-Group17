@@ -43,34 +43,6 @@ class Airport
     return cityName;
   }
 
-  public int getAmountOfOutgoingFlights(ArrayList<Flight> flightList)
-  {
-    int amount = 0;
-    for (Flight currentFlight : flightList)
-    {
-      String currentAirportName = currentFlight.getOrigin();
-      if (currentAirportName.equals(name))
-      {
-        amount++;
-      }
-    }
-    return amount;
-  }
-  
-  public int getAmountOfIncomingFlights(ArrayList<Flight> flightList)
-  {
-    int amount = 0;
-    for (Flight currentFlight : flightList)
-    {
-      String currentAirportName = currentFlight.getDest();
-      if (currentAirportName.equals(name))
-      {
-        amount++;
-      }
-    }
-    return amount;
-  }
-
   public int getID()
   {
     return airportID;

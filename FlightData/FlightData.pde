@@ -1,7 +1,7 @@
-import java.util.Scanner;
+import java.util.Scanner; //<>//
 import java.io.File;
 import java.util.ArrayList;
-import de.bezier.data.sql.*; 
+import de.bezier.data.sql.*;
 
 PostgreSQL pgsql;
 PFont myFont;
@@ -34,27 +34,13 @@ void setup() {
   String database = "AirlineData";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
+  {
+    pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
+    if ( pgsql.next() )
     {
-        // query the number of entries in table "weather"
-        pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
-        
-        // results found?
-        if ( pgsql.next() )
-        {
-            // nice, then let's report them back
-            println( "number of rows in table airlineData: " + pgsql.getInt(1) );
-        }
-        
-        // now let's query for last 10 entries in "weather"
-        pgsql.query( "SELECT * FROM airlinedata LIMIT 10" );
-        
-        // anything found?
-        while( pgsql.next() )
-        {
-            // splendid, here's what we've found ..
-            println( pgsql.getString("DEST") );
-        }
+      println( "number of rows in table airlineData: " + pgsql.getInt(1) );
     }
+  }
   background(WHITE);
   textAlign(CENTER);
   importDataFromFile();
@@ -126,7 +112,15 @@ void mousePressed()
     allButton.setColour();
     break;
 
-  case TOP_LEFT_EVENT: case TOP_MID_EVENT: case TOP_RIGHT_EVENT: case MID_LEFT_EVENT: case MID_MID_EVENT: case MID_RIGHT_EVENT: case BOT_LEFT_EVENT: case BOT_MID_EVENT: case BOT_RIGHT_EVENT:
+  case TOP_LEFT_EVENT:
+  case TOP_MID_EVENT:
+  case TOP_RIGHT_EVENT:
+  case MID_LEFT_EVENT:
+  case MID_MID_EVENT:
+  case MID_RIGHT_EVENT:
+  case BOT_LEFT_EVENT:
+  case BOT_MID_EVENT:
+  case BOT_RIGHT_EVENT:
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
     break;
 
@@ -139,7 +133,7 @@ void mousePressed()
     currentScreen = startScreen;
     break;
 
-  case OUTGOING_BAR_CHART_EVENT: 
+  case OUTGOING_BAR_CHART_EVENT:
     event = lastAirportSelected;
     currentScreen = outgoingChartScreen;
     break;
@@ -148,7 +142,7 @@ void mousePressed()
     event = lastAirportSelected;
     currentScreen = incomingChartScreen;
     break;
-    
+
   case SELECT_ALASKA_EVENT:
     currentScreen = alaskaScreen;
     regionScreen = currentScreen;
@@ -159,14 +153,14 @@ void mousePressed()
     regionScreen = currentScreen;
     break;
 
-  case BACK_SELECTION_EVENT: //<>// //<>//
+  case BACK_SELECTION_EVENT: //<>//
     currentScreen = chartSelectionScreen;
     break;
-    
+
   case PIE_CHART_EVENT:
-    currentScreen = pieChartScreen;  
+    currentScreen = pieChartScreen;
     break;
-    
+
   case SELECT_SEARCH_EVENT:
     currentScreen = searchScreen;
     break;
@@ -174,20 +168,33 @@ void mousePressed()
   case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
     Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
-    int outgoingFlights = currentAirport.getAmountOfOutgoingFlights(myFlights);
-    int incomingFlights = currentAirport.getAmountOfIncomingFlights(myFlights);
-    chartSelectionScreen.setOutgoingFlights(outgoingFlights);
-    chartSelectionScreen.setIncomingFlights(incomingFlights);
+    String airportName = currentAirport.getAirportName();
+    chartSelectionScreen.setOutgoingFlights(calculateFlights(airportName, OUTGOING));
+    chartSelectionScreen.setIncomingFlights(calculateFlights(airportName, INCOMING));
     lastAirportSelected = event;
     break;
   }
+}
+
+int calculateFlights(String airportName, int direction)
+{
+    String queryStr;
+    if(direction == INCOMING) queryStr = "DEST";
+    else queryStr = "ORIGIN";
+    int total = 0;
+    pgsql.query( "SELECT COUNT(*) FROM airlinedata WHERE " + queryStr + " = '" + airportName + "'");
+    if ( pgsql.next() )
+    {
+      total = pgsql.getInt(1);
+    }
+    return total;
 }
 
 void mouseMoved()
 {
   if (currentScreen != mapScreen)
   {
-    for (Airport currentAirport: myAirports)
+    for (Airport currentAirport : myAirports)
     {
       currentAirport.strokeAirport();
     }
