@@ -352,6 +352,24 @@ class Filter {
     myAirports.add(new Airport(743, 937, "HRL", ON_TOP));
     myAirports.add(new Airport(1142, 572, "TYS", ON_TOP));
     myAirports.add(new Airport(509, 456, "ASE", ON_TOP));
+    myAirports.add(new Airport(233, 659, "YUM", ON_TOP));
+    myAirports.add(new Airport(1233, 551, "GSO", ON_TOP));
+    myAirports.add(new Airport(1467, 210, "PWM", ON_TOP));
+    myAirports.add(new Airport(457, 306, "LIH", ON_TOP, HAWAII_REGION));
+    myAirports.add(new Airport(966, 315, "MSN", ON_TOP));
+    myAirports.add(new Airport(1333, 372, "MDT", ON_TOP));
+    myAirports.add(new Airport(455, 478, "MTJ", ON_TOP));
+    myAirports.add(new Airport(1027, 713, "KOA", ON_TOP, HAWAII_REGION));
+    myAirports.add(new Airport(469, 478, "GUC", ON_TOP));
+    myAirports.add(new Airport(1082, 313, "GRR", ON_TOP));
+    myAirports.add(new Airport(86, 552, "SBA", ON_TOP));
+    myAirports.add(new Airport(412, 254, "JAC", ON_TOP));
+    myAirports.add(new Airport(1348, 599, "ILM", ON_TOP));
+    myAirports.add(new Airport(491, 439, "EGE", ON_TOP));
+    myAirports.add(new Airport(802, 393, "OMA", ON_TOP));
+    myAirports.add(new Airport(1326, 257, "SYR", ON_TOP));
+    myAirports.add(new Airport(1282, 977, "EYW", ON_TOP));
+    
   }
   /*void whichWidget()
    {
