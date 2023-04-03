@@ -2,7 +2,7 @@ class Airport
 {
   int x, y, topSideBottom, airportID, numberOfOutgoingFlights, borderSize, region;
   float xpos, ypos;
-  String name, cityName;
+  String name;
   color airportStrokeColor, airportColor, airportTextColor;
 
   Airport(int x, int y, String name, int topSideBottom)
@@ -31,16 +31,6 @@ class Airport
   public void setID(int airportID)
   {
     this.airportID = airportID;
-  }
-
-  public void setCityName(String cityName)
-  {
-    this.cityName = cityName;
-  }
-
-  public String getCityName()
-  {
-    return cityName;
   }
 
   public int getID()
@@ -76,7 +66,17 @@ class Airport
 
   int airportClicked(int mX, int mY)
   {
-    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) return airportID + CHART_SELECTION_EVENT;
+    if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) 
+    {
+      incomingFlightsChart = new BarChart(airportID, myAirports, INCOMING); //<>//
+      outgoingFlightsChart = new BarChart(airportID, myAirports, OUTGOING);
+      airlinesChart = new PieChart(airportID, myAirports);
+      pgsql.query("SELECT origin_city_name FROM airlineData WHERE origin = '" + name + "'");
+      pgsql.next();
+      cityName = pgsql.getString(1);
+      airportName = name;
+      return airportID + CHART_SELECTION_EVENT;
+    }
     else return -1;
   }
 

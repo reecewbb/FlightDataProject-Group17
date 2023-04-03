@@ -22,31 +22,27 @@ class Search {
       } // if
       else if (key==RETURN || key==ENTER) {
         boolean gotFlight = false;
-        for (int i =0; i< myFlights.size(); i++) {
-          Flight currentFlight = myFlights.get(i);
-          String currentFlightNumber = currentFlight.getFlightNumber();
-          if (currentFlightNumber.equals(text1)) {
-            try {
-              String[] EDT = currentFlight.getEstimatedDepartureTime().split("");
-              String[] EAT = currentFlight.getEstimatedArrivalTime().split("");
-              String[] departsAt = currentFlight.getDepartureTime().split("");
-              String[] arrivesAt = currentFlight.getArrivalTime().split("");
-              dataReturned = text1 + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
-                "\nDestination Airport Code: " + currentFlight.getDest() +
-                "\nDate of Departure: " + currentFlight.getFlightDate() +
-                "\nEstimated Departure Time: " + EDT[0] + EDT[1] + ":" + EDT[2] + EDT[3] +
-                "\nEstimated Arrival Time: " + EAT[0] + EAT[1] + ":" + EAT[2] + EAT[3] +
-                "\nActual Departure Time: " + departsAt[0]+departsAt[1]+":"+departsAt[2]+departsAt[3]
-                + "\nActual Arrival Time: " + arrivesAt[0] + arrivesAt[1]+ ":" + arrivesAt[2] + arrivesAt[3]  +
-                "\nDeparture City: " + currentFlight.getCityName() + "\nArrival City: " + currentFlight.getArrivalCityName()+
-                "\nDistance: " + currentFlight.getDistance() + " miles";
-              gotFlight = true;
-            }
-            catch(ArrayIndexOutOfBoundsException exception) {
-              dataReturned= "Flight not found";
-            }
-          }
+        String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance" +
+                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + text1 + "'";
+        pgsql.query(sql);
+        if (pgsql.next())
+        {
+          String[] EDT = pgsql.getString(1).split("");
+          String[] EAT = pgsql.getString(2).split("");
+          String[] departsAt = pgsql.getString(3).split("");
+          String[] arrivesAt = pgsql.getString(4).split("");
+          dataReturned = text1 + "\nOrigin Airport Code: " + pgsql.getString(5) +
+            "\nDestination Airport Code: " + pgsql.getString(6) +
+            "\nDate of Departure: " + pgsql.getString(7) +
+            "\nEstimated Departure Time: " + EDT[0] + EDT[1] + ":" + EDT[2] + EDT[3] +
+            "\nEstimated Arrival Time: " + EAT[0] + EAT[1] + ":" + EAT[2] + EAT[3] +
+            "\nActual Departure Time: " + departsAt[0]+departsAt[1]+":"+departsAt[2]+departsAt[3] + 
+            "\nActual Arrival Time: " + arrivesAt[0] + arrivesAt[1]+ ":" + arrivesAt[2] + arrivesAt[3]  +
+            "\nDeparture City: " + pgsql.getString(8) + "\nArrival City: " + pgsql.getString(9) +
+            "\nDistance: " + pgsql.getString(10) + " miles";
+            gotFlight = true;
         }
+        else dataReturned= "Flight not found";
         println ("ENTER");
         if (gotFlight==true) {
           println("Hurra!");
@@ -59,7 +55,7 @@ class Search {
         }
       } // else if
       else {
-        text1+=key; //<>//
+        text1+=key;
       } // else
       // output
       //println (text1);
@@ -73,7 +69,7 @@ class Search {
     textSize(20);
     fill(BLACK);
     text(text1, 160, 50);
-    text(dataReturned, 160, 75); //<>//
+    text(dataReturned, 160, 75);
     textAlign(CENTER);
   }
 }

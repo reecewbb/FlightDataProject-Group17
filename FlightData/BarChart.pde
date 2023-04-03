@@ -1,76 +1,75 @@
-class BarChart //<>//
+class BarChart  //<>//
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
-  String airportName, chartName, highestOutgoingName, highestIncomingName;
-  ArrayList<Airport> airportList = new ArrayList();
-  ArrayList<Flight> flightList = new ArrayList();
-  int[] flightCount, queryCount;
-  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2, amountOfQuery, query, highestOutgoing, highestIncoming;
+  String airportName, chartName;
+  int[] flightCount;
+  String[][] infoArray;
+  ArrayList<Airport> airportList;
+  int number, maxValue, amountOfYValues, valueOnY, differenceInValue, positionOnY, xPosition, point, airportCounter, airportCounter2, query, highestOutgoing, highestIncoming;
   float differenceInPosition, yIncrement, difference, widthOfBar;
   boolean firstTime;
 
-  BarChart(int airportID, ArrayList airportList, ArrayList flightList, int query)
+  BarChart(int airportID, ArrayList airportList, int query)
   {
     this.barChartYAxisLength = BAR_CHART_Y_AXIS_LENGTH;
     this.barChartXAxisLength = BAR_CHART_X_AXIS_LENGTH;
     this.airportID = airportID;
     this.airportList = airportList;
-    this.flightList = flightList;
     this.query = query;
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
-    queryCalculation();
-    for (int i = 0; i < queryCount.length; i++)
-    {
-      amountOfQuery += queryCount[i];
-    }
+    createDestinationArray();
+    maxValue = findMaxValue();
   }
 
-  public int getQuery()
-  {
-    return amountOfQuery;
-  }
 
   public int findMaxValue()
   {
     int maxValue = 0;
-    queryCount = createDestinationArray();
-    for (int currentValue : queryCount)
+    for(int i = 0; i < flightCount.length; i++)
     {
-      if (currentValue > maxValue)
+      if (flightCount[i] > maxValue)
       {
-        maxValue = currentValue;
+        maxValue = flightCount[i];
+        if (query == INCOMING) highestIncomingName = infoArray[i][1];
+        if (query == OUTGOING) highestOutgoingName = infoArray[i][1];
       }
     }
     return maxValue;
   }
 
-
-  public int[] createDestinationArray()
+  public void createDestinationArray()
   {
-    int[] newFlightCount = new int[airportList.size()];
-    for (int i = 0; i < myAirports.size(); i++)
+    infoArray = new String[airportList.size()][2];
+    flightCount = new int[airportList.size()];
+    String from;
+    String to;
+    if(query == OUTGOING) 
     {
-      Airport currentAirport = myAirports.get(i);
-      String currentName = currentAirport.getAirportName();
-      if (query == OUTGOING)
-      {
-        pgsql.query("SELECT COUNT(*) AS connection_count FROM airlinedata WHERE ORIGIN = '" + airportName + "' AND DEST = '" + currentName + "';");
-        if ( pgsql.next())
-        {
-          newFlightCount[i] = pgsql.getInt(1);
-        }
-      } 
-      else if (query == INCOMING)
-      {
-        pgsql.query("SELECT COUNT(*) AS connection_count FROM airlinedata WHERE ORIGIN = '" + currentName + "' AND DEST = '" + airportName + "';");
-        if ( pgsql.next())
-        {
-          newFlightCount[i] = pgsql.getInt(1);
-        }
-      }
+      from = "origin";
+      to = "dest";
     }
-    return newFlightCount; //<>//
+    else
+    {
+      from = "dest";
+      to = "origin";
+    }
+    String sql = "SELECT COUNT(*) AS num_flights, " + to + ", " + to + "_city_name " +
+      "FROM airlinedata " +
+      "WHERE " + from + " = '" + airportName + "' " +
+      "GROUP BY " + to + ", " + to + "_city_name " +
+      "ORDER BY num_flights DESC";
+    pgsql.query(sql);
+    int j = 0;
+    while (pgsql.next()) {
+      int numFlights = pgsql.getInt(1);
+      String dest = pgsql.getString(2);
+      String dest_city_name = pgsql.getString(3);
+      flightCount[j] = numFlights;
+      infoArray[j][0] = dest;
+      infoArray[j][1] = dest_city_name;
+      j++;
+    }
   }
 
   public String getHighestIncomingName()
@@ -85,12 +84,13 @@ class BarChart //<>//
 
   void draw()
   {
-    drawBarChartForOutgoingFlights();
+    drawBarChartForOutgoingFlights(); //<>//
   }
 
   void drawBarChartForOutgoingFlights()
   {
-    setBarChart();
+    setBarChart(); //<>//
+    queryCalculation();
     textSize(20);
     text(chartName, SCREENX/2, TOP_TEXT_BUFFER);
     textSize(10);
@@ -108,11 +108,11 @@ class BarChart //<>//
       fill(#2FBEE8);
       int i = 0;
       strokeWeight(2);
-      while (airportCounter2 < airportCounter && i < airportList.size())
+      airportCounter2 = 0;
+      while (airportCounter2 < airportCounter && i < airportList.size()) //<>//
       {
-        Airport currentAirport = airportList.get(i);
-        String currentAirportName = currentAirport.getAirportName();
-        String cityName = currentAirport.getCityName();
+        String currentAirportName = infoArray[i][AIRPORT_NAME];
+        String cityName = infoArray[i][CITY_NAME];
         if (!currentAirportName.equals(airportName) && flightCount[i] != 0)
         {
           fill(0);
@@ -135,12 +135,11 @@ class BarChart //<>//
         i++;
       }
     } else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
-  }
+  } //<>//
 
   void queryCalculation() {
     if (query == OUTGOING) chartName = "Number of outgoing flights from " + airportName;
     else if (query == INCOMING) chartName = "Number of incoming flights to " + airportName;
-    maxValue = findMaxValue();
     if (maxValue != 0)
     {
       if (maxValue > MAX_Y_VALUES) amountOfYValues = MAX_Y_VALUES;
@@ -152,7 +151,6 @@ class BarChart //<>//
       differenceInPosition = barChartYAxisLength/amountOfYValues;
       xPosition = 80;
       point = CHART_BUFFER + 20;
-      flightCount = createDestinationArray();
       yIncrement = differenceInPosition/differenceInValue;
       airportCounter = 0;
       for (int i = 0; i < airportList.size(); i++)
@@ -167,7 +165,6 @@ class BarChart //<>//
       if (airportCounter > 40) airportCounter = 40;
       difference = (barChartXAxisLength / airportCounter) * 0.99;
       widthOfBar = difference * 0.8;
-      airportCounter2 = 0;
     }
   }
 
