@@ -4,7 +4,6 @@ class Search {
   String thirdDataString="";
   String fourthDataString="";
   String typeBar = "|";
-
   boolean alreadyRun=true;
   void searchTyping() {
     if (key==CODED) {
@@ -31,27 +30,21 @@ class Search {
         extraData="";
         String[] flightNoAndDate= text1.split(",");
         boolean gotFlight = false;
-        for (int i =0; i< myFlights.size(); i++) {
-          //if(gotFlight== true){break;}
-          Flight currentFlight = myFlights.get(i);
-          String currentFlightNumber = currentFlight.getFlightNumber();
-          if (currentFlightNumber.equals(flightNoAndDate[0]) && currentFlight.getFlightDate().equals(flightNoAndDate[1]) && countData<3) {
-            countData++;
-              dataReturned += "Flight Number: " + flightNoAndDate[0] + "\nOrigin Airport Code: " + currentFlight.getOrigin() +
-              "\nStatus: " + currentFlight.getStatus() +
-                "\nDestination Airport Code: " + currentFlight.getDest() +
-                "\nDate of Departure: " + currentFlight.getFlightDate();
-                if(!currentFlight.getStatus().equals("Cancelled")||!currentFlight.getStatus().equals("Diverted")){
-                dataReturned += "\nEstimated Departure Time: " + depArrTimeFormatter(currentFlight.getEstimatedDepartureTime()) +
-                "\nEstimated Arrival Time: " + depArrTimeFormatter(currentFlight.getEstimatedArrivalTime()) +
-                "\nActual Departure Time: " + depArrTimeFormatter(currentFlight.getDepartureTime())
-                + "\nActual Arrival Time: " + depArrTimeFormatter(currentFlight.getArrivalTime());};
-               dataReturned +="\nDeparture City: " + currentFlight.getCityName() + 
-                "\nArrival City: " + currentFlight.getArrivalCityName()+
-                "\nDistance: " + currentFlight.getDistance() + " miles\n\n" ;
-              gotFlight = true;
-            }
-
+        String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance" +
+                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + flightNoAndDate[0] + "'"; //put date and time to match up
+        pgsql.query(sql);
+        if (pgsql.next())
+        {
+          dataReturned =  "Flight Number: " + text1 + "\nOrigin Airport Code: " + pgsql.getString(5) +
+            "\nDestination Airport Code: " + pgsql.getString(6) +
+            "\nDate of Departure: " + pgsql.getString(7) +
+            "\nEstimated Departure Time: " + depArrTimeFormatter(pgsql.getString(1)) +
+            "\nEstimated Arrival Time: " + depArrTimeFormatter(pgsql.getString(2)) +
+            "\nActual Departure Time: " + depArrTimeFormatter(pgsql.getString(3)) + 
+            "\nActual Arrival Time: " + depArrTimeFormatter(pgsql.getString(4))  +
+            "\nDeparture City: " + pgsql.getString(8) + "\nArrival City: " + pgsql.getString(9) +
+            "\nDistance: " + pgsql.getString(10) + " miles";
+            gotFlight = true;
         }
         println ("ENTER");
         if (gotFlight==true) {
@@ -75,15 +68,16 @@ class Search {
   void flashingTypingYoke(){
     float s = second()%2;
     if(s==0)
-    {float barDist = (text1.length()*12)-4;
-    text(typeBar, 166 + barDist, 47);}
+    {
+      float barDist = (text1.length()*12)-4;
+      text(typeBar, 166 + barDist, 47);}
   }
   
   String depArrTimeFormatter(String time){
     if(time==null){
       return "N/A";
     }
-    try{ //<>//
+    try{ 
     String[] timeSplit = time.split("");
     String toReturn = timeSplit[0] + timeSplit[1] +":" + timeSplit[2] + timeSplit[3];
     return toReturn; }
@@ -93,7 +87,6 @@ class Search {
   void draw() {
     stroke(BLACK);
     rect(150, 25, 210, 30);
-
     textAlign(LEFT);
     textFont(myFont);
     textSize(20);

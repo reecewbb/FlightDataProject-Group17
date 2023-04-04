@@ -50,6 +50,8 @@ final color AIRPORT_COLOUR = #127A98;
 final int FILTER_WIDGET_WIDTH = 100;
 final int FILTER_WIDGET_HEIGHT = 40;
 final int FILTER_WIDGET_X = 1450;
+final int AIRPORT_NAME = 0;
+final int CITY_NAME = 1;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;

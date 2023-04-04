@@ -1,9 +1,10 @@
-import java.util.Scanner;
+import java.util.Scanner; //<>//
 import java.io.File;
 import java.util.ArrayList;
+import de.bezier.data.sql.*;
 
+PostgreSQL pgsql;
 PFont myFont;
-ArrayList<Flight> myFlights = new ArrayList<Flight>();
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
@@ -21,15 +22,29 @@ boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart;
 String text1 = "";
+String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
 
 void settings() {
   size(SCREENX, SCREENY);
 }
 
 void setup() {
+  String user     = "postgres";
+  String pass     = "group17";
+  String database = "AirlineData";
+  pgsql = new PostgreSQL( this, "localhost", database, user, pass );
+  if ( pgsql.connect() )
+  {
+    pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
+    if ( pgsql.next() )
+    {
+      println( "number of rows in table airlineData: " + pgsql.getInt(1) );
+    }
+  }
   background(WHITE);
   textAlign(CENTER);
-  importDataFromFile();
+  cityName = "error";
+  airportName = "error";
   setScreens();
   searchBar = new Search();
   mapFilter = new Filter();
@@ -38,8 +53,8 @@ void setup() {
   System.out.println(airportNames.size());
   ellipseMode(RADIUS);
   addAirportsToMaps();
-  addWidgets();
   addDataToAirports();
+  addWidgets();
   drawingGraph = false;
   allButton.setColour();
 }
@@ -48,11 +63,8 @@ void setup() {
 void draw()
 {
   background(WHITE);
-  currentScreen.draw(event, myAirports, myFlights, mapFilter);
+  currentScreen.draw(event, mapFilter);
 }
-void keyPressed(){
-        searchBar.searchTyping();
-      }
 
 void mousePressed()
 {
@@ -101,7 +113,15 @@ void mousePressed()
     allButton.setColour();
     break;
 
-  case TOP_LEFT_EVENT: case TOP_MID_EVENT: case TOP_RIGHT_EVENT: case MID_LEFT_EVENT: case MID_MID_EVENT: case MID_RIGHT_EVENT: case BOT_LEFT_EVENT: case BOT_MID_EVENT: case BOT_RIGHT_EVENT:
+  case TOP_LEFT_EVENT:
+  case TOP_MID_EVENT:
+  case TOP_RIGHT_EVENT:
+  case MID_LEFT_EVENT:
+  case MID_MID_EVENT:
+  case MID_RIGHT_EVENT:
+  case BOT_LEFT_EVENT:
+  case BOT_MID_EVENT:
+  case BOT_RIGHT_EVENT:
     currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
     break;
 
@@ -114,7 +134,7 @@ void mousePressed()
     currentScreen = startScreen;
     break;
 
-  case OUTGOING_BAR_CHART_EVENT: 
+  case OUTGOING_BAR_CHART_EVENT:
     event = lastAirportSelected;
     currentScreen = outgoingChartScreen;
     break;
@@ -123,7 +143,7 @@ void mousePressed()
     event = lastAirportSelected;
     currentScreen = incomingChartScreen;
     break;
-    
+
   case SELECT_ALASKA_EVENT:
     currentScreen = alaskaScreen;
     regionScreen = currentScreen;
@@ -134,14 +154,14 @@ void mousePressed()
     regionScreen = currentScreen;
     break;
 
-  case BACK_SELECTION_EVENT: //<>// //<>//
+  case BACK_SELECTION_EVENT: //<>//
     currentScreen = chartSelectionScreen;
     break;
-    
+
   case PIE_CHART_EVENT:
-    currentScreen = pieChartScreen;  
+    currentScreen = pieChartScreen;
     break;
-    
+
   case SELECT_SEARCH_EVENT:
     currentScreen = searchScreen;
     break;
@@ -149,20 +169,37 @@ void mousePressed()
   case CHART_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
     Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
-    int outgoingFlights = currentAirport.getAmountOfOutgoingFlights(myFlights);
-    int incomingFlights = currentAirport.getAmountOfIncomingFlights(myFlights);
-    chartSelectionScreen.setOutgoingFlights(outgoingFlights);
-    chartSelectionScreen.setIncomingFlights(incomingFlights);
+    String airportName = currentAirport.getAirportName();
+    chartSelectionScreen.setOutgoingFlights(calculateFlights(airportName, OUTGOING));
+    chartSelectionScreen.setIncomingFlights(calculateFlights(airportName, INCOMING));
     lastAirportSelected = event;
     break;
   }
+}
+
+void keyPressed(){
+        searchBar.searchTyping();
+      }
+
+int calculateFlights(String airportName, int direction)
+{
+    String queryStr;
+    if(direction == INCOMING) queryStr = "DEST";
+    else queryStr = "ORIGIN";
+    int total = 0;
+    pgsql.query( "SELECT COUNT(*) FROM airlinedata WHERE " + queryStr + " = '" + airportName + "'");
+    if ( pgsql.next() )
+    {
+      total = pgsql.getInt(1);
+    }
+    return total;
 }
 
 void mouseMoved()
 {
   if (currentScreen != mapScreen)
   {
-    for (Airport currentAirport: myAirports)
+    for (Airport currentAirport : myAirports)
     {
       currentAirport.strokeAirport();
     }
@@ -214,24 +251,9 @@ void addAirportsToMaps()
 void addDataToAirports()
 {
   int i = 0;
-  for (Airport currentAirport : myAirports)
+  for (Airport currentAirport : myAirports) //<>//
   {
     currentAirport.setID(i);
-    String airportName = currentAirport.getAirportName();
-    boolean hasStateName = false;
-    int  j = 0;
-    while (!hasStateName && j < myFlights.size())
-    {
-      Flight currentFlight = (Flight) myFlights.get(j);
-      String origin = currentFlight.getOrigin();
-      if (airportName.equals(origin))
-      {
-        String currentCityName = currentFlight.getCityName();
-        currentAirport.setCityName(currentCityName);
-        hasStateName = true;
-      }
-      j++;
-    }
     i++;
   }
 }
@@ -268,51 +290,6 @@ void setScreens()
   zoomScreens.add(botRight);
 }
 
-void importDataFromFile()
-{
-  try {
-    File myFile = new File("flights100k.csv");
-    Scanner input = new Scanner(myFile);
-    input.useDelimiter("\n");
-    int dataIdentifier = 0;
-    input.next();
-    while (input.hasNext())
-    {
-      Flight myFlight = new Flight(dataIdentifier);
-      String allData = input.next();
-      String[] allDataArray = allData.split("[,]", 0);
-      for (int i = 0; i < NUMBER_OF_DATAPOINTS + 2; i++)
-      {
-        String data = allDataArray[i];
-        data = data.replaceAll("\"", "");
-        if (i == 5 || i == 10)
-        {
-          data += ", " + allDataArray[i+1];
-        }
-        if (i == 3 || i == 8)
-        {
-          boolean repeat = false;
-          for (int j = 0; j < airportNames.size() && !repeat; j++)
-          {
-            repeat = airportNames.contains(data);
-          }
-          if (!repeat)
-          {
-            airportNames.add(data);
-          }
-        }
-        data = data.trim();
-        myFlight.setData(data, i);
-      }
-      myFlights.add(myFlight);
-      dataIdentifier++;
-    }
-    input.close();
-  }
-  catch (Exception e) {
-    System.err.println(e);
-  }
-}
 
 void addWidgets()
 {
