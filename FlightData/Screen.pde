@@ -140,6 +140,13 @@ class Screen { //<>// //<>// //<>//
       fill(BLACK);
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
+      fill(WHITE);
+      rect(0, 710, 250, SCREENY - 710);
+      rect(250, 710, 50, SCREENY - 710);
+      rect(290, 757, 207, SCREENY - 757);
+      rect(490, 820, 45, SCREENY - 820);
+      rect(530, 850, 75, SCREENY - 850);    
+      fill(BLACK);
       String selectArea = "Select area";
       textSize(20);
       text(selectArea, SCREENX/2, TOP_TEXT_BUFFER);
@@ -191,6 +198,9 @@ class Screen { //<>// //<>// //<>//
 
     case BOT_LEFT_SCREEN:
       setScreen(0, 2, BOT_LEFT_SCREEN);
+      rect(0, 130, 830, SCREENY - 130);
+      rect(795, 224, 655, SCREENY - 224);
+      rect(1440, 470, 160, SCREENY - 470);
       break;
 
     case BOT_MID_SCREEN:
