@@ -30,7 +30,7 @@ class Search {
         String[] flightNoAndDate= text1.split(",");
         boolean gotFlight = false;
         String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance" +
-                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + flightNoAndDate[0] + "', LEFT(fl_data, 8) = '" + flightNoAndDate[1] + "'"; 
+                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + flightNoAndDate[0] + "'"; //put date and time to match up
         pgsql.query(sql);
         if (pgsql.next())
         {
@@ -58,7 +58,7 @@ class Search {
         }
       } // else if
       else {
-        text1+=key; //<>// //<>//
+        text1+=key;
       } // else
       // output
     } // else
@@ -68,7 +68,7 @@ class Search {
     float s = second()%2;
     if(s==0)
     {
-      float barDist = (textWidth(text1) - 4);
+      float barDist = (text1.length()*12)-4;
       text(typeBar, 166 + barDist, 47);}
   }
   
