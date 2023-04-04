@@ -97,6 +97,7 @@ class PieChart //<>//
     fill(BLACK);
     text(chartName, SCREENX/2, TOP_TEXT_BUFFER);
     stroke(BLACK);
+    strokeWeight(1);
     float lastAngle = 0;
     int xForKey = 1295;
     int yForKey = 925;
@@ -166,6 +167,7 @@ class PieChart //<>//
         textSize(15);
         fill(arcColor);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
+        fill(BLACK);
         text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
         yForKey -= 35;
       }

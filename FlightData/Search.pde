@@ -30,7 +30,7 @@ class Search {
         String[] flightNoAndDate= text1.split(",");
         boolean gotFlight = false;
         String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance" +
-                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + flightNoAndDate[0] + "', LEFT(fl_data, 8) = '" + flightNoAndDate[1] + "'"; 
+                     "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + flightNoAndDate[0] + "', LEFT(fl_date, 8) = '" + flightNoAndDate[1] + "'"; 
         pgsql.query(sql);
         if (pgsql.next())
         {
