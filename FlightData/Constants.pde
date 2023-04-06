@@ -52,6 +52,8 @@ final int FILTER_WIDGET_HEIGHT = 40;
 final int FILTER_WIDGET_X = 1450;
 final int AIRPORT_NAME = 0;
 final int CITY_NAME = 1;
+final int FL_NO_SEARCH = 0;
+final int ORIGIN_SEARCH = 1;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;
@@ -132,7 +134,9 @@ final int PIE_CHART_EVENT = 21;
 final int SELECT_SEARCH_EVENT = 22;
 final int NEXT_FLIGHT_EVENT = 23;
 final int PREVIOUS_FLIGHT_EVENT = 24;
-final int CHART_SELECTION_EVENT = 25; //has to be last
+final int SEARCH_BY_FL_NO_EVENT = 25;
+final int SEARCH_BY_ORIGIN_EVENT = 26;
+final int CHART_SELECTION_EVENT = 27; //has to be last
 //regions
 final int US_REGION = 0;
 final int ALASKA_REGION = 1;

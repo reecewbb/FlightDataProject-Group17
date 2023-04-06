@@ -162,7 +162,12 @@ class BarChart  //<>//
           airportCounter++;
         }
       }
-      if (airportCounter > 40) airportCounter = 40;
+      if (airportCounter > 40) 
+      {
+        airportCounter = 40;
+        if(query == OUTGOING) chartName = "Top 40 most popular flights from " + airportName;
+        else if(query == INCOMING) chartName = "Top 40 most popular flights to " + airportName;
+      }
       difference = (barChartXAxisLength / airportCounter) * 0.99;
       widthOfBar = difference * 0.8;
     }

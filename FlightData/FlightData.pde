@@ -1,4 +1,4 @@
-import java.util.Scanner;  //<>//
+import java.util.Scanner; //<>//
 import java.io.File;
 import java.util.ArrayList;
 import de.bezier.data.sql.*;
@@ -16,7 +16,7 @@ BarChart chart;
 int event, lastAirportSelected, previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
-Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton, searchScreenButton, nextFlightButton, previousFlightButton;
+Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton, searchScreenButton, nextFlightButton, previousFlightButton, searchByNumberButton, searchByOriginButton;
 Search searchBar;
 boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
@@ -57,6 +57,7 @@ void setup() {
   addWidgets();
   drawingGraph = false;
   allButton.setColour();
+  searchByNumberButton.setColour();
 }
 
 
@@ -169,9 +170,21 @@ void mousePressed()
   case NEXT_FLIGHT_EVENT:
     searchBar.nextAirport();
     break;
-    
+
   case PREVIOUS_FLIGHT_EVENT:
     searchBar.previousAirport();
+    break;
+
+  case SEARCH_BY_FL_NO_EVENT:
+    searchBar.setQuery(FL_NO_SEARCH);
+    searchByNumberButton.setColour();
+    searchByOriginButton.unsetColour();
+    break;
+
+  case SEARCH_BY_ORIGIN_EVENT:
+    searchBar.setQuery(ORIGIN_SEARCH);
+    searchByNumberButton.unsetColour();
+    searchByOriginButton.setColour();
     break;
 
   case CHART_SELECTION_EVENT:
@@ -227,6 +240,8 @@ void mouseMoved()
   currentScreen.hover();
   nextFlightButton.hover();
   previousFlightButton.hover();
+  searchByNumberButton.hover();
+  searchByOriginButton.hover();
 }
 
 void addAirportsToMaps()
@@ -320,9 +335,13 @@ void addWidgets()
   searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH+30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
   nextFlightButton = new Widget(1200, 745, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
   previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
+  searchByNumberButton = new Widget(1200, 400, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
+  searchByOriginButton = new Widget(1200, 500, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
+  searchScreen.addWidget(searchByNumberButton);
+  searchScreen.addWidget(searchByOriginButton);
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
   pieChartScreen.addWidget(backToSelectionButton);

@@ -5,6 +5,32 @@ class Search {
   boolean alreadyRun = true;
   boolean gotFlight;
   int flightIndex, queryCount;
+  String query, userHelp;
+  
+  Search()
+  {
+    setQuery(FL_NO_SEARCH);
+  }
+  
+  void setQuery(int searchType)
+  {
+    switch(searchType)
+    {
+      case FL_NO_SEARCH:
+        query = "CONCAT(mkt_carrier, mkt_carrier_fl_num)";
+        userHelp = "Enter a flight number including the prefix i.e. AA1234";
+        dataReturned.clear();
+        break;
+        
+      case ORIGIN_SEARCH:
+        query = "origin";
+        userHelp = "Enter airport abbreviation code i.e. JFK"
+        dataReturned.clear();
+        break;
+        
+      default:
+    }
+  }
 
   void searchTyping() {
     flightIndex = 0;
@@ -52,17 +78,18 @@ class Search {
   { //<>//
     gotFlight = false;
     println(userInput);
-    String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, COUNT(*) OVER() AS total_rows " +
-      "FROM airlinedata WHERE CONCAT(mkt_carrier, mkt_carrier_fl_num) = '" + userInput + "'" +
-      "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance";
+    String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, COUNT(*) OVER() AS total_rows, " + 
+      "CONCAT(mkt_carrier, mkt_carrier_fl_num) " +
+      "FROM airlinedata WHERE " + query + " = '" + userInput + "'" +
+      "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, mkt_carrier, mkt_carrier_fl_num";
     pgsql.query(sql);
     int i = 0;
     do
     {
-      if(pgsql.next()) //<>//
+      if(pgsql.next())
       {
         queryCount = pgsql.getInt(11);
-        dataReturned.add("Flight Number: " + userInput + "\nOrigin Airport Code: " + pgsql.getString(5) +
+        dataReturned.add("Flight Number: " + pgsql.getString(12) + "\nOrigin Airport Code: " + pgsql.getString(5) +
           "\nDestination Airport Code: " + pgsql.getString(6) +
           "\nDate of Departure: " + pgsql.getString(7) +
           "\nEstimated Departure Time: " + depArrTimeFormatter(pgsql.getString(1)) +
@@ -96,7 +123,7 @@ class Search {
       String toReturn = timeSplit[0] + timeSplit[1] +":" + timeSplit[2] + timeSplit[3];
       return toReturn;
     }
-    catch(ArrayIndexOutOfBoundsException exception) {
+    catch(ArrayIndexOutOfBoundsException exception) { //<>//
       return "N/A";
     }
   }
@@ -121,9 +148,9 @@ class Search {
     textFont(myFont);
     textSize(20);
     fill(BLACK);
-    text("Enter a flight number including the prefix i.e. AA1234", 380, 50);
-    text(userInput, 160, 50);
-    if(dataReturned.size() != 0) //<>//
+    text(userHelp, 380, 50);
+    text(userInput, 160, 50); //<>//
+    if(dataReturned.size() != 0 && results.size() != 0)
     {
       text(dataReturned.get(flightIndex), 150, 80);
       text(results.get(flightIndex), 150, 500);
