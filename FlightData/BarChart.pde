@@ -1,4 +1,4 @@
-class BarChart  //<>//
+class BarChart  //<>// //<>//
 {
   int barChartYAxisLength, barChartXAxisLength, airportID;
   String airportName, chartName;
@@ -84,12 +84,12 @@ class BarChart  //<>//
 
   void draw()
   {
-    drawBarChartForOutgoingFlights(); //<>//
+    drawBarChartForOutgoingFlights(); //<>// //<>//
   }
 
   void drawBarChartForOutgoingFlights()
   {
-    setBarChart(); //<>//
+    setBarChart(); //<>// //<>//
     queryCalculation();
     textSize(20);
     text(chartName, SCREENX/2, TOP_TEXT_BUFFER);
@@ -109,7 +109,7 @@ class BarChart  //<>//
       int i = 0;
       strokeWeight(2);
       airportCounter2 = 0;
-      while (airportCounter2 < airportCounter && i < airportList.size()) //<>//
+      while (airportCounter2 < airportCounter && i < airportList.size()) //<>// //<>//
       {
         String currentAirportName = infoArray[i][AIRPORT_NAME];
         String cityName = infoArray[i][CITY_NAME];
@@ -135,7 +135,7 @@ class BarChart  //<>//
         i++;
       }
     } else text("NO DATA AVAILABLE", SCREENX/2, SCREENY/2);
-  } //<>//
+  } //<>// //<>//
 
   void queryCalculation() {
     if (query == OUTGOING) chartName = "Number of outgoing flights from " + airportName;

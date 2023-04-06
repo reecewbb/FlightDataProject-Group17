@@ -1,4 +1,4 @@
-class Screen {   //<>//
+class Screen {   //<>// //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
   int screenType, outgoingFlights, currentGridHover, screen, incomingFlights, currentAirport;
@@ -254,7 +254,7 @@ class Screen {   //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      String airportNameString = "Airport: " + airportName; //<>//
+      String airportNameString = "Airport: " + airportName; //<>// //<>//
       String cityNameString = "City: " + cityName;
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
       String incomingFlightsString = "Total number of incoming flights: " + Integer.toString(incomingFlights);
