@@ -130,7 +130,9 @@ final int SELECT_HAWAII_EVENT = 19;
 final int BACK_SELECTION_EVENT = 20;
 final int PIE_CHART_EVENT = 21;
 final int SELECT_SEARCH_EVENT = 22;
-final int CHART_SELECTION_EVENT = 23; //has to be last
+final int NEXT_FLIGHT_EVENT = 23;
+final int PREVIOUS_FLIGHT_EVENT = 24;
+final int CHART_SELECTION_EVENT = 25; //has to be last
 //regions
 final int US_REGION = 0;
 final int ALASKA_REGION = 1;

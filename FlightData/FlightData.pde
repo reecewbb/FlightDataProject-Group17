@@ -1,4 +1,4 @@
-import java.util.Scanner; //<>//
+import java.util.Scanner;  //<>//
 import java.io.File;
 import java.util.ArrayList;
 import de.bezier.data.sql.*;
@@ -16,12 +16,12 @@ BarChart chart;
 int event, lastAirportSelected, previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
-Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton, searchScreenButton;
+Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton, searchScreenButton, nextFlightButton, previousFlightButton;
 Search searchBar;
 boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart;
-String text1 = "";
+String userInput = "";
 String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
 
 void settings() {
@@ -31,7 +31,7 @@ void settings() {
 void setup() {
   String user     = "postgres";
   String pass     = "group17";
-  String database = "airlinedata";
+  String database = "AirlineData";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
   {
@@ -154,7 +154,7 @@ void mousePressed()
     regionScreen = currentScreen;
     break;
 
-  case BACK_SELECTION_EVENT: //<>//
+  case BACK_SELECTION_EVENT:
     currentScreen = chartSelectionScreen;
     break;
 
@@ -164,6 +164,14 @@ void mousePressed()
 
   case SELECT_SEARCH_EVENT:
     currentScreen = searchScreen;
+    break;
+
+  case NEXT_FLIGHT_EVENT:
+    searchBar.nextAirport();
+    break;
+    
+  case PREVIOUS_FLIGHT_EVENT:
+    searchBar.previousAirport();
     break;
 
   case CHART_SELECTION_EVENT:
@@ -177,22 +185,23 @@ void mousePressed()
   }
 }
 
-void keyPressed(){
-        searchBar.searchTyping();
-      }
+void keyPressed()
+{
+  searchBar.searchTyping();
+}
 
 int calculateFlights(String airportName, int direction)
 {
-    String queryStr;
-    if(direction == INCOMING) queryStr = "DEST";
-    else queryStr = "ORIGIN";
-    int total = 0;
-    pgsql.query( "SELECT COUNT(*) FROM airlinedata WHERE " + queryStr + " = '" + airportName + "'");
-    if ( pgsql.next() )
-    {
-      total = pgsql.getInt(1);
-    }
-    return total;
+  String queryStr;
+  if (direction == INCOMING) queryStr = "DEST";
+  else queryStr = "ORIGIN";
+  int total = 0;
+  pgsql.query( "SELECT COUNT(*) FROM airlinedata WHERE " + queryStr + " = '" + airportName + "'");
+  if ( pgsql.next() )
+  {
+    total = pgsql.getInt(1);
+  }
+  return total;
 }
 
 void mouseMoved()
@@ -216,6 +225,8 @@ void mouseMoved()
   searchScreenButton.hover();
   pieChartButton.hover();
   currentScreen.hover();
+  nextFlightButton.hover();
+  previousFlightButton.hover();
 }
 
 void addAirportsToMaps()
@@ -251,7 +262,7 @@ void addAirportsToMaps()
 void addDataToAirports()
 {
   int i = 0;
-  for (Airport currentAirport : myAirports) //<>//
+  for (Airport currentAirport : myAirports)
   {
     currentAirport.setID(i);
     i++;
@@ -302,12 +313,16 @@ void addWidgets()
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
   pieChartButton = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
-  AKButton= new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
-  LSButton= new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
-  TZButton= new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
-  allButton= new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
+  AKButton = new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
+  LSButton = new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
+  TZButton = new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
+  allButton = new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
   searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH+30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
+  nextFlightButton = new Widget(1200, 745, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
+  previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
   searchScreen.addWidget(backToStartButton);
+  searchScreen.addWidget(nextFlightButton);
+  searchScreen.addWidget(previousFlightButton);
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
   pieChartScreen.addWidget(backToSelectionButton);
