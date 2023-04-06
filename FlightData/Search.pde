@@ -58,7 +58,7 @@ class Search {
         }
       } // else if
       else {
-        text1+=key; //<>// //<>//
+        text1+=key; //<>//
       } // else
       // output
     } // else

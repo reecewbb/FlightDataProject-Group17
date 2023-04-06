@@ -68,9 +68,10 @@ class Airport
   {
     if ( mX < xpos + AIRPORT_RADIUS && mX > xpos - AIRPORT_RADIUS && mY < ypos + AIRPORT_RADIUS && mY > ypos - AIRPORT_RADIUS) 
     {
-      incomingFlightsChart = new BarChart(airportID, myAirports, INCOMING); //<>//
+      incomingFlightsChart = new BarChart(airportID, myAirports, INCOMING);
       outgoingFlightsChart = new BarChart(airportID, myAirports, OUTGOING);
-      airlinesChart = new PieChart(airportID, myAirports);
+      airlinesChart = new PieChart(airportID, myAirports, PIE_CHART_ARR_DEP);
+      flightsChart = new PieChart(airportID, myAirports, PIE_CHART_CANC_DIV);
       pgsql.query("SELECT origin_city_name FROM airlineData WHERE origin = '" + name + "'");
       pgsql.next();
       cityName = pgsql.getString(1);

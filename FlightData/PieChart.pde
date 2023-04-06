@@ -10,21 +10,37 @@ class PieChart //<>//
   String[] airlines = new String[10];
   String[] airlineNames = new String[10];
   int[] airlineFlightsTotal = new int[10];
+  int pieChartType;
+  int numberOfFlightsCancelled;
+  int numberOfFlightsDiverted;
+  int numberOfFlightsNotDivertedOrCancelled;
 
 
-  PieChart(int airportID, ArrayList airportList)
+  PieChart(int airportID, ArrayList airportList, int pieChartType)
   {
     diameterOfPieChart = 800;
     this.airportID = airportID;
     this.airportList = airportList;
+    this.pieChartType = pieChartType;
     Airport currentAirport = (Airport) airportList.get(airportID);
     airportName = currentAirport.getAirportName();
     setAirlines();
     setAirlineNames();
     getNumberOfFlightsForAirlinesAndTotal();
     setMostCommonAirline();
-    chartName = "Airlines at " + airportName;
+    numberOfFlightsCancelled = 0;
+    numberOfFlightsDiverted = 0;
+    getNumberOfCancelledAndDiverted();
+    if(this.pieChartType == PIE_CHART_ARR_DEP)
+    {
+      chartName = "Airlines at " + airportName;
+    }
+    else if(this.pieChartType == PIE_CHART_CANC_DIV)
+    {
+      chartName = "Flights cancelled and diverted at " + airportName;
+    }
     totalNumberOfFlightsToAndFrom = calculateFlights(airportName, INCOMING) + calculateFlights(airportName, OUTGOING);
+    numberOfFlightsNotDivertedOrCancelled = totalNumberOfFlightsToAndFrom - (numberOfFlightsCancelled + numberOfFlightsDiverted);
   }
 
 
@@ -54,6 +70,22 @@ class PieChart //<>//
     airlineNames[7] = NK;
     airlineNames[8] = UA;
     airlineNames[9] = WN;
+  }
+  
+  public void getNumberOfCancelledAndDiverted()
+  {
+    String query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND cancelled = '1.00'"; //<>//
+    pgsql.query(query);
+    if(pgsql.next())
+    {
+      numberOfFlightsCancelled = pgsql.getInt(1);
+    }
+    query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND diverted = '1.00'";
+    pgsql.query(query);
+    if(pgsql.next());
+    {
+      numberOfFlightsDiverted = pgsql.getInt(1);
+    }
   }
 
   public void getNumberOfFlightsForAirlinesAndTotal()
@@ -102,77 +134,128 @@ class PieChart //<>//
     int xForKey = 1295;
     int yForKey = 925;
     int widthAndHeightForKey = 25;
-    for (int i = 0; i < airlineFlightsTotal.length; i++)
+    if(pieChartType == PIE_CHART_ARR_DEP)
     {
-      float numerator = airlineFlightsTotal[i];
-      float fraction = numerator / totalNumberOfFlightsToAndFrom;
-      int bigPercent = (int) (fraction * 10000);
-      float percentRounded = (float) bigPercent / 100;
-      float numberConvertedToDegrees = fraction * 360;
-      color arcColor = 0;
-      switch(i)
+      for (int i = 0; i < airlineFlightsTotal.length; i++)
       {
-      case 0:
-        arcColor = color(#FF0303);
-        break;
+        float numerator = airlineFlightsTotal[i];
+        float fraction = numerator / totalNumberOfFlightsToAndFrom;
+        int bigPercent = (int) (fraction * 10000);
+        float percentRounded = (float) bigPercent / 100;
+        float numberConvertedToDegrees = fraction * 360;
+        color arcColor = 0;
+        switch(i)
+        {
+        case 0:
+          arcColor = color(#FF0303);
+          break;
 
-      case 1:
-        arcColor = color(#050455);
-        break;
+        case 1:
+          arcColor = color(#050455);
+          break;
 
-      case 2:
-        arcColor = color(#1210E3);
-        break;
+        case 2:
+          arcColor = color(#1210E3);
+          break;
 
-      case 3:
-        arcColor = color(#F75407);
-        break;
+        case 3:
+          arcColor = color(#F75407);
+          break;
 
-      case 4:
-        arcColor = color(#3C7E50);
-        break;
+        case 4:
+          arcColor = color(#3C7E50);
+          break;
 
-      case 5:
-        arcColor = color(#F5E20A);
-        break;
+        case 5:
+          arcColor = color(#F5E20A);
+          break;
 
-      case 6:
-        arcColor = color(#E10AFA);
-        break;
+        case 6:
+          arcColor = color(#E10AFA);
+          break;
 
-      case 7:
-        arcColor = color(#F1FA05);
-        break;
+        case 7:
+          arcColor = color(#F1FA05);
+          break;
 
-      case 8:
-        arcColor = color(#05FAF8);
-        break;
+        case 8:
+          arcColor = color(#05FAF8);
+          break;
 
-      case 9:
-        arcColor = color(#FAC608);
-        break;
+        case 9:
+          arcColor = color(#FAC608);
+          break;
 
-      default:
-      }
-      fill(arcColor);
-      if (numberConvertedToDegrees != 0)
-      {
-        arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(numberConvertedToDegrees));
-        lastAngle += radians(numberConvertedToDegrees);
-      }
-      String airlineName = airlineNames[i];
-      if (percentRounded != 0)
-      {
-        textAlign(LEFT);
-        textSize(15);
+        default:
+        }
         fill(arcColor);
+        if (numberConvertedToDegrees != 0)
+        {
+          arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(numberConvertedToDegrees));
+          lastAngle += radians(numberConvertedToDegrees);
+        }
+        String airlineName = airlineNames[i];
+        if (percentRounded != 0)
+        {
+          textAlign(LEFT);
+          textSize(15);
+          fill(arcColor);
+          rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
+          fill(BLACK);
+          text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+          yForKey -= 35;
+        }
+        fill(BLACK);
+        textAlign(CENTER);
+      }
+    }
+    else if(pieChartType == PIE_CHART_CANC_DIV)
+    {
+      float denominator = totalNumberOfFlightsToAndFrom;
+      float percentageNumberOfFlightsNeither = numberOfFlightsNotDivertedOrCancelled/denominator;
+      int bigPercentNeither = (int) (percentageNumberOfFlightsNeither * 10000);
+      float percentRoundedNeither = (float) bigPercentNeither / 100;
+      float neitherInDegrees = percentageNumberOfFlightsNeither * 360;
+      float percentageNumberOfFlightsCancelled = numberOfFlightsCancelled/denominator;
+      int bigPercentCancelled = (int) (percentageNumberOfFlightsCancelled * 10000);
+      float percentRoundedCancelled = (float) bigPercentCancelled / 100;
+      float cancelledInDegrees = percentageNumberOfFlightsCancelled * 360;
+      float percentageNumberOfFlightsDiverted = numberOfFlightsDiverted/denominator;
+      int bigPercentDiverted = (int) (percentageNumberOfFlightsDiverted * 10000);
+      float percentRoundedDiverted = (float) bigPercentDiverted / 100;
+      float divertedInDegrees = percentageNumberOfFlightsDiverted * 360;
+      textAlign(LEFT);
+      textSize(15);
+      if(neitherInDegrees != 0)
+      {
+        fill(#05FC13);
+        arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(neitherInDegrees));
+        lastAngle += radians(neitherInDegrees);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
         fill(BLACK);
-        text("-  " + airlineName + "  -  " + percentRounded + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
-        yForKey -= 35;
+        text("- neither - " + percentRoundedNeither + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        yForKey -= 35; 
       }
-      fill(BLACK);
-      textAlign(CENTER);
+      if(divertedInDegrees != 0)
+      {
+        fill(#FFA703);
+        arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(divertedInDegrees));
+        lastAngle += radians(divertedInDegrees);
+        rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
+        fill(BLACK);
+        text("- diverted - " + percentRoundedDiverted + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        yForKey -= 35; 
+      }
+      if(cancelledInDegrees != 0)
+      {
+        fill(#F70718);
+        arc(SCREENX/2, SCREENY/2, diameterOfPieChart/2, diameterOfPieChart/2, lastAngle, lastAngle + radians(cancelledInDegrees));
+        lastAngle += radians(cancelledInDegrees);
+        rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
+        fill(BLACK);
+        text("- cancelled - " + percentRoundedCancelled + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        yForKey -= 35; 
+      }
     }
   }
 }
