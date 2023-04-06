@@ -30,9 +30,9 @@ void settings() {
 
 void setup() {
   String user     = "postgres";
-  String pass     = "group17";
-  String database = "AirlineData";
-  pgsql = new PostgreSQL( this, "localhost", database, user, pass );
+  String pass     = "airlineDataViewerGroup17";
+  String database = "postgres";
+  pgsql = new PostgreSQL( this, "db.sujqsfodzyzprozcickq.supabase.co", database, user, pass );
   if ( pgsql.connect() )
   {
     pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
@@ -335,8 +335,8 @@ void addWidgets()
   searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH+30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
   nextFlightButton = new Widget(1200, 745, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
   previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
-  searchByNumberButton = new Widget(1200, 400, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
-  searchByOriginButton = new Widget(1200, 500, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
+  searchByNumberButton = new Widget(1200, 100, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
+  searchByOriginButton = new Widget(1200, 200, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
