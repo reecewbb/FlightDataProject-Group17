@@ -31,7 +31,7 @@ void settings() {
 void setup() {
   String user     = "postgres";
   String pass     = "group17";
-  String database = "AirlineData";
+  String database = "airlinedata";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
   {
