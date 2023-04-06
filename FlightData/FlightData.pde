@@ -9,29 +9,31 @@ ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
 ArrayList<Screen> zoomScreens = new ArrayList<Screen>();
 PImage mapImage, alaskaMapImage, hawaiiMapImage;
-PImage[] US, Alaska, Hawaii, Departures, Arrivals, Airlines;
+PImage[] US, Alaska, Hawaii, Departures, Arrivals, Airlines, CancelledAndDiverted;
 Screen mapScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
-Screen pieChartScreen, outgoingChartScreen, incomingChartScreen, searchScreen;
+Screen pieChartScreenArrDep, pieChartScreenCanDiv, outgoingChartScreen, incomingChartScreen, searchScreen;
 BarChart chart;
 int event, lastAirportSelected, previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
-Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButton, searchScreenButton, nextFlightButton, previousFlightButton, searchByNumberButton, searchByOriginButton;
+Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButtonArrDep, pieChartButtonCanDiv, searchScreenButton, nextFlightButton, previousFlightButton, searchByNumberButton, searchByOriginButton;
 Search searchBar;
 boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
-PieChart airlinesChart;
+PieChart airlinesChart, flightsChart;
 String userInput = "";
 String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
 
-void settings() {
+void settings() 
+{
   size(SCREENX, SCREENY);
 }
 
-void setup() {
+void setup() 
+{
   String user     = "postgres";
   String pass     = "group17";
-  String database = "AirlineData";
+  String database = "airlinedata";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
   {
@@ -159,8 +161,12 @@ void mousePressed()
     currentScreen = chartSelectionScreen;
     break;
 
-  case PIE_CHART_EVENT:
-    currentScreen = pieChartScreen;
+ case PIE_CHART_EVENT_ARR_DEP:
+    currentScreen = pieChartScreenArrDep;
+    break;
+
+  case PIE_CHART_EVENT_CANC_DIV:
+    currentScreen = pieChartScreenCanDiv;
     break;
 
   case SELECT_SEARCH_EVENT:
@@ -236,7 +242,8 @@ void mouseMoved()
   outgoingBarChartButton.hover();
   incomingBarChartButton.hover();
   searchScreenButton.hover();
-  pieChartButton.hover();
+  pieChartButtonArrDep.hover();
+  pieChartButtonCanDiv.hover();
   currentScreen.hover();
   nextFlightButton.hover();
   previousFlightButton.hover();
@@ -302,7 +309,8 @@ void setScreens()
   botRight = new Screen(BOT_RIGHT_SCREEN);
   startScreen = new Screen(START_SCREEN);
   chartSelectionScreen = new Screen(CHART_SELECT_SCREEN);
-  pieChartScreen = new Screen(PIE_CHART_SCREEN);
+  pieChartScreenArrDep = new Screen(PIE_CHART_SCREEN_ARR_DEP);
+  pieChartScreenCanDiv = new Screen(PIE_CHART_SCREEN_CANC_DIV);
   searchScreen = new Screen(SEARCH_SCREEN);
   currentScreen = startScreen;
   zoomScreens.add(topLeft);
@@ -326,7 +334,8 @@ void addWidgets()
   backToStartButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_TO_START_EVENT, WHITE);
   outgoingBarChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, OUTGOING_BAR_CHART_EVENT);
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
-  pieChartButton = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT);
+  pieChartButtonArrDep = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT_ARR_DEP);
+  pieChartButtonCanDiv = new Widget(PIE_2_X, PIE_2_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT_CANC_DIV);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
   AKButton = new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
   LSButton = new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
@@ -344,11 +353,13 @@ void addWidgets()
   searchScreen.addWidget(searchByOriginButton);
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
-  pieChartScreen.addWidget(backToSelectionButton);
+  pieChartScreenArrDep.addWidget(backToSelectionButton);
+  pieChartScreenCanDiv.addWidget(backToSelectionButton);
   chartSelectionScreen.addWidget(backToMapButton);
   chartSelectionScreen.addWidget(outgoingBarChartButton);
   chartSelectionScreen.addWidget(incomingBarChartButton);
-  chartSelectionScreen.addWidget(pieChartButton);
+  chartSelectionScreen.addWidget(pieChartButtonArrDep);
+  chartSelectionScreen.addWidget(pieChartButtonCanDiv);
   startScreen.addWidget(USMapButton);
   startScreen.addWidget(alaskaMapButton);
   startScreen.addWidget(hawaiiMapButton);

@@ -52,12 +52,14 @@ class Screen {   //<>//
     Departures = new PImage[3];
     Arrivals = new PImage[3];
     Airlines = new PImage[3];
+    CancelledAndDiverted = new PImage[3];
     setShadowArray(US, "Start_US_Map.png", "Shadow_US.png", START_MAP_WIDTH);
     setShadowArray(Alaska, "Start_Alaska_Map.png", "Shadow_Alaska.png", START_MAP_WIDTH);
     setShadowArray(Hawaii, "Start_Hawaii_Map.png", "Shadow_Hawaii.png", START_MAP_WIDTH);
     setShadowArray(Departures, "departures.png", "shadow_departures.png", CHART_BUTTON_SIZE);
     setShadowArray(Arrivals, "arrivals.png", "shadow_arrivals.png", CHART_BUTTON_SIZE);
     setShadowArray(Airlines, "airline_logos.png", "airline_logos_shadow.png", CHART_BUTTON_SIZE);
+    setShadowArray(CancelledAndDiverted, "canDivFlight.png", "shadow_canDivFlight.png", CHART_BUTTON_SIZE);
   }
 
   void setOutgoingFlights(int outgoingFlights)
@@ -262,6 +264,7 @@ class Screen {   //<>//
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
       String airString = "Click to view airlines";
+      String canAndDivString = "Click to view cancelled and diverted";
       fill(BLACK);
       textSize(20);
       textAlign(LEFT);
@@ -276,9 +279,11 @@ class Screen {   //<>//
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
       text(airString, PIE_X + Airlines[CURRENT].width/2, PIE_Y + Airlines[CURRENT].height + 30);
+      text(canAndDivString, PIE_2_X + CancelledAndDiverted[CURRENT].width/2, PIE_2_Y + CancelledAndDiverted[CURRENT].height + 30);
       image(Departures[CURRENT], DEP_X, DEP_Y);
       image(Arrivals[CURRENT], ARR_X, ARR_Y);
       image(Airlines[CURRENT], PIE_X, PIE_Y);
+      image(CancelledAndDiverted[CURRENT], PIE_2_X, PIE_2_Y);
       break;
 
     case ALASKA_SCREEN:
@@ -315,7 +320,7 @@ class Screen {   //<>//
       text("HAWAII", SCREENX/2, textAscent() * 2);
       break;
 
-    case PIE_CHART_SCREEN:
+    case PIE_CHART_SCREEN_ARR_DEP:
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
@@ -323,6 +328,16 @@ class Screen {   //<>//
       }
       previousEventScreen = event;
       airlinesChart.draw();
+      break;
+      
+    case PIE_CHART_SCREEN_CANC_DIV:
+      for (int i = 0; i < widgetList.size(); i++)
+      {
+        Widget aWidget = (Widget) widgetList.get(i);
+        aWidget.draw();
+      }
+      previousEventScreen = event;
+      flightsChart.draw();
       break;
 
     case INCOMING_BAR_CHART_SCREEN:
@@ -402,6 +417,7 @@ class Screen {   //<>//
       Departures[CURRENT] = changeShadow(DEP_X, DEP_Y, Departures[START], Departures[CHANGED]);
       Arrivals[CURRENT] = changeShadow(ARR_X, ARR_Y, Arrivals[START], Arrivals[CHANGED]);
       Airlines[CURRENT] = changeShadow(PIE_X, PIE_Y, Airlines[START], Airlines[CHANGED]);
+      CancelledAndDiverted[CURRENT] = changeShadow(PIE_2_X, PIE_2_Y, CancelledAndDiverted[START], CancelledAndDiverted[CHANGED]);
       break;
     }
   }
