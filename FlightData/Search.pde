@@ -24,7 +24,7 @@ class Search {
         
       case ORIGIN_SEARCH:
         query = "origin";
-        userHelp = "Enter airport abbreviation code i.e. JFK"
+        userHelp = "Enter airport abbreviation code i.e. JFK";
         dataReturned.clear();
         break;
         
