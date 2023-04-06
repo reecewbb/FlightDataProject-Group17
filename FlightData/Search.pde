@@ -125,8 +125,8 @@ class Search {
     text(userInput, 160, 50);
     if(dataReturned.size() != 0) //<>//
     {
-      text(dataReturned.get(flightIndex), 150, 80);
-      text(results.get(flightIndex), 150, 500);
+      text(dataReturned.get(flightIndex), 650, 280);
+      text(results.get(flightIndex), 690, 650);
     }
     textAlign(CENTER);
     flashingTypingYoke();

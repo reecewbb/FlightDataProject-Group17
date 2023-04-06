@@ -1,4 +1,4 @@
-import java.util.Scanner;  //<>//
+import java.util.Scanner;  //<>// //<>//
 import java.io.File;
 import java.util.ArrayList;
 import de.bezier.data.sql.*;
@@ -31,7 +31,7 @@ void settings() {
 void setup() {
   String user     = "postgres";
   String pass     = "group17";
-  String database = "AirlineData";
+  String database = "airlinedata";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
   {
@@ -318,8 +318,8 @@ void addWidgets()
   TZButton = new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
   allButton = new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
   searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH+30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
-  nextFlightButton = new Widget(1200, 745, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
-  previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
+  nextFlightButton = new Widget(700, 695, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
+  previousFlightButton = new Widget(700, 740, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
