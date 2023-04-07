@@ -215,7 +215,7 @@ class Search { //<>// //<>//
     if (s==0)
     {
       float barDist = (textWidth(userInput) - 4);
-      text(typeBar, 166 + barDist, 47);
+      text(typeBar, 163 + barDist, 49);
     }
   }
 
@@ -246,7 +246,7 @@ class Search { //<>// //<>//
   void draw() {
     stroke(BLACK);
     strokeWeight(1);
-    if (searchBox) rect(150, 25, 210, 30);
+    if (searchBox) rect(150, 25, 210, 34);
     else
     {
       textAlign(CENTER);
@@ -268,7 +268,8 @@ class Search { //<>// //<>//
     {
       text(errorMessage, 150, 80);
       textAlign(CENTER);
-      flashingTypingYoke();
+
     }
+    flashingTypingYoke();
   }
 }
