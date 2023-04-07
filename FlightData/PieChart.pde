@@ -42,6 +42,18 @@ class PieChart //<>// //<>//
     }
     totalNumberOfFlightsToAndFrom = calculateFlights(airportName, INCOMING) + calculateFlights(airportName, OUTGOING);
     numberOfFlightsNotDivertedOrCancelled = totalNumberOfFlightsToAndFrom - (numberOfFlightsCancelled + numberOfFlightsDiverted);
+    canDivCalculation();
+  }
+  
+  public void canDivCalculation()
+  {
+      float denominator = totalNumberOfFlightsToAndFrom;
+      float percentageNumberOfFlightsCancelled = numberOfFlightsCancelled/denominator;
+      int bigPercentCancelled = (int) (percentageNumberOfFlightsCancelled * 10000);
+      percentRoundedCancelled = (float) bigPercentCancelled / 100;
+      float percentageNumberOfFlightsDiverted = numberOfFlightsDiverted/denominator;
+      int bigPercentDiverted = (int) (percentageNumberOfFlightsDiverted * 10000);
+      percentRoundedDiverted = (float) bigPercentDiverted / 100;
   }
 
 
@@ -113,6 +125,7 @@ class PieChart //<>// //<>//
   {
     int highestTotal = 0;
     mostCommonAirline = "null";
+    amountOfOperatingAirlines = 0;
     for (int i = 0; i < airlineFlightsTotal.length; i++)
     {
       int currentAirlineTotal = airlineFlightsTotal[i];
@@ -120,6 +133,10 @@ class PieChart //<>// //<>//
       {
         highestTotal = currentAirlineTotal;
         mostCommonAirline = airlineNames[i];
+      }
+      if (currentAirlineTotal > 0)
+      {
+        amountOfOperatingAirlines++;
       }
     }
   }
@@ -219,11 +236,11 @@ class PieChart //<>// //<>//
       float neitherInDegrees = percentageNumberOfFlightsNeither * 360;
       float percentageNumberOfFlightsCancelled = numberOfFlightsCancelled/denominator;
       int bigPercentCancelled = (int) (percentageNumberOfFlightsCancelled * 10000);
-      float percentRoundedCancelled = (float) bigPercentCancelled / 100;
+      percentRoundedCancelled = (float) bigPercentCancelled / 100;
       float cancelledInDegrees = percentageNumberOfFlightsCancelled * 360;
       float percentageNumberOfFlightsDiverted = numberOfFlightsDiverted/denominator;
       int bigPercentDiverted = (int) (percentageNumberOfFlightsDiverted * 10000);
-      float percentRoundedDiverted = (float) bigPercentDiverted / 100;
+      percentRoundedDiverted = (float) bigPercentDiverted / 100;
       float divertedInDegrees = percentageNumberOfFlightsDiverted * 360;
       textAlign(LEFT);
       textSize(15);

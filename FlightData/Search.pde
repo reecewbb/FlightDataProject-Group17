@@ -24,6 +24,7 @@ class Search { //<>// //<>//
     monthsDropdown.setVisible(false);
     yearsDropdown.setVisible(false);
     searchBox = true;
+    flightIndex = 0;
     switch(searchType)
     {
     case FL_NO_SEARCH:

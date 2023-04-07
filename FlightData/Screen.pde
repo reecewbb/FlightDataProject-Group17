@@ -5,6 +5,8 @@ class Screen {   //<>// //<>//
   float[][] rectangleWidth;
   String[] areaNames;
   boolean firstTime;
+  PImage[] US, Alaska, Hawaii, Departures, Arrivals, Airlines, CancelledAndDiverted;
+  PImage mapImage, alaskaMapImage, hawaiiMapImage;
 
   Screen (int screenType)
   {
@@ -254,13 +256,16 @@ class Screen {   //<>// //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      String airportNameString = "Airport: " + airportName; //<>// //<>//
+      String airportNameString = "Airport: " + airportName; 
       String cityNameString = "City: " + cityName;
       String outgoingFlightsString = "Total number of outgoing flights: " + Integer.toString(outgoingFlights);
       String incomingFlightsString = "Total number of incoming flights: " + Integer.toString(incomingFlights);
       String mostCommonAirlineString = "Most popular airline: " + mostCommonAirline;
       String mostPopularDestination = "Most popular destination: " + highestOutgoingName;
       String mostPopularOrigin = "Most popular origin: " + highestIncomingName;
+      String airlineAmount = "Amount of operating airlines: " + amountOfOperatingAirlines;
+      String cancelled = "Percentage of cancelled flights: " + percentRoundedCancelled + "%"; //<>//
+      String diverted = "Percentage of diverted flights: " + percentRoundedDiverted + "%";
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
       String airString = "Click to view airlines";
@@ -275,6 +280,9 @@ class Screen {   //<>// //<>//
       text(mostCommonAirlineString, 100, 280);
       text(mostPopularDestination, 100, 320);
       text(mostPopularOrigin, 100, 360);
+      text(airlineAmount, 100, 400);
+      text(cancelled, 100, 440);
+      text(diverted, 100, 480);
       textAlign(CENTER);
       text(depString, DEP_X + Departures[CURRENT].width/2, DEP_Y + Departures[CURRENT].height + 10);
       text(arrString, ARR_X + Arrivals[CURRENT].width/2, ARR_Y + Arrivals[CURRENT].height + 30);
