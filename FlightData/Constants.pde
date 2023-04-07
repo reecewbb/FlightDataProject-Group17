@@ -58,6 +58,7 @@ final int PIE_CHART_ARR_DEP = 0;
 final int PIE_CHART_CANC_DIV = 1;
 final int FL_NO_SEARCH = 0;
 final int ORIGIN_SEARCH = 1;
+final int DATE_SEARCH = 2;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;
@@ -142,7 +143,8 @@ final int NEXT_FLIGHT_EVENT = 24;
 final int PREVIOUS_FLIGHT_EVENT = 25;
 final int SEARCH_BY_FL_NO_EVENT = 26;
 final int SEARCH_BY_ORIGIN_EVENT = 27;
-final int CHART_SELECTION_EVENT = 28; //has to be last
+final int SEARCH_BY_DATE_EVENT = 28;
+final int CHART_SELECTION_EVENT = 29; //has to be last
 //regions
 final int US_REGION = 0;
 final int ALASKA_REGION = 1;

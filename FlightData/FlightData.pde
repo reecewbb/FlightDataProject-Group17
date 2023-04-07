@@ -1,9 +1,11 @@
-import java.util.Scanner; //<>//
+import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
 import de.bezier.data.sql.*;
+import controlP5.*;
 
 PostgreSQL pgsql;
+ControlP5 cp5;
 PFont myFont;
 ArrayList<String> airportNames = new ArrayList<String>();
 ArrayList<Airport> myAirports = new ArrayList<Airport>();
@@ -17,11 +19,11 @@ int event, lastAirportSelected, previousEvent, previousEventScreen;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
 Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButtonArrDep, pieChartButtonCanDiv, searchScreenButton, nextFlightButton, previousFlightButton, searchByNumberButton, searchByOriginButton;
+Widget searchByDateButton;
 Search searchBar;
 boolean drawingGraph;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart, flightsChart;
-String userInput = "";
 String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
 
 void settings() 
@@ -43,6 +45,7 @@ void setup()
       println( "number of rows in table airlineData: " + pgsql.getInt(1) );
     }
   }
+  cp5 = new ControlP5(this);
   background(WHITE);
   textAlign(CENTER);
   cityName = "error";
@@ -184,12 +187,21 @@ void mousePressed()
     searchBar.setQuery(FL_NO_SEARCH);
     searchByNumberButton.setColour();
     searchByOriginButton.unsetColour();
+    searchByDateButton.unsetColour();
     break;
 
   case SEARCH_BY_ORIGIN_EVENT:
     searchBar.setQuery(ORIGIN_SEARCH);
     searchByNumberButton.unsetColour();
     searchByOriginButton.setColour();
+    searchByDateButton.unsetColour();
+    break;
+    
+  case SEARCH_BY_DATE_EVENT:
+    searchBar.setQuery(DATE_SEARCH);
+    searchByNumberButton.unsetColour();
+    searchByOriginButton.unsetColour();
+    searchByDateButton.setColour();
     break;
 
   case CHART_SELECTION_EVENT:
@@ -248,6 +260,7 @@ void mouseMoved()
   previousFlightButton.hover();
   searchByNumberButton.hover();
   searchByOriginButton.hover();
+  searchByDateButton.hover();
 }
 
 void addAirportsToMaps()
@@ -345,11 +358,12 @@ void addWidgets()
   previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
   searchByNumberButton = new Widget(1200, 100, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
   searchByOriginButton = new Widget(1200, 200, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
-  searchScreen.addWidget(backToStartButton);
+  searchByDateButton = new Widget(1200, 300, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by date", color(WIDGET_COLOUR), myFont, SEARCH_BY_DATE_EVENT, WHITE);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
   searchScreen.addWidget(searchByNumberButton);
   searchScreen.addWidget(searchByOriginButton);
+  searchScreen.addWidget(searchByDateButton);
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
   pieChartScreenArrDep.addWidget(backToSelectionButton);
