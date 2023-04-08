@@ -6,12 +6,12 @@ import controlP5.*;
 
 PostgreSQL pgsql;
 ControlP5 cp5;
-PFont myFont;
+PFont myFont, bigFont;
 ArrayList<Airport> myAirports;
 ArrayList<Screen> zoomScreens;
 Screen mapScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
 Screen pieChartScreenArrDep, pieChartScreenCanDiv, outgoingChartScreen, incomingChartScreen, searchScreen;
-int event, lastAirportSelected, previousEventScreen, amountOfOperatingAirlines;
+int event, lastAirportSelected, previousEventScreen, amountOfOperatingAirlines, currentFrame, loading;
 float percentRoundedCancelled, percentRoundedDiverted;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
@@ -21,16 +21,38 @@ Search searchBar;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart, flightsChart;
 String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
+boolean loadingComplete;
+PImage[] gifFrames;
 
-void settings() 
+void settings()
 {
   size(SCREENX, SCREENY);
 }
 
-void setup() 
+void setup()
 {
-  String user     = "postgres";
-  String pass     = "group17";
+  loadingComplete = false;
+  bigFont = loadFont("MicrosoftJhengHeiRegular-60.vlw");
+  gifFrames = new PImage[11]; // Replace with the actual number of frames in your GIF
+  for (int i = 0; i < gifFrames.length; i++) {
+    gifFrames[i] = loadImage("frame" + i + ".gif"); // Replace with the actual filenames of your GIF frames
+  }
+  currentFrame = 0;
+  loading = 0;
+  new Thread(new Runnable()
+  {
+    public void run()
+    {
+      loadData();
+    }
+  }
+  ).start();
+}
+
+void loadData()
+{
+  String user     = "postgres";                                                                        
+  String pass     = "group17";                                                            
   String database = "AirlineData";
   pgsql = new PostgreSQL( this, "localhost", database, user, pass );
   if ( pgsql.connect() )
@@ -47,7 +69,7 @@ void setup()
   myAirports = new ArrayList<Airport>();
   zoomScreens = new ArrayList<Screen>();
   cityName = "error";
-  airportName = "error";
+  airportName = "error"; //<>//
   setScreens();
   searchBar = new Search();
   mapFilter = new Filter();
@@ -58,162 +80,199 @@ void setup()
   addWidgets();
   allButton.setColour();
   searchByNumberButton.setColour();
+  loadingComplete = true;
 }
 
 
 void draw()
 {
   background(WHITE);
-  currentScreen.draw(event, mapFilter);
+  if (!loadingComplete)
+  {
+    frameRate(10);
+    fill(BLACK);
+    imageMode(CENTER);
+    textAlign(CENTER);
+    textFont(bigFont);
+    textSize(70);
+    text("AIRPORT DATA VIEWER", SCREENX/2, 180);
+    textSize(50);
+    String dots = "";
+    for (int i = 0; i < loading; i++) //<>//
+    {
+      dots += ".";
+    }
+    text("Loading" + dots, SCREENX/2, 850);
+    image(gifFrames[currentFrame], SCREENX/2, SCREENY/2);
+    currentFrame++;
+    if (currentFrame >= gifFrames.length) {
+      currentFrame = 0;
+      loading++;
+    }
+    if (loading > 3)
+    {
+      loading = 0;
+    }
+  } else
+  {
+    frameRate(30);
+    currentScreen.draw(event, mapFilter);
+  }
 }
 
 void mousePressed()
 {
-  event = currentScreen.buttonClicked();
-  int eventNo = event;
-  if (event >= CHART_SELECTION_EVENT && event < myAirports.size() + CHART_SELECTION_EVENT)
+  if (loadingComplete)
   {
-    eventNo = CHART_SELECTION_EVENT;
-  }
-  switch(eventNo)
-  {
-  case BACK_BUTTON_EVENT:
-    currentScreen = regionScreen;
-    break;
+    event = currentScreen.buttonClicked();
+    int eventNo = event;
+    if (event >= CHART_SELECTION_EVENT && event < myAirports.size() + CHART_SELECTION_EVENT)
+    {
+      eventNo = CHART_SELECTION_EVENT;
+    }
+    switch(eventNo)
+    {
+    case BACK_BUTTON_EVENT:
+      currentScreen = regionScreen;
+      break;
 
-  case AK_EVENT:
-    mapFilter.currentFilter = AK_FILTER;
-    AKButton.setColour();
-    LSButton.unsetColour();
-    TZButton.unsetColour();
-    allButton.unsetColour();
-    break;
+    case AK_EVENT:
+      mapFilter.currentFilter = AK_FILTER;
+      AKButton.setColour();
+      LSButton.unsetColour();
+      TZButton.unsetColour();
+      allButton.unsetColour();
+      break;
 
-  case LS_EVENT:
-    mapFilter.currentFilter = LS_FILTER;
-    AKButton.unsetColour();
-    LSButton.setColour();
-    TZButton.unsetColour();
-    allButton.unsetColour();
-    break;
+    case LS_EVENT:
+      mapFilter.currentFilter = LS_FILTER;
+      AKButton.unsetColour();
+      LSButton.setColour();
+      TZButton.unsetColour();
+      allButton.unsetColour();
+      break;
 
-  case TZ_EVENT:
-    mapFilter.currentFilter = TZ_FILTER;
-    AKButton.unsetColour();
-    LSButton.unsetColour();
-    TZButton.setColour();
-    allButton.unsetColour();
-    break;
+    case TZ_EVENT:
+      mapFilter.currentFilter = TZ_FILTER;
+      AKButton.unsetColour();
+      LSButton.unsetColour();
+      TZButton.setColour();
+      allButton.unsetColour();
+      break;
 
-  case NO_FILTER_EVENT:
-    mapFilter.currentFilter = NO_FILTER;
-    AKButton.unsetColour();
-    LSButton.unsetColour();
-    TZButton.unsetColour();
-    allButton.setColour();
-    break;
+    case NO_FILTER_EVENT:
+      mapFilter.currentFilter = NO_FILTER;
+      AKButton.unsetColour();
+      LSButton.unsetColour();
+      TZButton.unsetColour();
+      allButton.setColour();
+      break;
 
-  case TOP_LEFT_EVENT:
-  case TOP_MID_EVENT:
-  case TOP_RIGHT_EVENT:
-  case MID_LEFT_EVENT:
-  case MID_MID_EVENT:
-  case MID_RIGHT_EVENT:
-  case BOT_LEFT_EVENT:
-  case BOT_MID_EVENT:
-  case BOT_RIGHT_EVENT:
-    currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
-    break;
+    case TOP_LEFT_EVENT:
+    case TOP_MID_EVENT:
+    case TOP_RIGHT_EVENT:
+    case MID_LEFT_EVENT:
+    case MID_MID_EVENT:
+    case MID_RIGHT_EVENT:
+    case BOT_LEFT_EVENT:
+    case BOT_MID_EVENT:
+    case BOT_RIGHT_EVENT:
+      currentScreen = zoomScreens.get(event - TOP_LEFT_EVENT);
+      break;
 
-  case SELECT_US_EVENT:
-    currentScreen = mapScreen;
-    regionScreen = currentScreen;
-    break;
+    case SELECT_US_EVENT:
+      currentScreen = mapScreen;
+      regionScreen = currentScreen;
+      break;
 
-  case BACK_TO_START_EVENT:
-    currentScreen = startScreen;
-    searchBar.setQuery(BACK_BUTTON);
-    break;
+    case BACK_TO_START_EVENT:
+      currentScreen = startScreen;
+      searchBar.setQuery(BACK_BUTTON);
+      break;
 
-  case OUTGOING_BAR_CHART_EVENT:
-    event = lastAirportSelected;
-    currentScreen = outgoingChartScreen;
-    break;
+    case OUTGOING_BAR_CHART_EVENT:
+      event = lastAirportSelected;
+      currentScreen = outgoingChartScreen;
+      break;
 
-  case INCOMING_BAR_CHART_EVENT:
-    event = lastAirportSelected;
-    currentScreen = incomingChartScreen;
-    break;
+    case INCOMING_BAR_CHART_EVENT:
+      event = lastAirportSelected;
+      currentScreen = incomingChartScreen;
+      break;
 
-  case SELECT_ALASKA_EVENT:
-    currentScreen = alaskaScreen;
-    regionScreen = currentScreen;
-    break;
+    case SELECT_ALASKA_EVENT:
+      currentScreen = alaskaScreen;
+      regionScreen = currentScreen;
+      break;
 
-  case SELECT_HAWAII_EVENT:
-    currentScreen = hawaiiScreen;
-    regionScreen = currentScreen;
-    break;
+    case SELECT_HAWAII_EVENT:
+      currentScreen = hawaiiScreen;
+      regionScreen = currentScreen;
+      break;
 
-  case BACK_SELECTION_EVENT:
-    currentScreen = chartSelectionScreen;
-    break;
+    case BACK_SELECTION_EVENT:
+      currentScreen = chartSelectionScreen;
+      break;
 
- case PIE_CHART_EVENT_ARR_DEP:
-    currentScreen = pieChartScreenArrDep;
-    break;
+    case PIE_CHART_EVENT_ARR_DEP:
+      currentScreen = pieChartScreenArrDep;
+      break;
 
-  case PIE_CHART_EVENT_CANC_DIV:
-    currentScreen = pieChartScreenCanDiv;
-    break;
+    case PIE_CHART_EVENT_CANC_DIV:
+      currentScreen = pieChartScreenCanDiv;
+      break;
 
-  case SELECT_SEARCH_EVENT:
-    currentScreen = searchScreen;
-    break;
+    case SELECT_SEARCH_EVENT:
+      currentScreen = searchScreen;
+      break;
 
-  case NEXT_FLIGHT_EVENT:
-    searchBar.nextAirport();
-    break;
+    case NEXT_FLIGHT_EVENT:
+      searchBar.nextAirport();
+      break;
 
-  case PREVIOUS_FLIGHT_EVENT:
-    searchBar.previousAirport();
-    break;
+    case PREVIOUS_FLIGHT_EVENT:
+      searchBar.previousAirport();
+      break;
 
-  case SEARCH_BY_FL_NO_EVENT:
-    searchBar.setQuery(FL_NO_SEARCH);
-    searchByNumberButton.setColour();
-    searchByOriginButton.unsetColour();
-    searchByDateButton.unsetColour();
-    break;
+    case SEARCH_BY_FL_NO_EVENT:
+      searchBar.setQuery(FL_NO_SEARCH);
+      searchByNumberButton.setColour();
+      searchByOriginButton.unsetColour();
+      searchByDateButton.unsetColour();
+      break;
 
-  case SEARCH_BY_ORIGIN_EVENT:
-    searchBar.setQuery(ORIGIN_SEARCH);
-    searchByNumberButton.unsetColour();
-    searchByOriginButton.setColour();
-    searchByDateButton.unsetColour();
-    break;
-    
-  case SEARCH_BY_DATE_EVENT:
-    searchBar.setQuery(DATE_SEARCH);
-    searchByNumberButton.unsetColour();
-    searchByOriginButton.unsetColour();
-    searchByDateButton.setColour();
-    break;
+    case SEARCH_BY_ORIGIN_EVENT:
+      searchBar.setQuery(ORIGIN_SEARCH);
+      searchByNumberButton.unsetColour();
+      searchByOriginButton.setColour();
+      searchByDateButton.unsetColour();
+      break;
 
-  case CHART_SELECTION_EVENT:
-    currentScreen = chartSelectionScreen;
-    Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
-    String airportName = currentAirport.getAirportName();
-    chartSelectionScreen.setOutgoingFlights(calculateFlights(airportName, OUTGOING));
-    chartSelectionScreen.setIncomingFlights(calculateFlights(airportName, INCOMING));
-    lastAirportSelected = event;
-    break;
+    case SEARCH_BY_DATE_EVENT:
+      searchBar.setQuery(DATE_SEARCH);
+      searchByNumberButton.unsetColour();
+      searchByOriginButton.unsetColour();
+      searchByDateButton.setColour();
+      break;
+
+    case CHART_SELECTION_EVENT:
+      currentScreen = chartSelectionScreen;
+      Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
+      String airportName = currentAirport.getAirportName();
+      chartSelectionScreen.setOutgoingFlights(calculateFlights(airportName, OUTGOING));
+      chartSelectionScreen.setIncomingFlights(calculateFlights(airportName, INCOMING));
+      lastAirportSelected = event;
+      break;
+    }
   }
 }
 
 void keyPressed()
 {
-  searchBar.searchTyping();
+  if(loadingComplete && currentScreen == searchScreen)
+  {
+    searchBar.searchTyping();
+  }
 }
 
 int calculateFlights(String airportName, int direction)
@@ -232,31 +291,34 @@ int calculateFlights(String airportName, int direction)
 
 void mouseMoved()
 {
-  if (currentScreen != mapScreen)
+  if (loadingComplete)
   {
-    for (Airport currentAirport : myAirports)
+    if (currentScreen != mapScreen)
     {
-      currentAirport.strokeAirport();
+      for (Airport currentAirport : myAirports)
+      {
+        currentAirport.strokeAirport();
+      }
     }
+    backToMapButton.hover();
+    AKButton.hover();
+    LSButton.hover();
+    TZButton.hover();
+    allButton.hover();
+    backToStartButton.hover();
+    backToSelectionButton.hover();
+    outgoingBarChartButton.hover();
+    incomingBarChartButton.hover();
+    searchScreenButton.hover();
+    pieChartButtonArrDep.hover();
+    pieChartButtonCanDiv.hover();
+    currentScreen.hover();
+    nextFlightButton.hover();
+    previousFlightButton.hover();
+    searchByNumberButton.hover();
+    searchByOriginButton.hover();
+    searchByDateButton.hover();
   }
-  backToMapButton.hover();
-  AKButton.hover();
-  LSButton.hover();
-  TZButton.hover();
-  allButton.hover();
-  backToStartButton.hover();
-  backToSelectionButton.hover();
-  outgoingBarChartButton.hover();
-  incomingBarChartButton.hover();
-  searchScreenButton.hover();
-  pieChartButtonArrDep.hover();
-  pieChartButtonCanDiv.hover();
-  currentScreen.hover();
-  nextFlightButton.hover();
-  previousFlightButton.hover();
-  searchByNumberButton.hover();
-  searchByOriginButton.hover();
-  searchByDateButton.hover();
 }
 
 void addAirportsToMaps()
@@ -353,7 +415,7 @@ void addWidgets()
   nextFlightButton = new Button(700, 800, FILTER_WIDGET_WIDTH + 50, "Next Flight", NEXT_FLIGHT_EVENT);
   previousFlightButton = new Button(200, 800, FILTER_WIDGET_WIDTH + 50, "Previous Flight", PREVIOUS_FLIGHT_EVENT);
   searchByNumberButton = new Button(1200, 100, FILTER_WIDGET_WIDTH + 200, "Search by flight number", SEARCH_BY_FL_NO_EVENT);
-  searchByOriginButton = new Button(1200, 200, FILTER_WIDGET_WIDTH + 200,  "Search by origin", SEARCH_BY_ORIGIN_EVENT);
+  searchByOriginButton = new Button(1200, 200, FILTER_WIDGET_WIDTH + 200, "Search by origin", SEARCH_BY_ORIGIN_EVENT);
   searchByDateButton = new Button(1200, 300, FILTER_WIDGET_WIDTH + 200, "Search by date", SEARCH_BY_DATE_EVENT);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);

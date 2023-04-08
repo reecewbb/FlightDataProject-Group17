@@ -216,13 +216,13 @@ class Screen {   //<>// //<>//
       break;
 
     case OUTGOING_BAR_CHART_SCREEN:
+      previousEventScreen = event;
+      outgoingFlightsChart.draw();
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      previousEventScreen = event;
-      outgoingFlightsChart.draw();
       break;
 
     case START_SCREEN:
@@ -349,13 +349,13 @@ class Screen {   //<>// //<>//
       break;
 
     case INCOMING_BAR_CHART_SCREEN:
+      previousEventScreen = event;
+      incomingFlightsChart.draw();
       for (int i = 0; i < widgetList.size(); i++)
       {
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
-      previousEventScreen = event;
-      incomingFlightsChart.draw();
       break;
       
     case SEARCH_SCREEN:
