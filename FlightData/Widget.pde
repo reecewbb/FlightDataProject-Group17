@@ -18,42 +18,9 @@ class Widget {
     hasBorder = false;
   }
   
-  Widget(int x, int y, int widgetWidth, int widgetHeight, String label, color widgetColor, PFont widgetFont, int event, color labelColor) 
-  {
-    this(x, y, widgetWidth, widgetHeight, event);
-    this.label=label;
-    arrow = false;
-    offset = 0;
-    this.widgetColor = widgetColor;
-    this.widgetFont = widgetFont;
-    this.labelColor= labelColor;
-    visibleButton = true;
-    if (label.equals("Back"))
-    {
-      arrow = true;
-      arrowImage = loadImage("back_arrow.png");
-      arrowImage.resize(widgetHeight - 15, 0);
-      offset = 10;
-    }
-    if (label.equals("Search"))
-    {
-      search = true;
-      searchImage = loadImage("search.png");
-      searchImage.resize(widgetHeight - 15, 0);
-      offset = -10;
-    }
-  }
+  public void setColour(){}
+  public void unsetColour(){}
   
-  void setColour()
-  {
-    widgetColor = AIRPORT_COLOUR;
-  }
-  
-  void unsetColour()
-  {
-    widgetColor = WIDGET_COLOUR;
-  }
-
   void draw() {
     if(visibleButton)
     {
@@ -81,14 +48,14 @@ class Widget {
     }
   }
 
-  void hover() {
+  public void hover() {
     if(!setBorder) hasBorder = false;
     if (mouseX > x && mouseX < x + widgetWidth && mouseY > y && mouseY < y + widgetHeight) {
       hasBorder = true;
     }
   }
 
-  int getEvent(int mX, int mY) {
+  public int getEvent(int mX, int mY) {
     if (mX > x && mX < x+widgetWidth && mY > y && mY < y+widgetHeight) {
       return event;
     }

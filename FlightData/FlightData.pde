@@ -132,6 +132,7 @@ void mousePressed()
 
   case BACK_TO_START_EVENT:
     currentScreen = startScreen;
+    searchBar.setQuery(BACK_BUTTON);
     break;
 
   case OUTGOING_BAR_CHART_EVENT:
@@ -336,24 +337,24 @@ void addWidgets()
 {
   alaskaMapButton = new Widget(ALASKA_X_START, TOP_ROW_Y_START, START_MAP_WIDTH, 300, SELECT_ALASKA_EVENT);
   hawaiiMapButton = new Widget(HAWAII_X_START, HAWAII_Y_START, START_MAP_WIDTH, 300, SELECT_HAWAII_EVENT);
-  backToSelectionButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_SELECTION_EVENT, WHITE);
-  backToMapButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_BUTTON_EVENT, WHITE);
-  backToStartButton = new Widget(20, 20, (int) textWidth("Back") + 100, 40, "Back", color(WIDGET_COLOUR), myFont, BACK_TO_START_EVENT, WHITE);
+  backToSelectionButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_SELECTION_EVENT);
+  backToMapButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_BUTTON_EVENT);
+  backToStartButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_TO_START_EVENT);
   outgoingBarChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, OUTGOING_BAR_CHART_EVENT);
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
   pieChartButtonArrDep = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT_ARR_DEP);
   pieChartButtonCanDiv = new Widget(PIE_2_X, PIE_2_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT_CANC_DIV);
   USMapButton = new Widget(150, 250, START_MAP_WIDTH, 300, SELECT_US_EVENT);
-  AKButton = new Widget(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "A - K", color(WIDGET_COLOUR), myFont, AK_EVENT, WHITE);
-  LSButton = new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
-  TZButton = new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
-  allButton = new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
-  searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH + 30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
-  nextFlightButton = new Widget(700, 800, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
-  previousFlightButton = new Widget(200, 800, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
-  searchByNumberButton = new Widget(1200, 100, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
-  searchByOriginButton = new Widget(1200, 200, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
-  searchByDateButton = new Widget(1200, 300, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by date", color(WIDGET_COLOUR), myFont, SEARCH_BY_DATE_EVENT, WHITE);
+  AKButton = new Button(FILTER_WIDGET_X, 745, FILTER_WIDGET_WIDTH, "A - K", AK_EVENT);
+  LSButton = new Button(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, "L - S ", LS_EVENT);
+  TZButton = new Button(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, "T - Z", TZ_EVENT);
+  allButton = new Button(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, "ALL", NO_FILTER_EVENT);
+  searchScreenButton = new Button(1400, 98, FILTER_WIDGET_WIDTH + 30, "Search", color(WHITE), SELECT_SEARCH_EVENT, BLACK);
+  nextFlightButton = new Button(700, 800, FILTER_WIDGET_WIDTH + 50, "Next Flight", NEXT_FLIGHT_EVENT);
+  previousFlightButton = new Button(200, 800, FILTER_WIDGET_WIDTH + 50, "Previous Flight", PREVIOUS_FLIGHT_EVENT);
+  searchByNumberButton = new Button(1200, 100, FILTER_WIDGET_WIDTH + 200, "Search by flight number", SEARCH_BY_FL_NO_EVENT);
+  searchByOriginButton = new Button(1200, 200, FILTER_WIDGET_WIDTH + 200,  "Search by origin", SEARCH_BY_ORIGIN_EVENT);
+  searchByDateButton = new Button(1200, 300, FILTER_WIDGET_WIDTH + 200, "Search by date", SEARCH_BY_DATE_EVENT);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);

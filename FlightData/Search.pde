@@ -1,4 +1,4 @@
-class Search {  //<>//
+class Search { //<>// //<>//
   ArrayList<String> dataReturned = new ArrayList<String>();
   ArrayList<Integer> results = new ArrayList<Integer>();
   String typeBar = "|";
@@ -13,8 +13,8 @@ class Search {  //<>//
   {
     createDropdownList();
     setQuery(FL_NO_SEARCH);
-    rows = "Flight Number: " + "\nOrigin Airport Code: " + "\nDestination Airport Code: " + "\nDate of Departure: " + "\nEstimated Departure Time: " +  "\nEstimated Arrival Time: " + 
-               "\nActual Departure Time: " + "\nActual Arrival Time: " + "\nPunctuality: " + "\nDeparture City: " + "\nArrival City: " + "\nDistance: " + "\nCancelled: " + "\nDiverted: ";
+    rows = "Flight Number: " + "\nOrigin Airport Code: " + "\nDestination Airport Code: " + "\nDate of Departure: " + "\nEstimated Departure Time: " +  "\nEstimated Arrival Time: " +
+      "\nActual Departure Time: " + "\nActual Arrival Time: " + "\nPunctuality: " + "\nDeparture City: " + "\nArrival City: " + "\nDistance: " + "\nCancelled: " + "\nDiverted: ";
   }
 
   void setQuery(int searchType)
@@ -48,13 +48,20 @@ class Search {  //<>//
       query = "split_part(fl_date, ' ', 1)";
       userHelp = "Select date and press Enter";
       errorMessage = "No flight data available on selected date";
-      userHelpX = 540;
+      userHelpX = 520;
       daysDropdown.setVisible(true);
       monthsDropdown.setVisible(true);
       yearsDropdown.setVisible(true);
       searchBox = false;
       dataReturned.clear();
       break;
+
+    case BACK_BUTTON:
+      daysDropdown.setVisible(false);
+      monthsDropdown.setVisible(false);
+      yearsDropdown.setVisible(false);
+      break;
+      
     default:
     }
   }
@@ -62,7 +69,7 @@ class Search {  //<>//
   void createDropdownList()
   {
     daysDropdown = cp5.addDropdownList("Day")
-      .setPosition(150, 25)
+      .setPosition(180, 30)
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
@@ -73,11 +80,13 @@ class Search {  //<>//
       .setColorValueLabel(color(BLACK))
       .setFont(createFont("MicrosoftJhengHeiUIRegular-20.vlw", 20))
       .setColorValue(BLACK)
+      .setValue(0)
+      .setLabel("1")
       .addItems(getDays())
       .close();
 
     monthsDropdown = cp5.addDropdownList("Month")
-      .setPosition(260, 25)
+      .setPosition(290, 30)
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
@@ -88,11 +97,13 @@ class Search {  //<>//
       .setColorValueLabel(color(BLACK))
       .setFont(createFont("MicrosoftJhengHeiUIRegular-20.vlw", 20))
       .setColorValue(BLACK)
+      .setValue(0)
+      .setLabel("1")
       .addItems(getMonths())
       .close();
 
     yearsDropdown = cp5.addDropdownList("Year")
-      .setPosition(370, 25)
+      .setPosition(400, 30)
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
@@ -103,10 +114,12 @@ class Search {  //<>//
       .setColorValueLabel(color(BLACK))
       .setFont(createFont("MicrosoftJhengHeiUIRegular-20.vlw", 20))
       .setColorValue(BLACK)
+      .setValue(0)
+      .setLabel("2022")
       .addItems(getYears())
       .close();
   }
-  
+
   String[] getDays() {
     String[] days = new String[31];
     for (int i = 0; i < 31; i++) {
@@ -142,30 +155,29 @@ class Search {  //<>//
         {
           userInput=userInput.substring(0, userInput.length()-1);
         }
-      } 
-      else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9'))
+      } else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9'))
       {
-        if(textWidth(userInput) < 200) userInput+=key;
-      } 
+        if (textWidth(userInput) < 180) userInput+=key;
+      }
     }
     if (key==RETURN || key==ENTER)
+    {
+      dataReturned.clear();
+      queryCount = 0;
+      if (!searchBox)
       {
-        dataReturned.clear();
-        queryCount = 0;
-        if(!searchBox) 
-        {
-          selectedDay = (int) daysDropdown.getValue() + 1;
-          selectedMonth = (int) monthsDropdown.getValue() + 1;
-          selectedYear = (int) yearsDropdown.getValue() + 2022;
-          userInput = String.format(selectedDay + "/" + selectedMonth + "/" + selectedYear);
-        }
-        getFlightDetails();
-        println ("ENTER");
-        if (gotFlight==true)
-        {
-          println("Found");
-        }
+        selectedDay = (int) daysDropdown.getValue() + 1;
+        selectedMonth = (int) monthsDropdown.getValue() + 1;
+        selectedYear = (int) yearsDropdown.getValue() + 2022;
+        userInput = String.format(selectedDay + "/" + selectedMonth + "/" + selectedYear);
       }
+      getFlightDetails();
+      println ("ENTER");
+      if (gotFlight==true)
+      {
+        println("Found");
+      }
+    }
   }
 
   void getFlightDetails()
@@ -204,24 +216,23 @@ class Search {  //<>//
         }
       }
       while (i < queryCount);
-    } 
-    else
+    } else
     {
       error = false;
     }
   }
-  
+
   String punctualityCalc(String scheduled, String actual)
   {
     if (scheduled == null || actual == null) {
       return "N/A";
     }
     try {
-      String[] stringScheduledSplit = scheduled.split(""); //<>//
+      String[] stringScheduledSplit = scheduled.split("");
       String[] stringActualSplit = actual.split("");
       int[] scheduledSplit = new int[4];
       int[] actualSplit = new int[4];
-      for(int i = 0; i < 4; i++)
+      for (int i = 0; i < 4; i++)
       {
         scheduledSplit[i] = Integer.parseInt(stringScheduledSplit[i]);
         actualSplit[i] = Integer.parseInt(stringActualSplit[i]);
@@ -231,8 +242,8 @@ class Search {  //<>//
       int actualHours = actualSplit[0] * 10 + actualSplit[1];
       int actualMinutes = actualSplit[2] * 10 + actualSplit[3];
       int timeDifference = ((actualHours - scheduledHours) * 60) + actualMinutes - scheduledMinutes;
-      if(timeDifference == 0) return "On time";
-      if(timeDifference > 0) return "Late by " + timeDifference + " minutes";
+      if (timeDifference == 0) return "On time";
+      if (timeDifference > 0) return "Late by " + timeDifference + " minutes";
       else return "Early by " + -timeDifference + " minutes";
     }
     catch(ArrayIndexOutOfBoundsException exception) {
@@ -278,7 +289,7 @@ class Search {  //<>//
     stroke(BLACK);
     strokeWeight(1);
     if (searchBox) rect(190, 25, 210, 34);
-    else
+    else if (currentScreen == searchScreen)
     {
       textAlign(CENTER);
       cp5.draw();
@@ -288,7 +299,7 @@ class Search {  //<>//
     textSize(20);
     fill(BLACK);
     text(userHelp, userHelpX, 50);
-    text(userInput, 200, 50);
+    if (searchBox) text(userInput, 200, 50);
     int dataSize = dataReturned.size();
     if (dataSize != 0)
     {
@@ -298,18 +309,16 @@ class Search {  //<>//
       text(dataReturned.get(flightIndex), 850, 150);
       textAlign(CENTER);
       text("Result " + results.get(flightIndex) + " out of " + queryCount + "", 525, 830);
-    } 
-    else if (!gotFlight && hasInput)
+    } else if (!gotFlight && hasInput)
     {
       text(errorMessage, 150, 80);
       textAlign(CENTER);
-    }
-    else
+    } else
     {
       fill(WHITE);
       noStroke();
       rect(200, 800, 700, 100);
     }
-    flashingTypingYoke();
+    if (searchBox) flashingTypingYoke();
   }
 }

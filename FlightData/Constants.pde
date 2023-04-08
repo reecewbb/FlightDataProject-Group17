@@ -59,6 +59,7 @@ final int PIE_CHART_CANC_DIV = 1;
 final int FL_NO_SEARCH = 0;
 final int ORIGIN_SEARCH = 1;
 final int DATE_SEARCH = 2;
+final int BACK_BUTTON = 3;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;
