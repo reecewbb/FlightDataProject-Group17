@@ -4,15 +4,20 @@ class Search { //<>// //<>//
   String typeBar = "|";
   boolean gotFlight, hasInput;
   int flightIndex, queryCount, userHelpX, selectedDay, selectedMonth, selectedYear;
-  String query, userHelp, selectedDate, userInput, errorMessage, rows;
+  String query, filterQuery, searchQuery, userHelp, selectedDate, userInput, errorMessage, rows;
   boolean searchBox;
   DropdownList daysDropdown, monthsDropdown, yearsDropdown;
   Button submitButton;
+  PFont dropdownFont;
 
   Search()
   {
     createDropdownList();
     setQuery(FL_NO_SEARCH);
+    canCount = divCount = 0;
+    searchQuery = "true ";
+    filterQuery = "true ";
+    query = "";
     rows = "Flight Number: " + "\nOrigin Airport Code: " + "\nDestination Airport Code: " + "\nDate of Departure: " + "\nEstimated Departure Time: " +  "\nEstimated Arrival Time: " +
       "\nActual Departure Time: " + "\nActual Arrival Time: " + "\nPunctuality: " + "\nDeparture City: " + "\nArrival City: " + "\nDistance: " + "\nCancelled: " + "\nDiverted: ";
   }
@@ -32,14 +37,14 @@ class Search { //<>// //<>//
     {
     case FL_NO_SEARCH:
       query = "CONCAT(mkt_carrier, mkt_carrier_fl_num)";
-      userHelp = "Enter a flight number including the prefix i.e. AA1234 and press Enter";
+      userHelp = "Type flight number including the prefix i.e. AA1234 and press Enter";
       errorMessage = "Flight not found: use AA/AS/B6/DL/F9/G4/HA/NK/UA/WN, followed by the flight number";
       dataReturned.clear();
       break;
 
     case ORIGIN_SEARCH:
       query = "origin";
-      userHelp = "Enter airport abbreviation code i.e. JFK and press Enter";
+      userHelp = "Type airport abbreviation code i.e. JFK and press Enter";
       errorMessage = "Flight not found: use a valid 3 letter airport abbreviation code";
       dataReturned.clear();
       break;
@@ -60,14 +65,46 @@ class Search { //<>// //<>//
       daysDropdown.setVisible(false);
       monthsDropdown.setVisible(false);
       yearsDropdown.setVisible(false);
+      dataReturned.clear();
       break;
-      
+
+    case DEST_SEARCH:
+      query = "dest";
+      userHelp = "Type airport abbreviation code i.e. JFK and press Enter";
+      errorMessage = "Flight not found: use a valid 3 letter airport abbreviation code";
+      dataReturned.clear();
+      break;
+
     default:
+    }
+  }
+
+
+  void setFilterQuery(int filterType)
+  {
+    switch(filterType)
+    {
+    case CAN_FILTER:
+      filterQuery = canCount % 2 == 0 ? "cancelled = '1.00' " : "true ";
+      errorMessage = "No cancelled flights for this dataset";
+      dataReturned.clear();
+      getFlightDetails();
+      flightIndex = 0;
+      break;
+
+    case DIV_FILTER:
+      filterQuery = divCount % 2 == 0 ? "diverted = '1.00' " : "true ";
+      errorMessage = "No diverted flights for this dataset";
+      dataReturned.clear();
+      getFlightDetails();
+      flightIndex = 0;
+      break;
     }
   }
 
   void createDropdownList()
   {
+    dropdownFont = loadFont("MicrosoftJhengHeiRegular-20.vlw");
     daysDropdown = cp5.addDropdownList("Day")
       .setPosition(180, 30)
       .setWidth(100)
@@ -78,7 +115,7 @@ class Search { //<>// //<>//
       .setColorLabel(color(BLACK))
       .setColorActive(color(WHITE - 100))
       .setColorValueLabel(color(BLACK))
-      .setFont(myFont)
+      .setFont(dropdownFont)
       .setColorValue(BLACK)
       .setValue(0)
       .setLabel("1")
@@ -95,7 +132,7 @@ class Search { //<>// //<>//
       .setColorLabel(color(BLACK))
       .setColorActive(color(WHITE - 100))
       .setColorValueLabel(color(BLACK))
-      .setFont(myFont)
+      .setFont(dropdownFont)
       .setColorValue(BLACK)
       .setValue(0)
       .setLabel("1")
@@ -112,7 +149,7 @@ class Search { //<>// //<>//
       .setColorLabel(color(BLACK))
       .setColorActive(color(WHITE - 100))
       .setColorValueLabel(color(BLACK))
-      .setFont(myFont)
+      .setFont(dropdownFont)
       .setColorValue(BLACK)
       .setValue(0)
       .setLabel("2022")
@@ -148,7 +185,6 @@ class Search { //<>// //<>//
   {
     if (searchBox)
     {
-      flightIndex = 0;
       if (key==BACKSPACE)
       {
         if (userInput.length()>0)
@@ -164,12 +200,13 @@ class Search { //<>// //<>//
     {
       dataReturned.clear();
       queryCount = 0;
+      flightIndex = 0;
       if (!searchBox)
       {
         selectedDay = (int) daysDropdown.getValue() + 1;
         selectedMonth = (int) monthsDropdown.getValue() + 1;
         selectedYear = (int) yearsDropdown.getValue() + 2022;
-        userInput = String.format(selectedDay + "/" + selectedMonth + "/" + selectedYear);
+        userInput = String.format(selectedMonth + "/" + selectedDay + "/" + selectedYear);
       }
       getFlightDetails();
       println ("ENTER");
@@ -178,24 +215,26 @@ class Search { //<>// //<>//
         println("Found");
       }
     }
+    userInput.toUpperCase();
   }
 
   void getFlightDetails()
   {
     boolean error = false;
     hasInput = true;
-    if (userInput.equals(""))
+    if (userInput.equals("") && filterQuery.equals("true "))
     {
-      text(errorMessage, 150, 80);
+      text("Please enter text or filter data", 150, 80);
       error=true;
       return;
     }
     gotFlight = false;
     if (error == false)
     {
+      searchQuery = query != "" ? query + " = '" + userInput + "' " : "true ";
       String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, split_part(fl_date, ' ', 1), origin_city_name, dest_city_name, distance, COUNT(*) OVER() AS total_rows, " +
         "CONCAT(mkt_carrier, mkt_carrier_fl_num), cancelled, diverted " +
-        "FROM airlinedata WHERE " + query + " = '" + userInput + "'" +
+        "FROM airlinedata WHERE " + searchQuery + "AND " + filterQuery +
         "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, mkt_carrier, mkt_carrier_fl_num, cancelled, diverted";
       pgsql.query(sql);
       int i = 0;
@@ -253,6 +292,7 @@ class Search { //<>// //<>//
 
   void flashingTypingYoke() {
     fill(BLACK);
+    textSize(20);
     float s = second()%2;
     if (s==0)
     {
@@ -288,6 +328,8 @@ class Search { //<>// //<>//
   void draw() {
     stroke(BLACK);
     strokeWeight(1);
+    textFont(myFont);
+    textSize(20);
     if (searchBox) rect(190, 25, 210, 34);
     else if (currentScreen == searchScreen)
     {
@@ -295,15 +337,19 @@ class Search { //<>// //<>//
       cp5.draw();
     }
     textAlign(LEFT);
-    textFont(myFont);
-    textSize(20);
     fill(BLACK);
+    textSize(20);
     text(userHelp, userHelpX, 50);
     if (searchBox) text(userInput, 200, 50);
     int dataSize = dataReturned.size();
+    textAlign(CENTER);
+    textSize(30);
+    text("Search", 1350, 100);
+    text("Filter", 1350, 600);
     if (dataSize != 0)
     {
       textSize(30);
+      textAlign(LEFT);
       text(rows, 200, 150);
       textAlign(RIGHT);
       text(dataReturned.get(flightIndex), 850, 150);
@@ -311,7 +357,12 @@ class Search { //<>// //<>//
       text("Result " + results.get(flightIndex) + " out of " + queryCount + "", 525, 830);
     } else if (!gotFlight && hasInput)
     {
+      textAlign(LEFT);
+      textSize(20);
       text(errorMessage, 150, 80);
+      fill(WHITE);
+      noStroke();
+      rect(200, 800, 700, 100);
       textAlign(CENTER);
     } else
     {

@@ -60,6 +60,10 @@ final int FL_NO_SEARCH = 0;
 final int ORIGIN_SEARCH = 1;
 final int DATE_SEARCH = 2;
 final int BACK_BUTTON = 3;
+final int DEST_SEARCH = 4;
+final int NEITHER_FILTER = 0;
+final int CAN_FILTER = 1;
+final int DIV_FILTER = 2;
 //datapoints
 final int FLIGHT_DATE_NO = 0;
 final int MKT_CARRIER_NO = 1;
@@ -145,7 +149,10 @@ final int PREVIOUS_FLIGHT_EVENT = 25;
 final int SEARCH_BY_FL_NO_EVENT = 26;
 final int SEARCH_BY_ORIGIN_EVENT = 27;
 final int SEARCH_BY_DATE_EVENT = 28;
-final int CHART_SELECTION_EVENT = 29; //has to be last
+final int SEARCH_BY_DEST_EVENT = 29;
+final int FILTER_BY_CAN_EVENT = 30;
+final int FILTER_BY_DIV_EVENT = 31;
+final int CHART_SELECTION_EVENT = 32; //has to be last
 //regions
 final int US_REGION = 0;
 final int ALASKA_REGION = 1;

@@ -118,6 +118,7 @@ class BarChart  //<>// //<>//
           fill(0);
           text(currentAirportName, point + (widthOfBar / 2), SCREENY - 70);
           float barHeight = flightCount[i] * yIncrement;
+          stroke(BLACK);
           pushMatrix();
           textSize(12);
           textAlign(LEFT);

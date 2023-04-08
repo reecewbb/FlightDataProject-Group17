@@ -11,12 +11,12 @@ ArrayList<Airport> myAirports;
 ArrayList<Screen> zoomScreens;
 Screen mapScreen, currentScreen, topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight, startScreen, chartSelectionScreen, alaskaScreen, hawaiiScreen, regionScreen;
 Screen pieChartScreenArrDep, pieChartScreenCanDiv, outgoingChartScreen, incomingChartScreen, searchScreen;
-int event, lastAirportSelected, previousEventScreen, amountOfOperatingAirlines, currentFrame, loading;
+int event, lastAirportSelected, previousEventScreen, amountOfOperatingAirlines, currentFrame, loading, canCount, divCount;
 float percentRoundedCancelled, percentRoundedDiverted;
 Filter mapFilter;
 Widget backToMapButton, AKButton, LSButton, TZButton, allButton, USMapButton, backToStartButton, outgoingBarChartButton, incomingBarChartButton, alaskaMapButton, hawaiiMapButton, backToSelectionButton;
 Widget backToAlaskaMapButton, backToHawaiiMapButton, pieChartButtonArrDep, pieChartButtonCanDiv, searchScreenButton, nextFlightButton, previousFlightButton, searchByNumberButton, searchByOriginButton;
-Widget searchByDateButton;
+Widget searchByDateButton, searchByDestButton, filterByCanButton, filterByDivButton;
 Search searchBar;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart, flightsChart;
@@ -69,7 +69,7 @@ void loadData()
   myAirports = new ArrayList<Airport>();
   zoomScreens = new ArrayList<Screen>();
   cityName = "error";
-  airportName = "error"; //<>//
+  airportName = "error";
   setScreens();
   searchBar = new Search();
   mapFilter = new Filter();
@@ -98,7 +98,7 @@ void draw()
     text("AIRPORT DATA VIEWER", SCREENX/2, 180);
     textSize(50);
     String dots = "";
-    for (int i = 0; i < loading; i++) //<>//
+    for (int i = 0; i < loading; i++)
     {
       dots += ".";
     }
@@ -239,6 +239,7 @@ void mousePressed()
       searchByNumberButton.setColour();
       searchByOriginButton.unsetColour();
       searchByDateButton.unsetColour();
+      searchByDestButton.unsetColour();
       break;
 
     case SEARCH_BY_ORIGIN_EVENT:
@@ -246,6 +247,7 @@ void mousePressed()
       searchByNumberButton.unsetColour();
       searchByOriginButton.setColour();
       searchByDateButton.unsetColour();
+      searchByDestButton.unsetColour();
       break;
 
     case SEARCH_BY_DATE_EVENT:
@@ -253,8 +255,33 @@ void mousePressed()
       searchByNumberButton.unsetColour();
       searchByOriginButton.unsetColour();
       searchByDateButton.setColour();
+      searchByDestButton.unsetColour();
       break;
-
+      
+    case SEARCH_BY_DEST_EVENT:
+      searchBar.setQuery(DEST_SEARCH);
+      searchByNumberButton.unsetColour();
+      searchByOriginButton.unsetColour();
+      searchByDateButton.unsetColour();
+      searchByDestButton.setColour();
+      break;
+      
+    case FILTER_BY_CAN_EVENT:
+      searchBar.setFilterQuery(CAN_FILTER);
+      filterByCanButton.changeColour();
+      filterByDivButton.unsetColour();
+      if(divCount % 2 == 1) divCount = 0;
+      canCount++;
+      break;
+      
+    case FILTER_BY_DIV_EVENT:
+      searchBar.setFilterQuery(DIV_FILTER);
+      filterByDivButton.changeColour();
+      filterByCanButton.unsetColour();
+      if(canCount % 2 == 1) canCount = 0;
+      divCount++;
+      break;
+      
     case CHART_SELECTION_EVENT:
       currentScreen = chartSelectionScreen;
       Airport currentAirport = myAirports.get(event - CHART_SELECTION_EVENT);
@@ -318,6 +345,9 @@ void mouseMoved()
     searchByNumberButton.hover();
     searchByOriginButton.hover();
     searchByDateButton.hover();
+    searchByDestButton.hover();
+    filterByCanButton.hover();
+    filterByDivButton.hover();
   }
 }
 
@@ -399,9 +429,9 @@ void addWidgets()
 {
   alaskaMapButton = new Widget(ALASKA_X_START, TOP_ROW_Y_START, START_MAP_WIDTH, 300, SELECT_ALASKA_EVENT);
   hawaiiMapButton = new Widget(HAWAII_X_START, HAWAII_Y_START, START_MAP_WIDTH, 300, SELECT_HAWAII_EVENT);
-  backToSelectionButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_SELECTION_EVENT);
-  backToMapButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_BUTTON_EVENT);
-  backToStartButton = new Button(20, 20, (int) textWidth("Back") + 100, "Back", BACK_TO_START_EVENT);
+  backToSelectionButton = new Button(20, 20, (int) textWidth("Back"), "Back", BACK_SELECTION_EVENT);
+  backToMapButton = new Button(20, 20, (int) textWidth("Back"), "Back", BACK_BUTTON_EVENT);
+  backToStartButton = new Button(20, 20, (int) textWidth("Back"), "Back", BACK_TO_START_EVENT);
   outgoingBarChartButton = new Widget(DEP_X, DEP_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, OUTGOING_BAR_CHART_EVENT);
   incomingBarChartButton = new Widget(ARR_X, ARR_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, INCOMING_BAR_CHART_EVENT);
   pieChartButtonArrDep = new Widget(PIE_X, PIE_Y, CHART_BUTTON_SIZE, CHART_BUTTON_SIZE, PIE_CHART_EVENT_ARR_DEP);
@@ -414,15 +444,21 @@ void addWidgets()
   searchScreenButton = new Button(1400, 98, FILTER_WIDGET_WIDTH + 30, "Search", color(WHITE), SELECT_SEARCH_EVENT, BLACK);
   nextFlightButton = new Button(700, 800, FILTER_WIDGET_WIDTH + 50, "Next Flight", NEXT_FLIGHT_EVENT);
   previousFlightButton = new Button(200, 800, FILTER_WIDGET_WIDTH + 50, "Previous Flight", PREVIOUS_FLIGHT_EVENT);
-  searchByNumberButton = new Button(1200, 100, FILTER_WIDGET_WIDTH + 200, "Search by flight number", SEARCH_BY_FL_NO_EVENT);
-  searchByOriginButton = new Button(1200, 200, FILTER_WIDGET_WIDTH + 200, "Search by origin", SEARCH_BY_ORIGIN_EVENT);
-  searchByDateButton = new Button(1200, 300, FILTER_WIDGET_WIDTH + 200, "Search by date", SEARCH_BY_DATE_EVENT);
+  searchByNumberButton = new Button(1200, 150, FILTER_WIDGET_WIDTH + 200, "Search by flight number", SEARCH_BY_FL_NO_EVENT);
+  searchByOriginButton = new Button(1200, 250, FILTER_WIDGET_WIDTH + 200, "Search by origin", SEARCH_BY_ORIGIN_EVENT);
+  searchByDestButton = new Button(1200, 350, FILTER_WIDGET_WIDTH + 200, "Search by destination", SEARCH_BY_DEST_EVENT);
+  searchByDateButton = new Button(1200, 450, FILTER_WIDGET_WIDTH + 200, "Search by date", SEARCH_BY_DATE_EVENT);
+  filterByCanButton = new Button(1200, 680, FILTER_WIDGET_WIDTH + 200, "Filter by cancelled", FILTER_BY_CAN_EVENT);
+  filterByDivButton = new Button(1200, 780, FILTER_WIDGET_WIDTH + 200, "Filter by diverted", FILTER_BY_DIV_EVENT);
   searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
   searchScreen.addWidget(searchByNumberButton);
   searchScreen.addWidget(searchByOriginButton);
   searchScreen.addWidget(searchByDateButton);
+  searchScreen.addWidget(searchByDestButton);
+  searchScreen.addWidget(filterByCanButton);
+  searchScreen.addWidget(filterByDivButton);
   outgoingChartScreen.addWidget(backToSelectionButton);
   incomingChartScreen.addWidget(backToSelectionButton);
   pieChartScreenArrDep.addWidget(backToSelectionButton);

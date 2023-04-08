@@ -141,11 +141,13 @@ class Screen {   //<>// //<>//
       mapImage.resize(SCREENX, SCREENY);
       image(mapImage, 0, 0);
       fill(WHITE);
+      noStroke();
       rect(0, 700, 280, SCREENY - 700);
       rect(280, 750, 200, SCREENY - 750);
       rect(480, 830, 50, SCREENY - 830); 
       rect(530, 850, 100, SCREENY - 850);
       fill(BLACK);
+      stroke(BLACK);
       String selectArea = "Select area";
       textSize(20);
       text(selectArea, SCREENX/2, TOP_TEXT_BUFFER);
@@ -198,6 +200,7 @@ class Screen {   //<>// //<>//
     case BOT_LEFT_SCREEN:
       setScreen(0, 2, BOT_LEFT_SCREEN);
       fill(WHITE);
+      noStroke();
       rect(0, 130, 860, SCREENY - 130);
       rect(860, 240, 600, SCREENY - 240);
       rect(1450, 480, SCREENX - 1450, SCREENY - 480);
@@ -207,6 +210,7 @@ class Screen {   //<>// //<>//
     case BOT_MID_SCREEN:
       setScreen(1, 2, BOT_MID_SCREEN);
       fill(WHITE);
+      noStroke();
       rect(0, 550, 250, SCREENY - 550);
       fill(BLACK);
       break;
@@ -232,7 +236,7 @@ class Screen {   //<>// //<>//
         aWidget.draw();
       }
       String start = "AIRPORT DATA VIEWER";
-      String regionSelect = "Select Region";
+      String regionSelect = "Select Region or Search";
       String continentalUS = "Continental US";
       String alaska = "Alaska";
       String hawaii = "Hawaii";
