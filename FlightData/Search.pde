@@ -1,10 +1,10 @@
-class Search { //<>// //<>//
+class Search {  //<>//
   ArrayList<String> dataReturned = new ArrayList<String>();
   ArrayList<Integer> results = new ArrayList<Integer>();
   String typeBar = "|";
   boolean gotFlight, hasInput;
   int flightIndex, queryCount, userHelpX, selectedDay, selectedMonth, selectedYear;
-  String query, userHelp, selectedDate, userInput, errorMessage;
+  String query, userHelp, selectedDate, userInput, errorMessage, rows;
   boolean searchBox;
   DropdownList daysDropdown, monthsDropdown, yearsDropdown;
   Button submitButton;
@@ -13,18 +13,21 @@ class Search { //<>// //<>//
   {
     createDropdownList();
     setQuery(FL_NO_SEARCH);
+    rows = "Flight Number: " + "\nOrigin Airport Code: " + "\nDestination Airport Code: " + "\nDate of Departure: " + "\nEstimated Departure Time: " +  "\nEstimated Arrival Time: " + 
+               "\nActual Departure Time: " + "\nActual Arrival Time: " + "\nPunctuality: " + "\nDeparture City: " + "\nArrival City: " + "\nDistance: " + "\nCancelled: " + "\nDiverted: ";
   }
 
   void setQuery(int searchType)
   {
     hasInput = false;
     userInput = "";
-    userHelpX = 380;
+    userHelpX = 420;
     daysDropdown.setVisible(false);
     monthsDropdown.setVisible(false);
     yearsDropdown.setVisible(false);
     searchBox = true;
     flightIndex = 0;
+    queryCount = 0;
     switch(searchType)
     {
     case FL_NO_SEARCH:
@@ -45,7 +48,7 @@ class Search { //<>// //<>//
       query = "split_part(fl_date, ' ', 1)";
       userHelp = "Select date and press Enter";
       errorMessage = "No flight data available on selected date";
-      userHelpX = 500;
+      userHelpX = 540;
       daysDropdown.setVisible(true);
       monthsDropdown.setVisible(true);
       yearsDropdown.setVisible(true);
@@ -133,7 +136,6 @@ class Search { //<>// //<>//
     if (searchBox)
     {
       flightIndex = 0;
-      queryCount = 0;
       if (key==BACKSPACE)
       {
         if (userInput.length()>0)
@@ -143,12 +145,13 @@ class Search { //<>// //<>//
       } 
       else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9'))
       {
-        userInput+=key;
+        if(textWidth(userInput) < 200) userInput+=key;
       } 
     }
-    if (key==RETURN || key==ENTER) //<>//
+    if (key==RETURN || key==ENTER)
       {
         dataReturned.clear();
+        queryCount = 0;
         if(!searchBox) 
         {
           selectedDay = (int) daysDropdown.getValue() + 1;
@@ -167,7 +170,7 @@ class Search { //<>// //<>//
 
   void getFlightDetails()
   {
-    boolean error = false; //<>//
+    boolean error = false;
     hasInput = true;
     if (userInput.equals(""))
     {
@@ -179,25 +182,22 @@ class Search { //<>// //<>//
     if (error == false)
     {
       String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, split_part(fl_date, ' ', 1), origin_city_name, dest_city_name, distance, COUNT(*) OVER() AS total_rows, " +
-        "CONCAT(mkt_carrier, mkt_carrier_fl_num) " +
+        "CONCAT(mkt_carrier, mkt_carrier_fl_num), cancelled, diverted " +
         "FROM airlinedata WHERE " + query + " = '" + userInput + "'" +
-        "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, mkt_carrier, mkt_carrier_fl_num";
+        "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, mkt_carrier, mkt_carrier_fl_num, cancelled, diverted";
       pgsql.query(sql);
       int i = 0;
       do
       {
         if (pgsql.next())
         {
+          String punctuality = punctualityCalc(pgsql.getString(2), pgsql.getString(4));
+          String cancelled = (pgsql.getString(13).equals("1.00")) ? "Yes" : "No";
+          String diverted = (pgsql.getString(14).equals("1.00")) ? "Yes" : "No";
           queryCount = pgsql.getInt(11);
-          dataReturned.add("Flight Number: " + pgsql.getString(12) + "\nOrigin Airport Code: " + pgsql.getString(5) +
-            "\nDestination Airport Code: " + pgsql.getString(6) +
-            "\nDate of Departure: " + pgsql.getString(7) +
-            "\nEstimated Departure Time: " + depArrTimeFormatter(pgsql.getString(1)) +
-            "\nEstimated Arrival Time: " + depArrTimeFormatter(pgsql.getString(2)) +
-            "\nActual Departure Time: " + depArrTimeFormatter(pgsql.getString(3)) +
-            "\nActual Arrival Time: " + depArrTimeFormatter(pgsql.getString(4))  +
-            "\nDeparture City: " + pgsql.getString(8) + "\nArrival City: " + pgsql.getString(9) +
-            "\nDistance: " + pgsql.getString(10) + " miles");
+          dataReturned.add(pgsql.getString(12) + "\n" + pgsql.getString(5) + "\n" + pgsql.getString(6) + "\n" + pgsql.getString(7) + "\n" + depArrTimeFormatter(pgsql.getString(1)) +
+            "\n" + depArrTimeFormatter(pgsql.getString(2)) + "\n" + depArrTimeFormatter(pgsql.getString(3)) + "\n" + depArrTimeFormatter(pgsql.getString(4))  +
+            "\n" + punctuality + "\n" + pgsql.getString(8) + "\n" + pgsql.getString(9) + "\n" + pgsql.getString(10) + " miles" + "\n" + cancelled + "\n" + diverted);
           results.add(i + 1);
           gotFlight = true;
           i++;
@@ -210,13 +210,43 @@ class Search { //<>// //<>//
       error = false;
     }
   }
+  
+  String punctualityCalc(String scheduled, String actual)
+  {
+    if (scheduled == null || actual == null) {
+      return "N/A";
+    }
+    try {
+      String[] stringScheduledSplit = scheduled.split(""); //<>//
+      String[] stringActualSplit = actual.split("");
+      int[] scheduledSplit = new int[4];
+      int[] actualSplit = new int[4];
+      for(int i = 0; i < 4; i++)
+      {
+        scheduledSplit[i] = Integer.parseInt(stringScheduledSplit[i]);
+        actualSplit[i] = Integer.parseInt(stringActualSplit[i]);
+      }
+      int scheduledHours = scheduledSplit[0] * 10 + scheduledSplit[1];
+      int scheduledMinutes = scheduledSplit[2] * 10 + scheduledSplit[3];
+      int actualHours = actualSplit[0] * 10 + actualSplit[1];
+      int actualMinutes = actualSplit[2] * 10 + actualSplit[3];
+      int timeDifference = ((actualHours - scheduledHours) * 60) + actualMinutes - scheduledMinutes;
+      if(timeDifference == 0) return "On time";
+      if(timeDifference > 0) return "Late by " + timeDifference + " minutes";
+      else return "Early by " + -timeDifference + " minutes";
+    }
+    catch(ArrayIndexOutOfBoundsException exception) {
+      return "N/A";
+    }
+  }
 
   void flashingTypingYoke() {
+    fill(BLACK);
     float s = second()%2;
     if (s==0)
     {
-      float barDist = (textWidth(userInput) - 4);
-      text(typeBar, 163 + barDist, 49);
+      float barDist = textWidth(userInput);
+      text(typeBar, 200 + barDist, 49);
     }
   }
 
@@ -247,7 +277,7 @@ class Search { //<>// //<>//
   void draw() {
     stroke(BLACK);
     strokeWeight(1);
-    if (searchBox) rect(150, 25, 210, 34);
+    if (searchBox) rect(190, 25, 210, 34);
     else
     {
       textAlign(CENTER);
@@ -258,18 +288,27 @@ class Search { //<>// //<>//
     textSize(20);
     fill(BLACK);
     text(userHelp, userHelpX, 50);
-    text(userInput, 160, 50);
+    text(userInput, 200, 50);
     int dataSize = dataReturned.size();
     if (dataSize != 0)
     {
-      text(dataReturned.get(flightIndex), 150, 120);
-      text("Result " + results.get(flightIndex) + " out of " + queryCount + "", 150, 500);
+      textSize(30);
+      text(rows, 200, 150);
+      textAlign(RIGHT);
+      text(dataReturned.get(flightIndex), 850, 150);
+      textAlign(CENTER);
+      text("Result " + results.get(flightIndex) + " out of " + queryCount + "", 525, 830);
     } 
     else if (!gotFlight && hasInput)
     {
       text(errorMessage, 150, 80);
       textAlign(CENTER);
-
+    }
+    else
+    {
+      fill(WHITE);
+      noStroke();
+      rect(200, 800, 700, 100);
     }
     flashingTypingYoke();
   }

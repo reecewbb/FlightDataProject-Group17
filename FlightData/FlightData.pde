@@ -348,12 +348,13 @@ void addWidgets()
   LSButton = new Widget(FILTER_WIDGET_X, 790, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "L - S ", color(WIDGET_COLOUR), myFont, LS_EVENT, WHITE);
   TZButton = new Widget(FILTER_WIDGET_X, 835, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "T - Z", color(WIDGET_COLOUR), myFont, TZ_EVENT, WHITE);
   allButton = new Widget(FILTER_WIDGET_X, 700, FILTER_WIDGET_WIDTH, FILTER_WIDGET_HEIGHT, "ALL", color(WIDGET_COLOUR), myFont, NO_FILTER_EVENT, WHITE);
-  searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH+30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
-  nextFlightButton = new Widget(1200, 745, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
-  previousFlightButton = new Widget(1200, 790, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
+  searchScreenButton = new Widget(1400, 98, FILTER_WIDGET_WIDTH + 30, FILTER_WIDGET_HEIGHT, "Search", color(WHITE), myFont, SELECT_SEARCH_EVENT, BLACK);
+  nextFlightButton = new Widget(700, 800, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Next Flight", color(WIDGET_COLOUR), myFont, NEXT_FLIGHT_EVENT, WHITE);
+  previousFlightButton = new Widget(200, 800, FILTER_WIDGET_WIDTH + 50, FILTER_WIDGET_HEIGHT, "Previous Flight", color(WIDGET_COLOUR), myFont, PREVIOUS_FLIGHT_EVENT, WHITE);
   searchByNumberButton = new Widget(1200, 100, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by flight number", color(WIDGET_COLOUR), myFont, SEARCH_BY_FL_NO_EVENT, WHITE);
   searchByOriginButton = new Widget(1200, 200, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by origin", color(WIDGET_COLOUR), myFont, SEARCH_BY_ORIGIN_EVENT, WHITE);
   searchByDateButton = new Widget(1200, 300, FILTER_WIDGET_WIDTH + 200, FILTER_WIDGET_HEIGHT, "Search by date", color(WIDGET_COLOUR), myFont, SEARCH_BY_DATE_EVENT, WHITE);
+  searchScreen.addWidget(backToStartButton);
   searchScreen.addWidget(nextFlightButton);
   searchScreen.addWidget(previousFlightButton);
   searchScreen.addWidget(searchByNumberButton);
