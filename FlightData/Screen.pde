@@ -1,4 +1,4 @@
-class Screen {   //<>// //<>//
+class Screen {    //<>//
   ArrayList widgetList = new ArrayList();
   ArrayList<Airport> airportList = new ArrayList();
   int screenType, outgoingFlights, currentGridHover, screen, incomingFlights, currentAirport;

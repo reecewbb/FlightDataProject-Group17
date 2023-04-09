@@ -123,7 +123,7 @@ class BarChart  //<>// //<>//
           textSize(12);
           textAlign(LEFT);
           translate(point + widthOfBar/2, SCREENY - CHART_BUFFER - barHeight - 10);
-          rotate(-HALF_PI);
+          rotate(-HALF_PI / 2);
           text(cityName, 0, 0);
           popMatrix();
           textAlign(CENTER);
