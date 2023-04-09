@@ -110,10 +110,10 @@ class Search {  //<>//
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
-      .setColorBackground(color(WHITE - 20))
-      .setColorForeground(color(WHITE - 50))
+      .setColorBackground(color(#99D0E3))
+      .setColorForeground(color(#8BC8DE))
       .setColorLabel(color(BLACK))
-      .setColorActive(color(WHITE - 100))
+      .setColorActive(color(#71BAD3))
       .setColorValueLabel(color(BLACK))
       .setFont(dropdownFont)
       .setColorValue(BLACK)
@@ -127,10 +127,10 @@ class Search {  //<>//
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
-      .setColorBackground(color(WHITE - 20))
-      .setColorForeground(color(WHITE - 50))
+      .setColorBackground(color(#99D0E3))
+      .setColorForeground(color(#8BC8DE))
       .setColorLabel(color(BLACK))
-      .setColorActive(color(WHITE - 100))
+      .setColorActive(color(#71BAD3))
       .setColorValueLabel(color(BLACK))
       .setFont(dropdownFont)
       .setColorValue(BLACK)
@@ -144,10 +144,10 @@ class Search {  //<>//
       .setWidth(100)
       .setItemHeight(30)
       .setBarHeight(30)
-      .setColorBackground(color(WHITE - 20))
-      .setColorForeground(color(WHITE - 50))
+      .setColorBackground(color(#99D0E3))
+      .setColorForeground(color(#8BC8DE))
       .setColorLabel(color(BLACK))
-      .setColorActive(color(WHITE - 100))
+      .setColorActive(color(#71BAD3))
       .setColorValueLabel(color(BLACK))
       .setFont(dropdownFont)
       .setColorValue(BLACK)
@@ -252,6 +252,7 @@ class Search {  //<>//
           results.add(i + 1);
           gotFlight = true;
           i++;
+          pgsql.next();
         }
         while (i < queryCount);
       }
