@@ -38,7 +38,7 @@ class PieChart //<>// //<>//
     }
     else if(this.pieChartType == PIE_CHART_CANC_DIV)
     {
-      chartName = "Flights cancelled and diverted at " + airportName;
+      chartName = "Cancelled and diverted flights at " + airportName;
     }
     totalNumberOfFlightsToAndFrom = calculateFlights(airportName, INCOMING) + calculateFlights(airportName, OUTGOING);
     numberOfFlightsNotDivertedOrCancelled = totalNumberOfFlightsToAndFrom - (numberOfFlightsCancelled + numberOfFlightsDiverted);
@@ -251,7 +251,7 @@ class PieChart //<>// //<>//
         lastAngle += radians(neitherInDegrees);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
         fill(BLACK);
-        text("- neither - " + percentRoundedNeither + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        text("- Neither - " + percentRoundedNeither + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
         yForKey -= 35; 
       }
       if(divertedInDegrees != 0)
@@ -261,7 +261,7 @@ class PieChart //<>// //<>//
         lastAngle += radians(divertedInDegrees);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
         fill(BLACK);
-        text("- diverted - " + percentRoundedDiverted + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        text("- Diverted - " + percentRoundedDiverted + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
         yForKey -= 35; 
       }
       if(cancelledInDegrees != 0)
@@ -271,7 +271,7 @@ class PieChart //<>// //<>//
         lastAngle += radians(cancelledInDegrees);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
         fill(BLACK);
-        text("- cancelled - " + percentRoundedCancelled + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        text("- Cancelled - " + percentRoundedCancelled + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
         yForKey -= 35; 
       }
     }

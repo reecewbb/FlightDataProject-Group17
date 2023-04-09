@@ -368,6 +368,7 @@ class Screen {   //<>// //<>//
         Widget aWidget = (Widget) widgetList.get(i);
         aWidget.draw();
       }
+      
       searchBar.draw();
     }
   }

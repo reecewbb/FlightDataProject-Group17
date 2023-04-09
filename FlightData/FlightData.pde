@@ -222,10 +222,6 @@ void mousePressed()
       currentScreen = pieChartScreenCanDiv;
       break;
 
-    case SELECT_SEARCH_EVENT:
-      currentScreen = searchScreen;
-      break;
-
     case NEXT_FLIGHT_EVENT:
       searchBar.nextAirport();
       break;
@@ -233,6 +229,9 @@ void mousePressed()
     case PREVIOUS_FLIGHT_EVENT:
       searchBar.previousAirport();
       break;
+      
+    case SELECT_SEARCH_EVENT:
+      currentScreen = searchScreen;
 
     case SEARCH_BY_FL_NO_EVENT:
       searchBar.setQuery(FL_NO_SEARCH);

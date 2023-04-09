@@ -1,4 +1,4 @@
-class Search { //<>// //<>//
+class Search {  //<>//
   ArrayList<String> dataReturned = new ArrayList<String>();
   ArrayList<Integer> results = new ArrayList<Integer>();
   String typeBar = "|";
@@ -220,7 +220,7 @@ class Search { //<>// //<>//
 
   void getFlightDetails()
   {
-    boolean error = false;
+    boolean error = false; //<>//
     hasInput = true;
     if (userInput.equals("") && filterQuery.equals("true "))
     {
@@ -231,16 +231,16 @@ class Search { //<>// //<>//
     gotFlight = false;
     if (error == false)
     {
-      searchQuery = query != "" ? query + " = '" + userInput + "' " : "true ";
+      searchQuery = userInput != "" ? query + " = '" + userInput + "' " : "true ";
       String sql = "SELECT crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, split_part(fl_date, ' ', 1), origin_city_name, dest_city_name, distance, COUNT(*) OVER() AS total_rows, " +
         "CONCAT(mkt_carrier, mkt_carrier_fl_num), cancelled, diverted " +
         "FROM airlinedata WHERE " + searchQuery + "AND " + filterQuery +
         "GROUP BY crs_dep_time, crs_arr_time, dep_time, arr_time, origin, dest, fl_date, origin_city_name, dest_city_name, distance, mkt_carrier, mkt_carrier_fl_num, cancelled, diverted";
       pgsql.query(sql);
       int i = 0;
-      do
+      if (pgsql.next())
       {
-        if (pgsql.next())
+        do
         {
           String punctuality = punctualityCalc(pgsql.getString(2), pgsql.getString(4));
           String cancelled = (pgsql.getString(13).equals("1.00")) ? "Yes" : "No";
@@ -253,9 +253,10 @@ class Search { //<>// //<>//
           gotFlight = true;
           i++;
         }
+        while (i < queryCount);
       }
-      while (i < queryCount);
-    } else
+    } 
+    else
     {
       error = false;
     }
@@ -355,16 +356,18 @@ class Search { //<>// //<>//
       text(dataReturned.get(flightIndex), 850, 150);
       textAlign(CENTER);
       text("Result " + results.get(flightIndex) + " out of " + queryCount + "", 525, 830);
-    } else if (!gotFlight && hasInput)
+    } 
+    else if (!gotFlight && hasInput)
     {
       textAlign(LEFT);
       textSize(20);
-      text(errorMessage, 150, 80);
+      text(errorMessage, 190, 100);
       fill(WHITE);
       noStroke();
       rect(200, 800, 700, 100);
       textAlign(CENTER);
-    } else
+    } 
+    else
     {
       fill(WHITE);
       noStroke();
