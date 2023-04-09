@@ -78,7 +78,13 @@ class Search {  //<>//
     default:
     }
   }
-
+  
+  void setQuery(int searchType, String input)
+  {
+    setQuery(searchType);
+    userInput = input;
+    getFlightDetails();
+  }
 
   void setFilterQuery(int filterType)
   {

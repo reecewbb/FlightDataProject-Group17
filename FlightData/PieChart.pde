@@ -87,7 +87,7 @@ class PieChart //<>// //<>//
   
   public void getNumberOfCancelledAndDiverted()
   {
-    String query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND cancelled = '1.00'"; //<>// //<>//
+    String query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND cancelled = '1.00'"; //<>//
     pgsql.query(query);
     if(pgsql.next())
     {

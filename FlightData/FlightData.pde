@@ -21,7 +21,7 @@ Search searchBar;
 BarChart outgoingFlightsChart, incomingFlightsChart;
 PieChart airlinesChart, flightsChart;
 String mostCommonAirline, highestOutgoingName, highestIncomingName, cityName, airportName;
-boolean loadingComplete;
+boolean loadingComplete, fromAirport;
 PImage[] gifFrames;
 
 void settings()
@@ -31,7 +31,7 @@ void settings()
 
 void setup()
 {
-  loadingComplete = false;
+  loadingComplete = fromAirport = false;
   bigFont = loadFont("MicrosoftJhengHeiRegular-60.vlw");
   gifFrames = new PImage[11]; // Replace with the actual number of frames in your GIF
   for (int i = 0; i < gifFrames.length; i++) {
@@ -134,6 +134,7 @@ void mousePressed()
     {
     case BACK_BUTTON_EVENT:
       currentScreen = regionScreen;
+      fromAirport = false;
       break;
 
     case AK_EVENT:
@@ -186,7 +187,8 @@ void mousePressed()
       break;
 
     case BACK_TO_START_EVENT:
-      currentScreen = startScreen;
+      if(!fromAirport) currentScreen = startScreen;
+      if(fromAirport) currentScreen = chartSelectionScreen;
       searchBar.setQuery(BACK_BUTTON);
       break;
 
@@ -231,7 +233,26 @@ void mousePressed()
       break;
       
     case SELECT_SEARCH_EVENT:
+      if(currentScreen == startScreen) //<>//
+      {
+        searchBar.setQuery(FL_NO_SEARCH);
+        searchByNumberButton.setColour();
+        searchByOriginButton.unsetColour();
+        searchByDateButton.unsetColour();
+        searchByDestButton.unsetColour();
+        fromAirport = false;
+      }
+      else if(currentScreen == chartSelectionScreen)
+      {
+        searchBar.setQuery(ORIGIN_SEARCH, airportName);
+        searchByNumberButton.unsetColour();
+        searchByOriginButton.setColour();
+        searchByDateButton.unsetColour();
+        searchByDestButton.unsetColour();
+        fromAirport = true;
+      }
       currentScreen = searchScreen;
+      break;
 
     case SEARCH_BY_FL_NO_EVENT:
       searchBar.setQuery(FL_NO_SEARCH);
@@ -467,6 +488,7 @@ void addWidgets()
   chartSelectionScreen.addWidget(incomingBarChartButton);
   chartSelectionScreen.addWidget(pieChartButtonArrDep);
   chartSelectionScreen.addWidget(pieChartButtonCanDiv);
+  chartSelectionScreen.addWidget(searchScreenButton);
   startScreen.addWidget(USMapButton);
   startScreen.addWidget(alaskaMapButton);
   startScreen.addWidget(hawaiiMapButton);

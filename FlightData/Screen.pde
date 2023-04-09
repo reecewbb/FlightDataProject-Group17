@@ -199,12 +199,6 @@ class Screen {   //<>// //<>//
 
     case BOT_LEFT_SCREEN:
       setScreen(0, 2, BOT_LEFT_SCREEN);
-      fill(WHITE);
-      noStroke();
-      rect(0, 130, 860, SCREENY - 130);
-      rect(860, 240, 600, SCREENY - 240);
-      rect(1450, 480, SCREENX - 1450, SCREENY - 480);
-      fill(BLACK);
       break;
 
     case BOT_MID_SCREEN:
@@ -268,7 +262,7 @@ class Screen {   //<>// //<>//
       String mostPopularDestination = "Most popular destination: " + highestOutgoingName;
       String mostPopularOrigin = "Most popular origin: " + highestIncomingName;
       String airlineAmount = "Amount of operating airlines: " + amountOfOperatingAirlines;
-      String cancelled = "Percentage of cancelled flights: " + percentRoundedCancelled + "%"; //<>//
+      String cancelled = "Percentage of cancelled flights: " + percentRoundedCancelled + "%";
       String diverted = "Percentage of diverted flights: " + percentRoundedDiverted + "%";
       String depString = "Click to view departures";
       String arrString = "Click to view arrivals";
@@ -500,9 +494,18 @@ class Screen {   //<>// //<>//
     fill(BLACK);
     mapImage.resize(SCREENX * 3, SCREENY * 3);
     image(mapImage, -widthNo * SCREENX, -heightNo * SCREENY);
+    if(ID == BOT_LEFT_SCREEN)
+    {
+      fill(WHITE);
+      noStroke();
+      rect(0, 130, 860, SCREENY - 130);
+      rect(860, 240, 600, SCREENY - 240);
+      rect(1450, 480, SCREENX - 1450, SCREENY - 480);
+      fill(BLACK);
+    }
     textSize(20);
     text(areaNames[ID - 1], SCREENX/2, 50);
-    String selectAirport = "SELECT AIRPORT";
+    String selectAirport = "Select Airport";
     textSize(15);
     text(selectAirport, SCREENX/2, TOP_TEXT_BUFFER + 50);
     for (Airport currentAirport : airportList)
@@ -519,5 +522,7 @@ class Screen {   //<>// //<>//
     {
       mapFilter.showAirports(myAirports);
     }
+    fill(BLACK);
+    text("Sort", FILTER_WIDGET_X + FILTER_WIDGET_WIDTH / 2, 690);
   }
 }
