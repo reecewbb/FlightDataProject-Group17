@@ -87,13 +87,13 @@ class PieChart //<>// //<>//
   
   public void getNumberOfCancelledAndDiverted()
   {
-    String query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND cancelled = '1.00'"; //<>//
+    String query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND cancelled = '1'"; //<>//
     pgsql.query(query);
     if(pgsql.next())
     {
       numberOfFlightsCancelled = pgsql.getInt(1);
     }
-    query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND diverted = '1.00'";
+    query = "SELECT COUNT(*) as query_count FROM airlinedata WHERE (origin = '" + airportName + "' OR dest = '" + airportName + "') AND diverted = '1'";
     pgsql.query(query);
     if(pgsql.next());
     {
@@ -251,7 +251,7 @@ class PieChart //<>// //<>//
         lastAngle += radians(neitherInDegrees);
         rect(xForKey, yForKey, widthAndHeightForKey, widthAndHeightForKey);
         fill(BLACK);
-        text("- Neither - " + percentRoundedNeither + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
+        text("- Unchanged - " + percentRoundedNeither + "%", xForKey + widthAndHeightForKey + 15, yForKey + (widthAndHeightForKey) - 6);
         yForKey -= 35; 
       }
       if(divertedInDegrees != 0)
