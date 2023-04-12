@@ -51,10 +51,10 @@ void setup()
 
 void loadData()
 {
-  String user     = "postgres";                                                                        
-  String pass     = "group17";                                                            
-  String database = "AirlineData";
-  pgsql = new PostgreSQL( this, "localhost", database, user, pass );
+  String user     = "postgres";
+  String pass     = "airlineDataViewerGroup17";
+  String database = "postgres";
+  pgsql = new PostgreSQL( this, "db.sujqsfodzyzprozcickq.supabase.co", database, user, pass );
   if ( pgsql.connect() )
   {
     pgsql.query( "SELECT COUNT(*) FROM airlinedata" );
