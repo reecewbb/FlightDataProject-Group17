@@ -91,7 +91,7 @@ class Search {  //<>//
     switch(filterType)
     {
     case CAN_FILTER:
-      filterQuery = canCount % 2 == 0 ? "cancelled = '1.00' " : "true ";
+      filterQuery = canCount % 2 == 0 ? "cancelled = '1' " : "true ";
       errorMessage = "No cancelled flights for this dataset";
       dataReturned.clear();
       getFlightDetails();
@@ -99,7 +99,7 @@ class Search {  //<>//
       break;
 
     case DIV_FILTER:
-      filterQuery = divCount % 2 == 0 ? "diverted = '1.00' " : "true ";
+      filterQuery = divCount % 2 == 0 ? "diverted = '1' " : "true ";
       errorMessage = "No diverted flights for this dataset";
       dataReturned.clear();
       getFlightDetails();
@@ -249,8 +249,8 @@ class Search {  //<>//
         do
         {
           String punctuality = punctualityCalc(pgsql.getString(2), pgsql.getString(4));
-          String cancelled = (pgsql.getString(13).equals("1.00")) ? "Yes" : "No";
-          String diverted = (pgsql.getString(14).equals("1.00")) ? "Yes" : "No";
+          String cancelled = (pgsql.getString(13).equals("1")) ? "Yes" : "No";
+          String diverted = (pgsql.getString(14).equals("1")) ? "Yes" : "No";
           queryCount = pgsql.getInt(11);
           dataReturned.add(pgsql.getString(12) + "\n" + pgsql.getString(5) + "\n" + pgsql.getString(6) + "\n" + pgsql.getString(7) + "\n" + depArrTimeFormatter(pgsql.getString(1)) +
             "\n" + depArrTimeFormatter(pgsql.getString(2)) + "\n" + depArrTimeFormatter(pgsql.getString(3)) + "\n" + depArrTimeFormatter(pgsql.getString(4))  +
