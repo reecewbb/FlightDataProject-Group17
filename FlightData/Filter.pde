@@ -75,7 +75,7 @@ class Filter {
     myAirports.add(new Airport(736, 954, "MFE", ON_TOP));
     myAirports.add(new Airport(1140, 332, "DTW", ON_TOP));
     //myAirports.add(new Airport(1590, 970, "SJU", ON_TOP)); //Puerto Rico not on Map
-    myAirports.add(new Airport(74, 138, "MFR", ON_TOP));
+    myAirports.add(new Airport(90, 138, "MFR", ON_TOP));
     myAirports.add(new Airport(745, 779, "AUS", ON_TOP));
     myAirports.add(new Airport(659, 113, "MOT", ON_TOP));
     myAirports.add(new Airport(473, 575, "ABQ", ON_TOP));

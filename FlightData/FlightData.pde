@@ -33,9 +33,9 @@ void setup()
 {
   loadingComplete = fromAirport = false;
   bigFont = loadFont("MicrosoftJhengHeiRegular-60.vlw");
-  gifFrames = new PImage[11]; // Replace with the actual number of frames in your GIF
+  gifFrames = new PImage[11]; 
   for (int i = 0; i < gifFrames.length; i++) {
-    gifFrames[i] = loadImage("frame" + i + ".gif"); // Replace with the actual filenames of your GIF frames
+    gifFrames[i] = loadImage("frame" + i + ".gif");
   }
   currentFrame = 0;
   loading = 0;
