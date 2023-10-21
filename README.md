@@ -1,6 +1,6 @@
 # FlightDataProject-Group17
 
-Video link: https://media.heanet.ie/secure/file/7f160e918e2349a0936bb3f382824139
+Video link: https://youtu.be/HcGC6EF_ubk
 
 Visualizing Flight Data  
 Radoslaw Dulny,
